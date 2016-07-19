@@ -1,0 +1,98 @@
+%% LyX 2.2.0 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{amsmath}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\title{Neural Field Model}
+\maketitle
+
+\section{Convolution of Two Gaussian basis functions}
+
+\paragraph{Analytically prove convolution of two Gaussians. In general, the
+precision level of analytic simulation should be around$10^{-6}$.}
+
+\paragraph{File (Matlab script): Convolution2DGaussians.m}
+
+\subsection*{Matlab script description}
+
+\paragraph{Appendix E.4 (Freestone et al. 2011 NeuroImage) $\left(\phi_{i}\otimes\phi_{j}\right)(r)=(\frac{\pi\sigma_{i}^{2}\sigma_{j}^{2}}{\sigma_{i}^{2}+\sigma_{i}^{2}})^{\frac{n}{2}}exp(-\frac{1}{\sigma_{i}^{2}+\sigma_{i}^{2}}r^{T}r)$.}
+
+\subparagraph{Section: Generate data, create a$NPoints\times NPoints$ cortical
+surface and phi and psi Gaussian basis functions.}
+
+\subparagraph{%
+\begin{tabular}{|c|c|}
+\hline 
+Variable name & Explanation\tabularnewline
+\hline 
+X & Coordinates of x-axis\tabularnewline
+\hline 
+Y & Coordinates of y-axis\tabularnewline
+\hline 
+mu\_phi & Centre of gaussian\tabularnewline
+\hline 
+sigma\_phi & covariance matrix of phi\tabularnewline
+\hline 
+phi & Gaussian basis function\tabularnewline
+\hline 
+mu\_psi & Centre of gaussian\tabularnewline
+\hline 
+sigma\_psi & covariance matrix of psi\tabularnewline
+\hline 
+psi & Gaussian basis function\tabularnewline
+\hline 
+\end{tabular}}
+
+\subparagraph{Section: analytic check of convolution of two gaussians}
+
+\subparagraph{%
+\begin{tabular}{|c|c|}
+\hline 
+Variable name & Explanation\tabularnewline
+\hline 
+mu & Centre of a gaussian resulted from convolution of two gaussians, phi
+and psi\tabularnewline
+\hline 
+var\_phi & variance of gaussian phi\tabularnewline
+\hline 
+var\_psi & variance of gaussian psi\tabularnewline
+\hline 
+exponential & exponential part of Equation Appendix E.4 (Freestone et al. 2011)\tabularnewline
+\hline 
+CovMat & covariance matrix of a resultant gaussian convolved by two other gaussians\tabularnewline
+\hline 
+coefficient & coefficient part of Equation Appendix E.4 (Freestone et al. 2011)\tabularnewline
+\hline 
+convE2\_equivalent & analytic result of convolution of two gaussians, phi and psi\tabularnewline
+\hline 
+\end{tabular}}
+
+\section{Compute Gamma}
+
+\paragraph{File (Matlab script): ComputeGamma.m}
+
+\subsection*{Matlab script description}
+
+\paragraph{This matlab script mainly implement and estimate the following two
+equations, (21) and Appendix (D.7) (Freestone et al. 2011 NeuroImage).}
+
+\paragraph{Field, v(r), is decomposed of a finite-dimensional state vector and
+a vector of Gaussian basis functions.}
+
+\paragraph{Define $\Gamma=\int_{\Omega}\phi(r)\phi^{T}(r)dr$. Firstly, programmatically
+define $\phi(r)$, as a vector of Gaussian basis functions. Each Gaussian
+function is defined as $\phi(r-r')=e^{(-\frac{(r-r')^{T}(r-r')}{\sigma_{\phi}^{2}})}$.}
+\end{document}
