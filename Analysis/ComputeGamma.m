@@ -3,7 +3,7 @@
 %%
 clc, clear, close all
 %% Generate data
-SpaceMin = -4; SpaceMax = 4; NPoints = 401;
+SpaceMin = -10; SpaceMax = 10; NPoints = 1001;
 % create a cortical surface
 x = linspace(SpaceMin, SpaceMax, NPoints);
 stepSize = x(2)-x(1);
@@ -13,20 +13,27 @@ stepSize = x(2)-x(1);
 
 nx = 16; % number of basis functions
 
-mu = [-3 3; -3 1; -3 -1; -3 -3;
-    -1 3; -1 1; -1 -1; -1 -3;
-    1 3; 1 1; 1 -1; 1 -3;
-    3 3; 3 1; 3 -1; 3 -3];
+numRow = sqrt(nx); % number of gaussians for each colomn
+numCol = nx / numRow; % number of columns
 
-sigma = [0.2 0; 0 0.2];
+widthSpace = SpaceMax - SpaceMin;
+widthCentre = widthSpace / (numCol*2);
+
+mu = zeros(nx, 2); % centres of each gaussian
+for m = 1 : numRow
+    for n = 1 : numCol
+        mu(n + numCol*(m-1), :) = [(SpaceMin - widthCentre + m*widthCentre*2) (SpaceMin - widthCentre + n*widthCentre*2)];
+    end
+end
+sigma = [3 0; 0 3]; % covariance matrix
 
 % define gaussian basis functions
 guassians = zeros(NPoints, NPoints, nx);
 for n = 1 : nx
     guassians(:,:, n) = Define2DGaussian_AnisotropicKernel(mu(n, 1), mu(n, 2), sigma, NPoints, SpaceMin, SpaceMax);
 end
-
-% phi = Define2DGaussian(mu_phi(1), mu_phi(2), sigma_phi(1,1), 0, NPoints, SpaceMin, SpaceMax);
+%% plot
+figure, clf, shg; imagesc(squeeze(sum(guassians, 3))), colorbar;
 %% Gamma
 gamma = zeros(nx, nx);
 
