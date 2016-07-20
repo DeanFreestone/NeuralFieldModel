@@ -33,7 +33,7 @@ for n = 1 : nx
     guassians(:,:, n) = Define2DGaussian_AnisotropicKernel(mu(n, 1), mu(n, 2), sigma, NPoints, SpaceMin, SpaceMax);
 end
 %% plot
-figure, clf, shg; imagesc(squeeze(sum(guassians, 3))), colorbar;
+figure, clf, shg; imagesc(squeeze(sum(guassians, 3))), colorbar; title('Guassian basis functions');
 %% Gamma
 gamma = zeros(nx, nx);
 
