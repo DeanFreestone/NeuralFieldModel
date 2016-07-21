@@ -3,7 +3,7 @@
 %%
 clc, clear, close all
 %% Generate data
-SpaceMin = -10; SpaceMax = 10; NPoints = 1001;
+SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 % create a cortical surface
 x = linspace(SpaceMin, SpaceMax, NPoints);
 stepSize = x(2)-x(1);
@@ -25,7 +25,7 @@ for m = 1 : numRow
         mu(n + numCol*(m-1), :) = [(SpaceMin - widthCentre + m*widthCentre*2) (SpaceMin - widthCentre + n*widthCentre*2)];
     end
 end
-sigma = [4 0; 0 4]; % covariance matrix
+sigma = [1 0; 0 1]; % covariance matrix
 
 % define gaussian basis functions
 gaussians = zeros(NPoints, NPoints, nx);
@@ -35,20 +35,24 @@ end
 %% plot
 figure, clf, shg; imagesc(squeeze(sum(gaussians, 3))), colorbar; title('Guassian basis functions in the field');
 %% Compute gamma - analytic
-gamma = zeros(nx, nx);
+gamma_analytic = zeros(nx, nx);
 
 for m = 1 : nx
     for n = 1 : nx
-        gamma(m, n) = InnerProductTwo2DGaussians(mu(m, :), mu(n, :), sigma, sigma);
+        gamma_analytic(m, n) = InnerProductTwo2DGaussians(mu(m, :), mu(n, :), sigma, sigma);
     end
 end
-figure, imagesc(gamma), colorbar;
+% plot
+figure, imagesc(gamma_analytic), colorbar, title('gamma matrix - analytic');
 %% Compute gamma - numeric
 gamma_numeric = zeros(nx, nx);
 
 for m = 1 : nx
     for n = 1 : nx
-        gamma_numeric(m, n) = spatialIntegral2Gaussians(gaussians(:,:, m), gaussians(:,:, n), stepSize); % integral
+        gamma_numeric(m, n) = spatialIntegral2Gaussians(X, Y, NPoints, mu(m, :)', sigma, mu(n, :)', sigma); % integral
     end
 end
-
+% plot
+figure, imagesc(gamma_numeric), colorbar, title('gamma matrix - numeric');
+%% plot
+figure, clf, shg; imagesc(gamma_analytic - gamma_numeric), colorbar; title('gamma matrix Diff(analytic - numeric)');
