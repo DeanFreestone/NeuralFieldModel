@@ -21,6 +21,8 @@ mu_psi = [-.5 -.5];              % centre of basis function
 sigma_psi = [0.04 0; 0 0.04];        % variance-covariance matrix of phi
 psi = Define2DGaussian_AnisotropicKernel(mu_psi(1), mu_psi(2), sigma_psi, NPoints, SpaceMin, SpaceMax);
 % psi = Define2DGaussian(mu_psi(1), mu_psi(2), sigma_psi(1,1), 0, NPoints, SpaceMin, SpaceMax);
+%% convolution of two gaussians - numerical
+conv2_convPhiPsi = conv2(phi, psi, 'same') * stepSize ^ 2;
 %% Analytic check of convolution of two gaussians
 % r is the location vector, specifically a row vector (consistent with the equation in Dean's paper)
 mu = (mu_phi + mu_psi)';

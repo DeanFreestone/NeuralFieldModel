@@ -25,16 +25,16 @@ for m = 1 : numRow
         mu(n + numCol*(m-1), :) = [(SpaceMin - widthCentre + m*widthCentre*2) (SpaceMin - widthCentre + n*widthCentre*2)];
     end
 end
-sigma = [3 0; 0 3]; % covariance matrix
+sigma = [4 0; 0 4]; % covariance matrix
 
 % define gaussian basis functions
-guassians = zeros(NPoints, NPoints, nx);
+gaussians = zeros(NPoints, NPoints, nx);
 for n = 1 : nx
-    guassians(:,:, n) = Define2DGaussian_AnisotropicKernel(mu(n, 1), mu(n, 2), sigma, NPoints, SpaceMin, SpaceMax);
+    gaussians(:,:, n) = Define2DGaussian_AnisotropicKernel(mu(n, 1), mu(n, 2), sigma, NPoints, SpaceMin, SpaceMax);
 end
 %% plot
-figure, clf, shg; imagesc(squeeze(sum(guassians, 3))), colorbar; title('Guassian basis functions');
-%% Gamma
+figure, clf, shg; imagesc(squeeze(sum(gaussians, 3))), colorbar; title('Guassian basis functions in the field');
+%% Compute gamma - analytic
 gamma = zeros(nx, nx);
 
 for m = 1 : nx
@@ -42,3 +42,13 @@ for m = 1 : nx
         gamma(m, n) = InnerProductTwo2DGaussians(mu(m, :), mu(n, :), sigma, sigma);
     end
 end
+figure, imagesc(gamma), colorbar;
+%% Compute gamma - numeric
+gamma_numeric = zeros(nx, nx);
+
+for m = 1 : nx
+    for n = 1 : nx
+        gamma_numeric(m, n) = spatialIntegral2Gaussians(gaussians(:,:, m), gaussians(:,:, n), stepSize); % integral
+    end
+end
+
