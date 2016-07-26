@@ -2,6 +2,9 @@
 clc, clear, close all
 %% parameters and variables are pre-defined here
 SpaceMin = -10; SpaceMax = 10; NPoints = 401;
+x = linspace(SpaceMin, SpaceMax, NPoints);
+stepSize = x(2)-x(1);
+
 Ts = 0.0001;
 nx = 16; % number of states basis functions
 theta = [1, 1.2, 1.5]; % number of connectivity kernel basis functions
@@ -33,9 +36,9 @@ Gamma = ComputeGamma(SpaceMin, SpaceMax, NPoints, nx, mu_phi, sigma_phi); % comp
 % now form the matrix
 % these are the coefficients for the analytic convolution of psi and phi
 % But, we haven't figure out covariance matrix here.
-psi_phi_coefficient(1) = pi*sigma_psi(1)^2*sigma_phi(1, 1)^2 / (sigma_psi(1)^2+sigma_phi(1, 1)^2);
-psi_phi_coefficient(2) = pi*sigma_psi(2)^2*sigma_phi(1, 1)^2 ./ (sigma_psi(2)^2+sigma_phi(1, 1)^2);
-psi_phi_coefficient(3) = pi*sigma_psi(3)^2*sigma_phi(1, 1)^2 ./ (sigma_psi(3)^2+sigma_phi(1, 1)^2);
+psi_phi_coefficient(1) = pi*sigma_psi(1)*sigma_phi(1, 1) / (sigma_psi(1)+sigma_phi(1, 1));
+psi_phi_coefficient(2) = pi*sigma_psi(2)*sigma_phi(1, 1) / (sigma_psi(2)+sigma_phi(1, 1));
+psi_phi_coefficient(3) = pi*sigma_psi(3)*sigma_phi(1, 1) / (sigma_psi(3)+sigma_phi(1, 1));
 
 % compute the convolution between phi and psi
 
@@ -44,7 +47,7 @@ for n=1 : nx
         % these guys here are used with the LS algorithm for estimating
         % theta and xi
         mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :);
-        psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [sigma_psi(m)^2 0; 0 sigma_psi(m)^2]+sigma_phi^2, NPoints, SpaceMin, SpaceMax);
+        psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [sigma_psi(m) 0; 0 sigma_psi(m)]+sigma_phi, NPoints, SpaceMin, SpaceMax);
         
         psi_phi_basis(m, n, :, :) = psi_phi(:, :);
         %         theta_psi_phi_basis(nn,n,:) = theta(nn)*psi_phi_basis(nn,n,:);
@@ -55,10 +58,71 @@ end
 %     + theta_psi_phi_basis(2,:,:) ...
 %     + theta_psi_phi_basis(3,:,:)));
 
-Ts_invGamma_phi_psi(1,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(1, :, :, :)));
-Ts_invGamma_phi_psi(2,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(2, :, :, :)));
-Ts_invGamma_phi_psi(3,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(3, :, :, :)));
+Ts_invGamma_phi_psi = zeros(length(theta), nx, NPoints, NPoints); % initialise the matrix of fields
+
+inv_Gamma = inv(Gamma);
+
+for n = 1 : length(theta) % cycle through each row of the matrix of fields
+    
+    fieldVector = squeeze(psi_phi_basis(n, :, :, :)); % a
+    inv_Gamma_fieldVector = zeros(size(fieldVector));
+    
+    for p = 1 : nx
+        for q = 1 : nx
+            inv_Gamma_fieldVector(p, :, :) = inv_Gamma_fieldVector(p, :, :) + inv_Gamma(p, q) .* fieldVector(q, :, :);
+        end
+    end
+    
+    Ts_invGamma_phi_psi(n,:,:,:) = Ts * inv_Gamma_fieldVector;
+end
+
+% Ts_invGamma_phi_psi(1,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(1, :, :, :)));
+% Ts_invGamma_phi_psi(2,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(2, :, :, :)));
+% Ts_invGamma_phi_psi(3,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(3, :, :, :)));
 %% Compute Psi - numeric
 
+% Compute convolution
+for n=1 : nx
+    for m=1:length(theta)
+        % these guys here are used with the LS algorithm for estimating
+        % theta and xi
+        phi_gaussian = Define2DGaussian_AnisotropicKernel(mu_phi(n, 1), mu_phi(n, 2), sigma_phi, NPoints, SpaceMin, SpaceMax);
+        psi_gaussian = Define2DGaussian_AnisotropicKernel(3*mu_psi(m, 1), 3*mu_psi(m, 2), [sigma_psi(m) 0; 0 sigma_psi(m)], NPoints, SpaceMin, SpaceMax);
+        
+        psi_phi_numeric(:, :) = conv2(phi_gaussian, psi_gaussian, 'same') * stepSize^2;
+        
+        psi_phi_basis_numeric(m, n, :, :) = psi_phi_numeric(:, :);
+    end
+end
 
+Ts_invGamma_phi_psi_numeric = zeros(length(theta), nx, NPoints, NPoints); % initialise the matrix of fields
 
+inv_Gamma = inv(Gamma);
+
+for n = 1 : length(theta) % cycle through each row of the matrix of fields
+    
+    fieldVector = squeeze(psi_phi_basis_numeric(n, :, :, :)); %
+    inv_Gamma_fieldVector = zeros(size(fieldVector));
+    
+    for p = 1 : nx
+        for q = 1 : nx
+            inv_Gamma_fieldVector(p, :, :) = inv_Gamma_fieldVector(p, :, :) + inv_Gamma(p, q) .* fieldVector(q, :, :);
+        end
+    end
+    
+    Ts_invGamma_phi_psi_numeric(n,:,:,:) = Ts * inv_Gamma_fieldVector;
+end
+%% compare difference
+for n=1 : nx
+    for m=1:length(theta)
+        % these guys here are used with the LS algorithm for estimating
+        % theta and xi
+        figure, shg, clf;
+        subplot(3,1,1);
+        imagesc(squeeze(psi_phi_basis(m, n, :, :))); colorbar; title('analytic');
+        subplot(3,1,2);
+        imagesc(squeeze(psi_phi_basis_numeric(m, n, :, :))), colorbar; title('numeric');
+        subplot(3,1,3);
+        imagesc(squeeze(psi_phi_basis(m, n, :, :)) - squeeze(psi_phi_basis_numeric(m, n, :, :))), colorbar; suptitle(['n:' num2str(n) ' m:' num2str(m)]);
+    end
+end
