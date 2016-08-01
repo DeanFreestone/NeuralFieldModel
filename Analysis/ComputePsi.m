@@ -1,7 +1,7 @@
 %% Compute Psi
 clc, clear, close all
 %% parameters and variables are pre-defined here
-SpaceMin = -10; SpaceMax = 10; NPoints = 401;
+SpaceMin = -10; SpaceMax = 10; NPoints = 501;
 x = linspace(SpaceMin, SpaceMax, NPoints);
 stepSize = x(2)-x(1);
 
@@ -23,9 +23,9 @@ for m = 1 : numRow
     end
 end
 
-sigma_phi = [4 0; 0 4]; % covariance matrix of phi
+sigma_phi = [0.8 0; 0 0.8]; % covariance matrix of phi
 
-sigma_psi = [2, 3, 4];
+sigma_psi = [0.5, 0.8, 1];
 
 mu_psi = [1 1;
     1 1;
@@ -41,9 +41,9 @@ psi_phi_coefficient(2) = pi*sigma_psi(2)*sigma_phi(1, 1) / (sigma_psi(2)+sigma_p
 psi_phi_coefficient(3) = pi*sigma_psi(3)*sigma_phi(1, 1) / (sigma_psi(3)+sigma_phi(1, 1));
 
 % compute the convolution between phi and psi
-
-for n=1 : nx
-    for m=1:length(theta)
+psi_phi_basis = zeros(length(theta), nx, NPoints, NPoints);
+for m=1:length(theta)
+    for n=1 : nx
         % these guys here are used with the LS algorithm for estimating
         % theta and xi
         mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :);
@@ -62,9 +62,9 @@ Ts_invGamma_phi_psi = zeros(length(theta), nx, NPoints, NPoints); % initialise t
 
 inv_Gamma = inv(Gamma);
 
-for n = 1 : length(theta) % cycle through each row of the matrix of fields
+for m = 1 : length(theta) % cycle through each row of the matrix of fields
     
-    fieldVector = squeeze(psi_phi_basis(n, :, :, :)); % a
+    fieldVector = squeeze(psi_phi_basis(m, :, :, :)); % a
     inv_Gamma_fieldVector = zeros(size(fieldVector));
     
     for p = 1 : nx
@@ -73,7 +73,7 @@ for n = 1 : length(theta) % cycle through each row of the matrix of fields
         end
     end
     
-    Ts_invGamma_phi_psi(n,:,:,:) = Ts * inv_Gamma_fieldVector;
+    Ts_invGamma_phi_psi(m,:,:,:) = Ts * inv_Gamma_fieldVector;
 end
 
 % Ts_invGamma_phi_psi(1,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(1, :, :, :)));
@@ -82,14 +82,15 @@ end
 %% Compute Psi - numeric
 
 % Compute convolution
-for n=1 : nx
-    for m=1:length(theta)
+psi_phi_basis_numeric = zeros(length(theta), nx, NPoints, NPoints);
+for m=1:length(theta)
+    for n=1 : nx
         % these guys here are used with the LS algorithm for estimating
         % theta and xi
         phi_gaussian = Define2DGaussian_AnisotropicKernel(mu_phi(n, 1), mu_phi(n, 2), sigma_phi, NPoints, SpaceMin, SpaceMax);
         psi_gaussian = Define2DGaussian_AnisotropicKernel(3*mu_psi(m, 1), 3*mu_psi(m, 2), [sigma_psi(m) 0; 0 sigma_psi(m)], NPoints, SpaceMin, SpaceMax);
         
-        psi_phi_numeric(:, :) = conv2(phi_gaussian, psi_gaussian, 'same') * stepSize^2;
+        psi_phi_numeric(:, :) = conv2(phi_gaussian, psi_gaussian, 'same') .* stepSize^2;
         
         psi_phi_basis_numeric(m, n, :, :) = psi_phi_numeric(:, :);
     end
@@ -113,16 +114,30 @@ for n = 1 : length(theta) % cycle through each row of the matrix of fields
     Ts_invGamma_phi_psi_numeric(n,:,:,:) = Ts * inv_Gamma_fieldVector;
 end
 %% compare difference
-for n=1 : nx
-    for m=1:length(theta)
-        % these guys here are used with the LS algorithm for estimating
-        % theta and xi
+for m=1:length(theta)
+    for n=1 : nx
         figure, shg, clf;
         subplot(3,1,1);
-        imagesc(squeeze(psi_phi_basis(m, n, :, :))); colorbar; title('analytic');
+        imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], squeeze(psi_phi_basis(m, n, :, :))); colorbar; title('analytic');
         subplot(3,1,2);
-        imagesc(squeeze(psi_phi_basis_numeric(m, n, :, :))), colorbar; title('numeric');
+        imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], squeeze(psi_phi_basis_numeric(m, n, :, :))), colorbar; title('numeric');
         subplot(3,1,3);
-        imagesc(squeeze(psi_phi_basis(m, n, :, :)) - squeeze(psi_phi_basis_numeric(m, n, :, :))), colorbar; suptitle(['n:' num2str(n) ' m:' num2str(m)]);
+        diffMat = squeeze(psi_phi_basis(m, n, :, :)) - squeeze(psi_phi_basis_numeric(m, n, :, :));
+        imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], diffMat), colorbar; title('Diff(analytic, numeric)');
+        suptitle(['n:' num2str(n) ' m:' num2str(m)]);
     end
 end
+%% compare
+xT = -10 : 0.1 : 10;
+offset = 2;
+mu_f = 0; mu_g = 1;
+f = exp(-1*(xT - mu_f).^2);
+g = 0.5*exp(-1*0.3*(xT - mu_g).^2);
+g2 = 0.5*exp(-1*0.3*(xT - mu_g - offset).^2);
+c1 = conv(f, g, 'same');
+c2 = conv(f, g2, 'same');
+figure;
+subplot(2,1,1);
+plot(xT, f); hold on; plot(xT, g); hold on; plot(xT, c1); hold on; plot(xT, c2);
+subplot(2,1,2);
+plot(xT+offset, c1); xlim([-10 10])

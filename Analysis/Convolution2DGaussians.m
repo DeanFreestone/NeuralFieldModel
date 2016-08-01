@@ -1,7 +1,7 @@
 %% Analytic test of inner product
 clc, clear, close all
 %% Generate data
-SpaceMin = -4; SpaceMax = 4; NPoints = 401;
+SpaceMin = -10; SpaceMax = 10; NPoints = 401;
 % random data, fData
 x = linspace(SpaceMin, SpaceMax, NPoints);
 stepSize = x(2)-x(1);
@@ -10,15 +10,15 @@ fData = randn(NPoints);
 
 % define phi Gaussian basis function
 %
-mu_phi = [0.5 0.5];                   % center of basis function
-sigma_phi = [0.02 0; 0 0.02];           % variance-covariance matrix of phi
+mu_phi = [5 5];                   % center of basis function
+sigma_phi = [.5 0; 0 .5];           % variance-covariance matrix of phi
 phi =Define2DGaussian_AnisotropicKernel(mu_phi(1), mu_phi(2), sigma_phi, NPoints, SpaceMin, SpaceMax);
 % phi = Define2DGaussian(mu_phi(1), mu_phi(2), sigma_phi(1,1), 0, NPoints, SpaceMin, SpaceMax);
 
 
 % define psi Gaussian basis function
-mu_psi = [-.5 -.5];              % centre of basis function
-sigma_psi = [0.04 0; 0 0.04];        % variance-covariance matrix of phi
+mu_psi = [-4 -4];              % centre of basis function
+sigma_psi = [1 0; 0 1];        % variance-covariance matrix of phi
 psi = Define2DGaussian_AnisotropicKernel(mu_psi(1), mu_psi(2), sigma_psi, NPoints, SpaceMin, SpaceMax);
 % psi = Define2DGaussian(mu_psi(1), mu_psi(2), sigma_psi(1,1), 0, NPoints, SpaceMin, SpaceMax);
 %% convolution of two gaussians - numerical
@@ -53,7 +53,7 @@ figure, imagesc(convE2_equivalent); colorbar; title('phi-psi - analytic');
 figure, imagesc(conv2_convPhiPsi - convE2_equivalent); colorbar; title('Diff(Con2 - analytic)');
 
 % analytic
-figure, surf(X, Y, convE2_equivalent); colorbar; title('analytic conv(phi,psi)');
+% figure, surf(X, Y, convE2_equivalent); colorbar; title('analytic conv(phi,psi)');
 
 % numerical Conv2
-figure, surf(X, Y, conv2_convPhiPsi); colorbar; title('numerical (conv2) conv(phi,psi)');
+% figure, surf(X, Y, conv2_convPhiPsi); colorbar; title('numerical (conv2) conv(phi,psi)');
