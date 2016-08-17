@@ -1,20 +1,32 @@
 function Ts_invGamma_phi_psi = ComputePsi(SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi, mu_psi, vector_Sigma_Psi)
 %% Compute Psi
 % Compute Psi in Equation (24), Freestone et al., 2011, NeuroImage
-% parameter list:
+% Miao Cao
+
+% ~~~~~~~~~~~~~~~
+% input parameter list:
 % parameters used to create a  2-D cortical surface
 % SpaceMin - Edge of surface on the negative side
 % SpaceMax - Edge of surface on the positive side
 % NPoints - number of points along each dimension
+
 % nTheta - number of connectivity kernel basis functions
 % Ts - Time step
-% nx - number of states
+% nx - number of Gaussian basis functions
 % mu_phi - centre of Gaussian basis function for phi
 % sigma_phi - sigma of Gaussian basis function for phi
 % mu_psi - a vector of centres of Gaussian basis functions of connectivity kernel
 % vector_Sigma_Psi - a vector of sigma of Gaussian basis functions
+
+% ~~~~~~~~~~~~~~~
+% output parameter list:
+% Psi - Psi matrix
+
 %% parameters and variables are pre-defined here
-% calc location of Gaussian basis functions. Uniformly distributed.
+% ~~~~~~~~~~~~~~~
+% calc location of Gaussian basis functions. Uniformly distributed over 2-D surface.
+
+
 numRow = sqrt(nx); % number of gaussians for each colomn
 numCol = nx / numRow; % number of columns
 
@@ -30,13 +42,20 @@ if isempty(mu_phi) || any(mu_phi) % if mu_phi is empty or only zeros
     end
 end
 
-covMat_phi = [sigma_phi 0; 0 sigma_phi];
+covMat_phi = [sigma_phi 0; 0 sigma_phi]; % covariance matrix of phi
+
 %% Compute gamma
-Gamma = ComputeGamma(SpaceMin, SpaceMax, NPoints, nx, mu_phi, covMat_phi); % compute gamma based on the function
+% ~~~~~~~~~~~~~~~
+
+Gamma = ComputeGamma(SpaceMin, SpaceMax, NPoints, nx, mu_phi, covMat_phi); % compute gamma based on phi
+
 %% Compute Psi - analytic
+% ~~~~~~~~~~~~~~~
 % now form the matrix
 % these are the coefficients for the analytic convolution of psi and phi
 % But, we haven't figure out covariance matrix here.
+
+
 psi_phi_coefficient = zeros(length(vector_Sigma_Psi), 1);
 for m = 1 : length(vector_Sigma_Psi)
     psi_phi_coefficient(m) = pi*vector_Sigma_Psi(m)*sigma_phi / (vector_Sigma_Psi(m)+sigma_phi);
@@ -73,4 +92,5 @@ for m = 1 : nTheta % cycle through each row of the matrix of fields
     
     Ts_invGamma_phi_psi(m,:,:,:) = Ts * inv_Gamma_fieldVector;
 end
+
 end

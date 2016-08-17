@@ -22,7 +22,7 @@ stepSize = x(2)-x(1);
 
 
 Ts = 0.0001; % time step
-nx = 16; % number of states basis functions
+nx = 16; % number of Gaussian basis functions
 theta = [1, 1.2, 1.5]'; % number of connectivity kernel basis functions
 nTheta = 3;
 

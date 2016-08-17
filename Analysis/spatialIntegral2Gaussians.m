@@ -1,5 +1,14 @@
 function [integral] = spatialIntegral2Gaussians(X, Y, NPoints, mu1, sigma1, mu2, sigma2)
+%% Integrate two 2-D gaussians
+% Miao Cao
+
+
+% ~~~~~~~~~~~~~~~
+
 %%
+
+
+% ~~~~~~~~~~~~~~~
 stepSize = abs(X(1,1)-X(1,2));
 
 product = zeros(size(X));
@@ -14,8 +23,6 @@ for m = 1 : NPoints
     end
 end
 
-
-% product = conv2(gaussian1, gaussian2, 'same');
-
 integral = sum(sum(product*stepSize^2, 2), 1);
+
 end

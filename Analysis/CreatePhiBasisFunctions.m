@@ -1,6 +1,10 @@
 function phiBasisFunctions =  CreatePhiBasisFunctions(SpaceMin, SpaceMax, NPoints, nx, mu_phi, sigma_phi)
-%%
-% parameter list:
+%% Create field basis functions for Phi
+% To implement Equation (21). Freestone et al., 2011, NeuroImage
+% Miao Cao
+
+% ~~~~~~~~~~~~~~~
+% input parameter list:
 % parameters used to create a  2-D cortical surface
 % SpaceMin - Edge of surface on the negative side
 % SpaceMax - Edge of surface on the positive side
@@ -8,7 +12,16 @@ function phiBasisFunctions =  CreatePhiBasisFunctions(SpaceMin, SpaceMax, NPoint
 % nx - number of states
 % mu_phi - centre of Gaussian basis function for phi
 % sigma_phi - sigma of Gaussian basis function for phi
+
+% ~~~~~~~~~~~~~~~
+% output parameter list:
+% phiBasisFunctions - matrix of field basis functions for Phi
+
 %%
+% ~~~~~~~~~~~~~~~
+
+
+
 numRow = sqrt(nx); % number of gaussians for each colomn
 numCol = nx / numRow; % number of columns
 
@@ -27,9 +40,14 @@ if isempty(mu_phi) || any(mu_phi) % if mu_phi is empty or only zeros
 end
 
 covMat_phi = [sigma_phi 0; 0 sigma_phi];
+
 %%
+% ~~~~~~~~~~~~~~~
+
+
 phiBasisFunctions = zeros(NPoints, NPoints, nx);
 for n = 1 : nx
     phiBasisFunctions(:,:, n) = Define2DGaussian_AnisotropicKernel(mu_phi(n, 1), mu_phi(n, 2), covMat_phi, NPoints, SpaceMin, SpaceMax);
 end
+
 end
