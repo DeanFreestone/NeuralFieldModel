@@ -59,11 +59,11 @@ psi = ComputePsi(SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi,
 
 % Firing rate function. Equation (4) Freestone et al., 2011, NeuroImage
 
-xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
+x_t = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
 phi_fields = zeros(size(phi_basisFunctions));
 
 for m = 1 : nx % to compute phi * x(t)
-    phi_fields(:,:, m) = phi_basisFunctions(:,:, m) * xt(m);
+    phi_fields(:,:, m) = phi_basisFunctions(:,:, m) * x_t(m);
 end
 v = sum(phi_fields, 3); % v, mean membrane potential field, at time t.
 
