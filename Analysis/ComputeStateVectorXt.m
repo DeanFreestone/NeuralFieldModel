@@ -74,7 +74,7 @@ firingRate_phi_xt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v))); % firing rate sig
 % ~~~~~~~~~~~~~~~
 
 
-x_t_plus1 = []; % here is x(t+1)
+x_tplus1 = []; % here is x(t+1)
 ingtegralProduct = zeros(nx, nTheta);
 for pNX = 1 : nx
     for qNTheta = 1 : nTheta
@@ -82,4 +82,4 @@ for pNX = 1 : nx
         ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1);
     end
 end
-x_t_plus1 = ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
+x_tplus1 = ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
