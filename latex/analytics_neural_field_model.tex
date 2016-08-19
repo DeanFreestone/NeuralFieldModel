@@ -1,84 +1,81 @@
-%% LyX 2.2.0 created this file.  For more info, see http://www.lyx.org/.
-%% Do not edit unless you really know what you are doing.
-\documentclass[english]{article}
-\usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
-\usepackage{amsmath}
+%% Tex file of coding notes of analytic implementation of neural
+\documentclass[a4paper, 8pt, english]{article}
 
-\makeatletter
+\usepackage{graphicx}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
-%% Because html converters don't know tabularnewline
-\providecommand{\tabularnewline}{\\}
 
-\makeatother
-
-\usepackage{babel}
 \begin{document}
 
-\title{Neural Field Model}
+%% title of this paper
+\title{Matlab code notes for Neural Field Model}
+\author{Miao Cao}
+\date{1 July 2016}
 \maketitle
+
+
+%% sections start from here
 
 \section{Convolution of Two Gaussian basis functions}
 
 \paragraph{Analytically prove convolution of two Gaussians. In general, the
-precision level of analytic simulation should be around$10^{-6}$.}
+precision level of analytic simulation should be around $10^{-6}$.}
 
 \paragraph{File (Matlab script): Convolution2DGaussians.m}
 
 \subsection*{Matlab script description}
 
-\paragraph{Appendix E.4 (Freestone et al. 2011 NeuroImage) $\left(\phi_{i}\otimes\phi_{j}\right)(r)=(\frac{\pi\sigma_{i}^{2}\sigma_{j}^{2}}{\sigma_{i}^{2}+\sigma_{i}^{2}})^{\frac{n}{2}}exp(-\frac{1}{\sigma_{i}^{2}+\sigma_{i}^{2}}r^{T}r)$.}
+\paragraph{Appendix E (Freestone et al., 2011, NeuroImage), Equation (4) $\left(\phi_{i}\otimes\phi_{j}\right)(r)=(\frac{\pi\sigma_{i}^{2}\sigma_{j}^{2}}{\sigma_{i}^{2}+\sigma_{i}^{2}})^{\frac{n}{2}}\exp(-\frac{1}{\sigma_{i}^{2}+\sigma_{i}^{2}}r^{T}r)$.}
 
-\subparagraph{Section: Generate data, create a$NPoints\times NPoints$ cortical
-surface and phi and psi Gaussian basis functions.}
+\subparagraph{Section: Generate spatial data, create a $NPoints\times NPoints$ cortical surface and phi and psi Gaussian basis functions.\\}
 
-\subparagraph{%
+
 \begin{tabular}{|c|c|}
-\hline 
+\hline
 Variable name & Explanation\tabularnewline
-\hline 
+\hline
 X & Coordinates of x-axis\tabularnewline
-\hline 
+\hline
 Y & Coordinates of y-axis\tabularnewline
-\hline 
+\hline
 mu\_phi & Centre of gaussian\tabularnewline
-\hline 
+\hline
 sigma\_phi & covariance matrix of phi\tabularnewline
-\hline 
+\hline
 phi & Gaussian basis function\tabularnewline
-\hline 
+\hline
 mu\_psi & Centre of gaussian\tabularnewline
-\hline 
+\hline
 sigma\_psi & covariance matrix of psi\tabularnewline
-\hline 
+\hline
 psi & Gaussian basis function\tabularnewline
-\hline 
-\end{tabular}}
+\hline
+\end{tabular}
 
-\subparagraph{Section: analytic check of convolution of two gaussians}
+\paragraph{Analytic check of convolution of two Gaussians.\\}
+\label{subp:Analytic check of convolution of two Gaussians}
 
-\subparagraph{%
+%\subparagraph{Section: analytic check of convolution of two gaussians}
+
 \begin{tabular}{|c|c|}
-\hline 
+\hline
 Variable name & Explanation\tabularnewline
-\hline 
+\hline
 mu & Centre of a gaussian resulted from convolution of two gaussians, phi
 and psi\tabularnewline
-\hline 
+\hline
 var\_phi & variance of gaussian phi\tabularnewline
-\hline 
+\hline
 var\_psi & variance of gaussian psi\tabularnewline
-\hline 
+\hline
 exponential & exponential part of Equation Appendix E.4 (Freestone et al. 2011)\tabularnewline
-\hline 
+\hline
 CovMat & covariance matrix of a resultant gaussian convolved by two other gaussians\tabularnewline
-\hline 
+\hline
 coefficient & coefficient part of Equation Appendix E.4 (Freestone et al. 2011)\tabularnewline
-\hline 
+\hline
 convE2\_equivalent & analytic result of convolution of two gaussians, phi and psi\tabularnewline
-\hline 
-\end{tabular}}
+\hline
+\end{tabular}
 
 \section{Compute Gamma}
 
@@ -94,5 +91,11 @@ a vector of Gaussian basis functions.}
 
 \paragraph{Define $\Gamma=\int_{\Omega}\phi(r)\phi^{T}(r)dr$. Firstly, programmatically
 define $\phi(r)$, as a vector of Gaussian basis functions. Each Gaussian
-function is defined as $\phi(r-r')=e^{(-\frac{(r-r')^{T}(r-r')}{\sigma_{\phi}^{2}})}$.}
+function is defined as $\phi(r-r')=\exp{(-\frac{(r-r')^{T}(r-r')}{\sigma_{\phi}^{2}})}$.}
+
+\section{Compute Psi}
+\label{compute psi}
+\paragraph{Compute}
+\label{par:Compute}
+
 \end{document}
