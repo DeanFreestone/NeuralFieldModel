@@ -1,19 +1,30 @@
 %% Tex file of coding notes of analytic implementation of neural
 \documentclass[a4paper, 8pt, english]{article}
 
+%% packages
+\usepackage{amsmath}
 \usepackage{graphicx}
+
+%% title of this manuscript
+\title{Matlab Code Notes for Neural Field Model}
+\author{Miao Cao}
+\date{1 July 2016}
 
 
 \begin{document}
 
-%% title of this paper
-\title{Matlab code notes for Neural Field Model}
-\author{Miao Cao}
-\date{1 July 2016}
+% title
+\begin{titlepage}\centering
+\vspace*{\fill}
 \maketitle
+\vspace*{\fill}
+\end{titlepage}
 
+\tableofcontents
 
+\newpage
 %% sections start from here
+
 
 \section{Convolution of Two Gaussian basis functions}
 
@@ -24,7 +35,7 @@ precision level of analytic simulation should be around $10^{-6}$.}
 
 \subsection*{Matlab script description}
 
-\paragraph{Appendix E (Freestone et al., 2011, NeuroImage), Equation (4) $\left(\phi_{i}\otimes\phi_{j}\right)(r)=(\frac{\pi\sigma_{i}^{2}\sigma_{j}^{2}}{\sigma_{i}^{2}+\sigma_{i}^{2}})^{\frac{n}{2}}\exp(-\frac{1}{\sigma_{i}^{2}+\sigma_{i}^{2}}r^{T}r)$.}
+Appendix E (Freestone et al., 2011, NeuroImage), Equation (4) $\left(\phi_{i}\otimes\phi_{j}\right)(r)=(\frac{\pi\sigma_{i}^{2}\sigma_{j}^{2}}{\sigma_{i}^{2}+\sigma_{i}^{2}})^{\frac{n}{2}}\exp(-\frac{1}{\sigma_{i}^{2}+\sigma_{i}^{2}}r^{T}r)$.
 
 \subparagraph{Section: Generate spatial data, create a $NPoints\times NPoints$ cortical surface and phi and psi Gaussian basis functions.\\}
 
@@ -95,7 +106,17 @@ function is defined as $\phi(r-r')=\exp{(-\frac{(r-r')^{T}(r-r')}{\sigma_{\phi}^
 
 \section{Compute Psi}
 \label{compute psi}
-\paragraph{Compute}
+\paragraph{Compute Psi --- connectivity kernel}
 \label{par:Compute}
+
+\section{Compute State Vector}
+\label{state vector}
+\paragraph{parameter table, figures}
+
+
+\section{Compute State Vector --- Check with numerical solution}
+\label{sec:Compute State Vector --- Check}
+
+
 
 \end{document}
