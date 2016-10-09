@@ -84,6 +84,8 @@ end
 x_tplus1 = ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
 %%
 
+% implementationf of Equation (12)
+
 tau = 0.01; % synaptic time constant
 
 v_tplus1 = []; % field at T+Ts
@@ -92,3 +94,13 @@ v_t = 5; % assign v_t as 5 mv for now
 
 ks = 1- Ts*(1/tau); % time constant parameter
 
+errorPart = 0; % set error part to zero for now
+%% integral part
+
+
+
+
+integralPart = 0;
+%% v(t+1)
+
+v_tplus1 = ks * v_t + Ts * integralPart + errorPart;
