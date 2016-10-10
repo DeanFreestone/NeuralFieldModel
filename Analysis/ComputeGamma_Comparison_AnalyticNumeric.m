@@ -1,8 +1,12 @@
 %% Compute Gamma
 % compute gamma, Equation (21), Freestone et al., 2011 NeuroImage
 %%
+
+
 clc, clear, close all
 %% Generate data
+
+
 SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 % create a cortical surface
 x = linspace(SpaceMin, SpaceMax, NPoints);
@@ -10,6 +14,7 @@ stepSize = x(2)-x(1);
 [X, Y] = meshgrid(x, x);
 %% define Gaussian basis functions
 % define mu and sigma for gaussian basis functions
+
 
 nx = 16; % number of basis functions
 
@@ -35,6 +40,8 @@ end
 %% plot
 figure, clf, shg; imagesc(squeeze(sum(gaussians, 3))), colorbar; title('Guassian basis functions in the field');
 %% Compute gamma - analytic
+
+
 gamma_analytic = zeros(nx, nx);
 
 for m = 1 : nx
@@ -45,6 +52,8 @@ end
 % plot
 figure, imagesc(gamma_analytic), colorbar, title('gamma matrix - analytic');
 %% Compute gamma - numeric
+
+
 gamma_numeric = zeros(nx, nx);
 
 for m = 1 : nx

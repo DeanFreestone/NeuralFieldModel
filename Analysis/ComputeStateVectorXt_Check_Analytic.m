@@ -86,18 +86,19 @@ x_tplus1 = ingtegralProduct * theta; % finally times theta (vector) and get x(t+
 
 % implementationf of Equation (12)
 
+% electrical field size
+sizeField = 101; % size 101
+
 tau = 0.01; % synaptic time constant
 
-v_tplus1 = []; % field at T+Ts
+v_tplus1 = []; % field at T+1
 
-v_t = 5; % assign v_t as 5 mv for now
+v_t = rand(sizeField, sizeField); % generate a random field for v at T
 
 ks = 1- Ts*(1/tau); % time constant parameter
 
-errorPart = 0; % set error part to zero for now
+errorPart = zeros(sizeField, sizeField); % set error part to zero for now
 %% integral part
-
-
 
 
 integralPart = 0;
