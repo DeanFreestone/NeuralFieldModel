@@ -93,7 +93,7 @@ tau = 0.01; % synaptic time constant
 
 v_tplus1 = []; % field at T+1
 
-v_t = rand(sizeField, sizeField); % generate a random field for v at T
+v_t = rand(sizeField, sizeField); % initialise a random field v at time point T
 
 ks = 1- Ts*(1/tau); % time constant parameter
 
