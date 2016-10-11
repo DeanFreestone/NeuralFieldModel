@@ -86,23 +86,32 @@ x_tplus1 = ingtegralProduct * theta; % finally times theta (vector) and get x(t+
 
 % implementationf of Equation (12)
 
-% electrical field size
-sizeField = 101; % size 101
+% random electrical field size
 
 tau = 0.01; % synaptic time constant
 
 v_tplus1 = []; % field at T+1
 
-v_t = rand(sizeField, sizeField); % initialise a random field v at time point T
+v_t = rand(NPoints, NPoints); % initialise a random field v at time point T
 
 ks = 1- Ts*(1/tau); % time constant parameter
 
-errorPart = zeros(sizeField, sizeField); % set error part to zero for now
+errorPart = zeros(NPoints, NPoints); % set error part to zero for now
 %% integral part
 
+% firing rate function
+firingRate_v_t = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v_t)));
 
-v_t
+% connectivity kernel, a sum of three gaussian kernels
+theta = [10, -8, 0.5]';
+sigma = [0.6 0.8 2];
+for n = 1 : 3
+    gaussians(:,:, n) = Define2DGaussian_AnisotropicKernel(0, 0, [sigma(n) 0; 0 sigma(n)], 201, SpaceMin, SpaceMax) * theta(n);
+end
 
+w = squeeze(sum(gaussians, 3));
+
+% integral. convolution or integral
 integralPart = 0;
 %% v(t+1)
 
