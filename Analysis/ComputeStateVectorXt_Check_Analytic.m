@@ -101,6 +101,8 @@ errorPart = zeros(sizeField, sizeField); % set error part to zero for now
 %% integral part
 
 
+v_t
+
 integralPart = 0;
 %% v(t+1)
 
