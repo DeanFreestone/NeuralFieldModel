@@ -82,11 +82,9 @@ for pNX = 1 : nx
     end
 end
 x_tplus1 = ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
-%%
-
+%% Numerical check. Implement equation (12)
 % implementationf of Equation (12)
 
-% random electrical field size
 
 tau = 0.01; % synaptic time constant
 
@@ -97,6 +95,7 @@ v_t = rand(NPoints, NPoints); % initialise a random field v at time point T
 ks = 1- Ts*(1/tau); % time constant parameter
 
 errorPart = zeros(NPoints, NPoints); % set error part to zero for now
+
 %% integral part
 
 
@@ -123,9 +122,6 @@ for m = 1 : NPoints
     end
 end
 
-
-% average??
-
 %% v(t+1)
 
-v_tplus1 = ks * v_t + Ts * integralPart + errorPart;
+v_tplus1 = ks * v_t + Ts * integralPart + errorPart; % calculate v(t+1)
