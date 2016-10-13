@@ -124,4 +124,12 @@ end
 
 %% v(t+1)
 
+
 v_tplus1 = ks * v_t + Ts * integralPart + errorPart; % calculate v(t+1)
+
+%% check
+
+figure, imagesc(v_t), colorbar, title('v(t)');
+figure, imagesc(integralPart), colorbar, title('integral part');
+figure, imagesc(v_tplus1), colorbar, title('v(t+1)');
+
