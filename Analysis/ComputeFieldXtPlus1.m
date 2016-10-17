@@ -23,7 +23,7 @@ firingRate_v_t = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v_t)));
 % integral. convolution or integral
 for m = 1 : NPoints
     for n = 1 : NPoints
-        r = [X(m, n), Y(m, n)]; % location r vector
+        r = [X(m, n), Y(m, n)]; % location r vector 
         
         % define connectivity kernel at location r
         % connectivity kernel, a sum of three gaussian kernels
