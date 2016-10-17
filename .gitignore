@@ -237,6 +237,7 @@ pip-log.txt
 *.vrb
 *.nav
 *.out
+*.fls
 
 # BibTeX
 *.bbl
