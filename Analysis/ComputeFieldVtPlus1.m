@@ -3,7 +3,7 @@
 
 clc
 clear
-close
+close all
 
 %% Spatial parameters
 % ~~~~~~~~~~~~~~~
