@@ -18,7 +18,10 @@ stepSize = x(2)-x(1);
 
 [X, Y] = meshgrid(x, x);
 
-%%
+%% model parameters
+% ~~~~~~~~~~~~~~~
+
+
 
 tau = 0.01; % synaptic time constant
 
