@@ -31,7 +31,7 @@ v_tplus1 = []; % field at T+1
 % V at time t
 
 %  v_t = ones(NPoints, NPoints);
- 
+
 rng(0,'twister');
 
 lower = -6;
@@ -64,16 +64,21 @@ errorPart = zeros(NPoints, NPoints); % set error part to zero for now
 
 % initialise integral part
 integralPart = zeros(NPoints, NPoints);
+
+
 % firing rate function
 firingRate_v_t = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v_t)));
+
+
+
+
 
 % integral. convolution or integral
 for m = 1 : NPoints
     for n = 1 : NPoints
-        r = [X(m, n), Y(m, n)]; % location r vector 
+        r = [X(m, n), Y(m, n)]; % location r vector
         
-        % define connectivity kernel at location r
-        % connectivity kernel, a sum of three gaussian kernels
+        % connectivity kernel, a sum of three gaussian basis functions
         theta = [10, -8, 0.5]';
         sigma = [0.6 0.8 2];
         for p = 1 : 3
@@ -81,6 +86,7 @@ for m = 1 : NPoints
         end
         w = squeeze(sum(gaussians, 3));
         
+        % define connectivity kernel at location r
         integralPart = integralPart + w.*v_t;
     end
 end

@@ -65,10 +65,10 @@ phi_fields = zeros(size(phi_basisFunctions));
 for m = 1 : nx % to compute phi * x(t)
     phi_fields(:,:, m) = phi_basisFunctions(:,:, m) * x_t(m);
 end
-v = sum(phi_fields, 3); % v, mean membrane potential field, at time t.
+v_t = sum(phi_fields, 3); % v, mean membrane potential field, at time t.
 
 % firing rate function
-firingRate_phi_xt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v))); % firing rate sigmoidal function, field
+firingRate_phi_xt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v_t))); % firing rate sigmoidal function, field
 
 %% integral over 2-D space
 % ~~~~~~~~~~~~~~~
