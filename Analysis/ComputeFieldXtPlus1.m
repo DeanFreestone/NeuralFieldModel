@@ -1,6 +1,10 @@
 %% Numerical check. Implement equation (12)
 % implementationf of Equation (12)
 
+clc
+clear
+close
+
 %% Spatial parameters
 % ~~~~~~~~~~~~~~~
 
@@ -21,10 +25,14 @@ tau = 0.01; % synaptic time constant
 v_tplus1 = []; % field at T+1
 
 
+% V at time t
+
+%  v_t = ones(NPoints, NPoints);
+ 
 rng(0,'twister');
 
-lower = -4;
-upper = 4;
+lower = -6;
+upper = 6;
 v_t = (upper-lower).*rand(NPoints, NPoints) + lower;
 
 % v_t = rand(NPoints, NPoints); % initialise a random field v at time point T
