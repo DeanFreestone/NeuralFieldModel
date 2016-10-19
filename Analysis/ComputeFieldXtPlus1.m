@@ -39,12 +39,6 @@ v_t = (upper-lower).*rand(NPoints, NPoints) + lower;
 
 
 
-
-ks = 1- Ts*(1/tau); % time constant parameter
-
-errorPart = zeros(NPoints, NPoints); % set error part to zero for now
-
-
 Ts = 0.0001; % time step
 
 nx = 16; % number of Gaussian basis functions
@@ -59,6 +53,9 @@ slope_sigmoidal = 0.56; % slope of sigmoidal activation function
 
 v0 = 1.8; % Firing threshold
 
+ks = 1- Ts*(1/tau); % time constant parameter
+
+errorPart = zeros(NPoints, NPoints); % set error part to zero for now
 %% integral part
 
 
