@@ -1,16 +1,55 @@
 %% Numerical check. Implement equation (12)
 % implementationf of Equation (12)
 
+%% Spatial parameters
+% ~~~~~~~~~~~~~~~
+
+
+% parameters to create a 2-D cortical surface
+SpaceMin = -10; SpaceMax = 10; NPoints = 201;
+
+x = linspace(SpaceMin, SpaceMax, NPoints);
+
+stepSize = x(2)-x(1);
+
+[X, Y] = meshgrid(x, x);
+
+%%
 
 tau = 0.01; % synaptic time constant
 
 v_tplus1 = []; % field at T+1
 
-v_t = rand(NPoints, NPoints); % initialise a random field v at time point T
+
+rng(0,'twister');
+
+lower = -4;
+upper = 4;
+v_t = (upper-lower).*rand(NPoints, NPoints) + lower;
+
+% v_t = rand(NPoints, NPoints); % initialise a random field v at time point T
+
+
+
 
 ks = 1- Ts*(1/tau); % time constant parameter
 
 errorPart = zeros(NPoints, NPoints); % set error part to zero for now
+
+
+Ts = 0.0001; % time step
+
+nx = 16; % number of Gaussian basis functions
+
+theta = [1, 1.2, 1.5]'; % number of connectivity kernel basis functions
+
+nTheta = 3;
+
+% ~~~~~~~~~~~~~~~
+% parameters for firing rate function
+slope_sigmoidal = 0.56; % slope of sigmoidal activation function
+
+v0 = 1.8; % Firing threshold
 
 %% integral part
 
