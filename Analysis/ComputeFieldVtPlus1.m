@@ -27,7 +27,6 @@ tau = 0.01; % synaptic time constant
 
 v_tplus1 = []; % field at T+1
 
-
 % V at time t
 
 %  v_t = ones(NPoints, NPoints);
@@ -48,7 +47,7 @@ nx = 16; % number of Gaussian basis functions
 
 theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
 
-sigma = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
+vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
 
 nTheta = 3; % number of connectivity kernel basis functions
 
@@ -77,9 +76,9 @@ for m = 1 : NPoints
     for n = 1 : NPoints
         r = [X(m, n), Y(m, n)]; % location r vector
         
-        % connectivity kernel, a sum of three gaussian basis functions
+        % connectivity kernel, a sum of Gaussian basis functions
         for p = 1 : nTheta
-            gaussians(:,:, p) = Define2DGaussian_AnisotropicKernel(r(1), r(2), [sigma(p) 0; 0 sigma(p)], NPoints, SpaceMin, SpaceMax) * theta(p);
+            gaussians(:,:, p) = Define2DGaussian_AnisotropicKernel(r(1), r(2), [vector_Sigma_Psi(p) 0; 0 vector_Sigma_Psi(p)], NPoints, SpaceMin, SpaceMax) * theta(p);
         end
         w = squeeze(sum(gaussians, 3)); % connectivity kernel
         
