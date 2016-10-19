@@ -46,9 +46,11 @@ Ts = 0.0001; % time step
 
 nx = 16; % number of Gaussian basis functions
 
-theta = [1, 1.2, 1.5]'; % number of connectivity kernel basis functions
+theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
 
-nTheta = 3;
+sigma = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
+
+nTheta = 3; % number of connectivity kernel basis functions
 
 % ~~~~~~~~~~~~~~~
 % parameters for firing rate function
@@ -70,21 +72,16 @@ integralPart = zeros(NPoints, NPoints);
 firingRate_v_t = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v_t)));
 
 
-
-
-
 % integral. convolution or integral
 for m = 1 : NPoints
     for n = 1 : NPoints
         r = [X(m, n), Y(m, n)]; % location r vector
         
         % connectivity kernel, a sum of three gaussian basis functions
-        theta = [10, -8, 0.5]';
-        sigma = [0.6 0.8 2];
-        for p = 1 : 3
+        for p = 1 : nTheta
             gaussians(:,:, p) = Define2DGaussian_AnisotropicKernel(r(1), r(2), [sigma(p) 0; 0 sigma(p)], NPoints, SpaceMin, SpaceMax) * theta(p);
         end
-        w = squeeze(sum(gaussians, 3));
+        w = squeeze(sum(gaussians, 3)); % connectivity kernel
         
         % define connectivity kernel at location r
         integralPart = integralPart + w.*v_t;
