@@ -46,7 +46,7 @@ VtPlus1 = []; % field at T+1
 
 Ts = 0.0001; % time step
 
-nx = 16; % number of Gaussian basis functions
+% nx = 16; % number of Gaussian basis functions
 
 theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
 
@@ -86,7 +86,7 @@ for m = 1 : NPoints
         w = squeeze(sum(gaussians, 3)); % connectivity kernel
         
         % define connectivity kernel at location r
-        integralPart = integralPart + w.*Vt;
+        integralPart = integralPart + w.*firingRate_v_t;
     end
 end
 

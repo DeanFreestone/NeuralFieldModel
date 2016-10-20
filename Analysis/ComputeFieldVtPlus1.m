@@ -25,7 +25,7 @@ stepSize = x(2)-x(1);
 
 tau = 0.01; % synaptic time constant
 
-v_tplus1 = []; % field at T+1
+VtPlus1 = []; % field at T+1
 
 % V at time t
 
@@ -35,7 +35,7 @@ rng(0,'twister');
 
 lower = -6;
 upper = 6;
-v_t = (upper-lower).*rand(NPoints, NPoints) + lower;
+Vt = (upper-lower).*rand(NPoints, NPoints) + lower;
 
 % v_t = rand(NPoints, NPoints); % initialise a random field v at time point T
 
@@ -68,7 +68,7 @@ integralPart = zeros(NPoints, NPoints);
 
 
 % firing rate function
-firingRate_v_t = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v_t)));
+firingRate_Vt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - Vt)));
 
 
 % integral. convolution or integral
@@ -83,10 +83,10 @@ for m = 1 : NPoints
         w = squeeze(sum(gaussians, 3)); % connectivity kernel
         
         % define connectivity kernel at location r
-        integralPart = integralPart + w.*v_t;
+        integralPart = integralPart + w.*firingRate_Vt;
     end
 end
 
 %% v(t+1)
 
-v_tplus1 = ks * v_t + Ts * integralPart + errorPart; % calculate v(t+1)
+VtPlus1 = ks * Vt + Ts * integralPart + errorPart; % calculate v(t+1)
