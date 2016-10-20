@@ -20,8 +20,12 @@ stepSize = x(2)-x(1);
 %% Parameters used to compute psi
 % ~~~~~~~~~~~~~~~
 
+tau = 0.01; % synaptic time constant
 
 Ts = 0.0001; % time step
+
+ks = 1- Ts*(1/tau); % time constant parameter
+
 nx = 16; % number of Gaussian basis functions
 theta = [1, 1.2, 1.5]'; % scale 
 nTheta = 3; % number of connectivity kernel basis functions
@@ -82,4 +86,4 @@ for pNX = 1 : nx
         ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1);
     end
 end
-x_tplus1 = ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
+x_tplus1 = ks * x_t + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)

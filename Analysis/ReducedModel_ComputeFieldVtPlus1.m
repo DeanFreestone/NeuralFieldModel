@@ -26,7 +26,11 @@ stepSize = x(2)-x(1);
 % ~~~~~~~~~~~~~~~
 
 
+tau = 0.01; % synaptic time constant
+
 Ts = 0.0001; % time step
+
+ks = 1- Ts*(1/tau); % time constant parameter
 
 % ~~~~~~~~~~~~~~~
 % field basis functions
@@ -46,6 +50,7 @@ mu_phi = []; % centres of Gaussian basis functions. But for now let's leave it e
 mu_psi = [1 1;
     1 1;
     1 1]; % centres of Gaussian basis functions of connectivity kernel
+
 % vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
 
 % ~~~~~~~~~~~~~~~
@@ -95,7 +100,7 @@ for pNX = 1 : nx
         ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1);
     end
 end
-x_tplus1 = ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
+x_tplus1 = ks * x_t + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
 
 %% Compute field at time (T+1)
 % ~~~~~~~~~~~~~~~
