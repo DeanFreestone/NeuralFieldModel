@@ -1,4 +1,4 @@
-function ReducedModel_ComputeFieldVtPlus1()
+function v_tplus1 = ReducedModel_ComputeFieldVtPlus1(SpaceMin, SpaceMax, NPoints)
 
 %% Compute state vector x(t+1)
 % To implement Equation (25), Freestone et al., 2011, NeuroImage
@@ -14,7 +14,7 @@ close all
 
 
 % parameters to create a 2-D cortical surface
-SpaceMin = -10; SpaceMax = 10; NPoints = 501;
+% SpaceMin = -10; SpaceMax = 10; NPoints = 501;
 
 x = linspace(SpaceMin, SpaceMax, NPoints);
 
@@ -88,5 +88,14 @@ for pNX = 1 : nx
     end
 end
 x_tplus1 = ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
+
+%% Compute field at time (T+1)
+% ~~~~~~~~~~~~~~~
+
+
+for m = 1 : nx % to compute phi * x(t)
+    fields_tplus1(:,:, m) = phi_basisFunctions(:,:, m) * x_tplus1(m);
+end
+v_tplus1 = squeeze(sum(fields_tplus1, 3));
 
 end

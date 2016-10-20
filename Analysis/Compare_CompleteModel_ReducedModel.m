@@ -1,5 +1,4 @@
 %% Compute state vector x(t+1)
-% To implement Equation (25), Freestone et al., 2011, NeuroImage
 % Miao Cao
 
 
