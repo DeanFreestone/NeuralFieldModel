@@ -1,4 +1,4 @@
-function VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, SpaceMin, SpaceMax, NPoints)
+function VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
 
 
 %% Numerical check. Implement equation (12)
@@ -35,7 +35,7 @@ VtPlus1 = []; % field at T+1
 %  v_t = ones(NPoints, NPoints);
 
 % rng(0,'twister');
-% 
+%
 % lower = -6;
 % upper = 6;
 % v_t = (upper-lower).*rand(NPoints, NPoints) + lower;
@@ -48,11 +48,11 @@ Ts = 0.0001; % time step
 
 % nx = 16; % number of Gaussian basis functions
 
-theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
+% theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
 
-vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
+% vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
 
-nTheta = 3; % number of connectivity kernel basis functions
+% nTheta = 3; % number of connectivity kernel basis functions
 
 % ~~~~~~~~~~~~~~~
 % parameters for firing rate function

@@ -1,4 +1,4 @@
-function [v_tplus1, v_t] = ReducedModel_ComputeFieldVtPlus1(x_t, nx, sigma_phi, SpaceMin, SpaceMax, NPoints)
+function [v_tplus1, v_t] = ReducedModel_ComputeFieldVtPlus1(x_t, nx, sigma_phi, theta, nTheta, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
 %% Reduced model
 % Compute field at time (T+1)
 % To implement Equation (25), Freestone et al., 2011, NeuroImage
@@ -39,14 +39,14 @@ mu_phi = []; % centres of Gaussian basis functions. But for now let's leave it e
 
 % ~~~~~~~~~~~~~~~
 % connectivity kernel
-theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
+% theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
 
-nTheta = 3; % number of connectivity kernel basis functions
+% nTheta = 3; % number of connectivity kernel basis functions
 
 mu_psi = [1 1;
     1 1;
     1 1]; % centres of Gaussian basis functions of connectivity kernel
-vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
+% vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
 
 % ~~~~~~~~~~~~~~~
 % parameters for firing rate function
