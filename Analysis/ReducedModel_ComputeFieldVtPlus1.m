@@ -1,4 +1,4 @@
-function [v_tplus1, v_t] = ReducedModel_ComputeFieldVtPlus1(x_t, nx, sigma_phi, theta, nTheta, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
+function [v_tplus1, Vt] = ReducedModel_ComputeFieldVtPlus1(x_t, nx, sigma_phi, theta, nTheta, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
 %% Reduced model
 % Compute field at time (T+1)
 % To implement Equation (25), Freestone et al., 2011, NeuroImage
@@ -83,10 +83,10 @@ phi_fields = zeros(size(phi_basisFunctions));
 for m = 1 : nx % to compute phi * x(t)
     phi_fields(:,:, m) = phi_basisFunctions(:,:, m) * x_t(m);
 end
-v_t = sum(phi_fields, 3); % v, mean membrane potential field, at time t.
+Vt = sum(phi_fields, 3); % v, mean membrane potential field, at time t.
 
 % firing rate function
-firingRate_phi_xt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v_t))); % firing rate sigmoidal function, field
+firingRate_phi_Vt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - Vt))); % firing rate sigmoidal function, field
 
 %% integral over 2-D space
 % ~~~~~~~~~~~~~~~
@@ -96,7 +96,7 @@ firingRate_phi_xt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v_t))); % firing rate s
 ingtegralProduct = zeros(nx, nTheta);
 for pNX = 1 : nx
     for qNTheta = 1 : nTheta
-        product_psi_firingRate = squeeze(psi(qNTheta, pNX, :, :)) * firingRate_phi_xt;
+        product_psi_firingRate = squeeze(psi(qNTheta, pNX, :, :)) * firingRate_phi_Vt;
         ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1);
     end
 end
