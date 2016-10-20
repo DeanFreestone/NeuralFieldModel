@@ -10,7 +10,7 @@ close all
 
 
 % parameters to create a 2-D cortical surface
-SpaceMin = -10; SpaceMax = 10; NPoints = 201;
+SpaceMin = -10; SpaceMax = 10; NPoints = 101;
 
 x = linspace(SpaceMin, SpaceMax, NPoints);
 
@@ -33,8 +33,8 @@ VtPlus1 = []; % field at T+1
 
 rng(0,'twister');
 
-lower = -6;
-upper = 6;
+lower = -3;
+upper = 3;
 Vt = (upper-lower).*rand(NPoints, NPoints) + lower;
 
 % v_t = rand(NPoints, NPoints); % initialise a random field v at time point T

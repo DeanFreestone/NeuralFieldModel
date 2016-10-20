@@ -1,3 +1,5 @@
+function ReducedModel_ComputeFieldVtPlus1()
+
 %% Compute state vector x(t+1)
 % To implement Equation (25), Freestone et al., 2011, NeuroImage
 % Miao Cao
@@ -26,7 +28,7 @@ stepSize = x(2)-x(1);
 
 Ts = 0.0001; % time step
 nx = 16; % number of Gaussian basis functions
-theta =  [10, -8, 0.5]'; % scale connectivity kernel basis functions
+theta = [1, 1.2, 1.5]'; % number of connectivity kernel basis functions
 nTheta = 3;
 
 % ~~~~~~~~~~~~~~~
@@ -86,3 +88,5 @@ for pNX = 1 : nx
     end
 end
 x_tplus1 = ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
+
+end
