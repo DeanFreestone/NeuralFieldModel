@@ -1,6 +1,6 @@
-function v_tplus1 = ReducedModel_ComputeFieldVtPlus1(SpaceMin, SpaceMax, NPoints)
-
-%% Compute state vector x(t+1)
+function [v_tplus1, v_t] = ReducedModel_ComputeFieldVtPlus1(x_t, nx, sigma_phi, SpaceMin, SpaceMax, NPoints)
+%% Reduced model
+% Compute field at time (T+1)
 % To implement Equation (25), Freestone et al., 2011, NeuroImage
 % Miao Cao
 
@@ -22,29 +22,37 @@ stepSize = x(2)-x(1);
 
 [X, Y] = meshgrid(x, x);
 
-%% Parameters used to compute psi
+%% Parameters
 % ~~~~~~~~~~~~~~~
 
 
 Ts = 0.0001; % time step
-nx = 16; % number of Gaussian basis functions
-theta = [1, 1.2, 1.5]'; % number of connectivity kernel basis functions
-nTheta = 3;
+
+% ~~~~~~~~~~~~~~~
+% field basis functions
+% nx = 16; number of Gaussian basis functions
+
+% sigma_phi = 0.8; % variance of gaussian basis functions
+
+mu_phi = []; % centres of Gaussian basis functions. But for now let's leave it empty for function ComputePsi to generate centres that are uniformly distributed on the surface.
+
+
+% ~~~~~~~~~~~~~~~
+% connectivity kernel
+theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
+
+nTheta = 3; % number of connectivity kernel basis functions
+
+mu_psi = [1 1;
+    1 1;
+    1 1]; % centres of Gaussian basis functions of connectivity kernel
+vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
 
 % ~~~~~~~~~~~~~~~
 % parameters for firing rate function
 slope_sigmoidal = 0.56; % slope of sigmoidal activation function
+
 v0 = 1.8; % Firing threshold
-
-% ~~~~~~~~~~~~~~~
-mu_phi = []; % centres of Gaussian basis functions. But for now let's leave it empty for function ComputePsi to generate centres that are uniformly distributed on the surface.
-sigma_phi = 0.8; % variance of gaussian basis functions
-
-% centres of Gaussian basis functions of connectivity kernel
-mu_psi = [1 1;
-    1 1;
-    1 1];
-vector_Sigma_Psi = [0.5, 0.8, 1]; % a vector of variances of Gaussian basis function of connectivity kernel
 
 %% Create Phi basis functions
 % ~~~~~~~~~~~~~~~
@@ -64,7 +72,7 @@ psi = ComputePsi(SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi,
 
 % Firing rate function. Equation (4) Freestone et al., 2011, NeuroImage
 
-x_t = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
+% x_t = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
 phi_fields = zeros(size(phi_basisFunctions));
 
 for m = 1 : nx % to compute phi * x(t)
@@ -79,7 +87,7 @@ firingRate_phi_xt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v_t))); % firing rate s
 % ~~~~~~~~~~~~~~~
 
 
-x_tplus1 = []; % here is x(t+1)
+% compute x(T+1)
 ingtegralProduct = zeros(nx, nTheta);
 for pNX = 1 : nx
     for qNTheta = 1 : nTheta
