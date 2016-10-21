@@ -78,7 +78,7 @@ for m=1 : nTheta
                 
                 psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [vector_Sigma_Psi(m) 0; 0 vector_Sigma_Psi(m)]+covMat_phi, NPoints, SpaceMin, SpaceMax);
                 
-                psi_phi_basis(m, n, :, :) = psi_phi_basis(m, n, :, :) + psi_phi(:, :);
+                psi_phi_basis(m, n, :, :) = squeeze(psi_phi_basis(m, n, :, :)) + psi_phi(:, :);
                 
             end
         end

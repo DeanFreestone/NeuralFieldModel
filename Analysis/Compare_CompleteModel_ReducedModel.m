@@ -12,7 +12,7 @@ close all
 
 
 % parameters to create a 2-D cortical surface
-SpaceMin = -10; SpaceMax = 10; NPoints = 501;
+SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 
 nx = 16; % number of Gaussian basis function of field decomposition
 
