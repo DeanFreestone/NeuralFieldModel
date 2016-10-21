@@ -23,6 +23,8 @@ theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
 
 nTheta = 3; % number of connectivity kernel basis functions
 
+mu_psi = [0 0; 0 0; 0 0]; % centres of basis functions of connectivity kernel
+
 vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
 
 %% Models
@@ -31,7 +33,7 @@ vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectiv
 Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
 
 % reduced model
-[ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
+[ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
 % complete model
 CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);

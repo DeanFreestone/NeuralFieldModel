@@ -1,4 +1,4 @@
-function Ts_invGamma_phi_psi = ComputePsi(SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi, mu_psi, vector_Sigma_Psi)
+function Ts_invGamma_phi_psi = ComputePsi(X, Y, SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi, mu_psi, vector_Sigma_Psi)
 %% Compute Psi
 % Compute Psi in Equation (24), Freestone et al., 2011, NeuroImage
 % Miao Cao
@@ -67,12 +67,24 @@ for m=1 : nTheta
     for n=1 : nx
         % these guys here are used with the LS algorithm for estimating
         % theta and xi
-        mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :);
-        psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [vector_Sigma_Psi(m) 0; 0 vector_Sigma_Psi(m)]+covMat_phi, NPoints, SpaceMin, SpaceMax);
         
-        psi_phi_basis(m, n, :, :) = psi_phi(:, :);
+        % cycle through every point on the cortical surface
+        for p = 1 : NPoints
+            for q = 1 : NPoints
+                
+                rPrime = [X(p, q) Y(p, q)]; % location r'
+                
+                mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :) + rPrime; % centre of Gaussian after convolution
+                
+                psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [vector_Sigma_Psi(m) 0; 0 vector_Sigma_Psi(m)]+covMat_phi, NPoints, SpaceMin, SpaceMax);
+                
+                psi_phi_basis(m, n, :, :) = psi_phi_basis(m, n, :, :) + psi_phi(:, :);
+                
+            end
+        end
         %         theta_psi_phi_basis(nn,n,:) = theta(nn)*psi_phi_basis(nn,n,:);
     end
+    
 end
 
 Ts_invGamma_phi_psi = zeros(nTheta, nx, NPoints, NPoints); % initialise the matrix of fields. nx * ntheta * fields
