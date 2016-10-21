@@ -4,10 +4,6 @@ function VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, vector_S
 %% Numerical check. Implement equation (12)
 % implementationf of Equation (12)
 
-clc
-clear
-close all
-
 %% Spatial parameters
 % ~~~~~~~~~~~~~~~
 

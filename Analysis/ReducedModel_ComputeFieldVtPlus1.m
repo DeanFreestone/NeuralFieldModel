@@ -5,10 +5,6 @@ function [v_tplus1, Vt] = ReducedModel_ComputeFieldVtPlus1(x_t, nx, sigma_phi, t
 % Miao Cao
 
 
-clc
-clear
-close all
-
 %% Spatial parameters
 % ~~~~~~~~~~~~~~~
 
