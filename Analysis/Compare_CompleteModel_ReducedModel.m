@@ -36,7 +36,7 @@ Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers
 [ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
 % complete model
-CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
+CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, mu_psi(1, :), vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
 % compare
 

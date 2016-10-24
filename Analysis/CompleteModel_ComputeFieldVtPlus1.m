@@ -1,4 +1,4 @@
-function VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
+function VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
 %% Complete/Full model
 % Compute neural field (post-synaptic membrane potential) at time (T+1)
 % Based on the equation (12), Freestone et al. 2011 NeuroImage
@@ -10,6 +10,7 @@ function VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, vector_S
 % Vt - Neural field at time T
 % theta - scale of basis functions of connectivity kernel
 % nTheta - number of basis functions of connectivity kernel
+% mu_psi - the centre of Gaussian basis function of connectivity kernel
 % vector_Sigma_Psi - a vector of widiths of Gaussian basis functions of
 % connvectivity kernel (spatial decomposition)
 % SpaceMin - the negative edge of cortical surface/neural field
@@ -81,21 +82,30 @@ integralPart = zeros(NPoints, NPoints);
 firingRate_v_t = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - Vt)));
 
 
-% integral. convolution or integral
-for m = 1 : NPoints
-    for n = 1 : NPoints
-        r = [X(m, n), Y(m, n)]; % location r vector
-        
-        % connectivity kernel, a sum of Gaussian basis functions
-        for p = 1 : nTheta
-            gaussians(:,:, p) = Define2DGaussian_AnisotropicKernel(r(1), r(2), [vector_Sigma_Psi(p) 0; 0 vector_Sigma_Psi(p)], NPoints, SpaceMin, SpaceMax) * theta(p);
-        end
-        w = squeeze(sum(gaussians, 3)); % connectivity kernel
-        
-        % define connectivity kernel at location r
-        integralPart = integralPart + w.*firingRate_v_t;
-    end
+% Compute connectivity kernel, decomposed into three basis functions
+for p = 1 : nTheta
+    gaussians(:,:, p) = Define2DGaussian_AnisotropicKernel(mu_psi(1), mu_psi(2), [vector_Sigma_Psi(p) 0; 0 vector_Sigma_Psi(p)], NPoints, SpaceMin, SpaceMax) * theta(p); % define each Gaussian basis function
 end
+w = squeeze(sum(gaussians, 3)); % connectivity kernel
+
+% convolution
+integralPart = conv2(w, firingRate_v_t, 'same');
+
+% % integral. convolution or integral
+% for m = 1 : NPoints
+%     for n = 1 : NPoints
+%         r = [X(m, n), Y(m, n)]; % location r vector
+%
+%         % connectivity kernel, a sum of Gaussian basis functions
+%         for p = 1 : nTheta
+%             gaussians(:,:, p) = Define2DGaussian_AnisotropicKernel(r(1), r(2), [vector_Sigma_Psi(p) 0; 0 vector_Sigma_Psi(p)], NPoints, SpaceMin, SpaceMax) * theta(p);
+%         end
+%         w = squeeze(sum(gaussians, 3)); % connectivity kernel
+%
+%         % define connectivity kernel at location r
+%         integralPart = integralPart + w.*firingRate_v_t;
+%     end
+% end
 
 %% V(t+1), neural field at time T+1
 
