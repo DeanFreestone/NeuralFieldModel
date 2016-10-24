@@ -33,10 +33,16 @@ vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectiv
 Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
 
 % reduced model
-[ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
+% [ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
+
+
+rng(0,'twister');
+lower = -3;
+upper = 3;
+Vt = (upper-lower).*rand(NPoints, NPoints) + lower;
 % complete model
-CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, mu_psi(1, :), vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
+CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, [0 0], vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
 % compare
 
