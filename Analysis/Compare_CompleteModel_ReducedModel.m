@@ -6,6 +6,11 @@
 clc
 clear
 close all
+%% add function path
+% ~~~~~~~~~~~~~~~
+
+
+addpath(genpath('./Functions/'));
 
 %% Parameters
 % ~~~~~~~~~~~~~~~
@@ -27,7 +32,7 @@ mu_psi = [0 0; 0 0; 0 0]; % centres of basis functions of connectivity kernel
 
 vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
 
-%% Models
+%% Compare models with Mexican-hat connectvity kernels
 % ~~~~~~~~~~~~~~~
 
 
@@ -52,4 +57,27 @@ imagesc(CompleteModel_VtPlus1), colorbar; title('Full V(t+1)');
 subplot(2,2,4);
 imagesc(CompleteModel_VtPlus1 - ReducedModel_VtPlus1), colorbar; title('Res(Reduced, Full)');
 
-%%
+%% Compare models with Gabor-kernel connectvity kernels
+% ~~~~~~~~~~~~~~~
+
+
+Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
+
+% reduced model
+[ReducedModel_VtPlus1, Vt] = ReducedModel_Gabor_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
+
+
+% complete model
+CompleteModel_VtPlus1 = CompleteModel_Gabor_ComputeFieldVtPlus1(Vt, theta, nTheta, [0 0], vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
+
+
+% compare
+figure; 
+subplot(2,2,1);
+imagesc(Vt), colorbar; title('V(t)');
+subplot(2,2,2);
+imagesc(ReducedModel_VtPlus1), colorbar; title('Reduced V(t+1)');
+subplot(2,2,3);
+imagesc(CompleteModel_VtPlus1), colorbar; title('Full V(t+1)');
+subplot(2,2,4);
+imagesc(CompleteModel_VtPlus1 - ReducedModel_VtPlus1), colorbar; title('Res(Reduced, Full)');
