@@ -23,13 +23,11 @@ function [v_tplus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, th
 
 
 % parameters to create a 2-D cortical surface
-% SpaceMin = -10; SpaceMax = 10; NPoints = 501;
+x = linspace(SpaceMin, SpaceMax, NPoints); % a 2-D surface
 
-x = linspace(SpaceMin, SpaceMax, NPoints);
+stepSize = x(2)-x(1); % distance between two adjacent points in the 2-D surface
 
-stepSize = x(2)-x(1);
-
-[X, Y] = meshgrid(x, x);
+[X, Y] = meshgrid(x, x); % x and y coordinates of the 2-D surface
 
 %% Parameters
 % ~~~~~~~~~~~~~~~
@@ -74,7 +72,7 @@ phi_basisFunctions = CreatePhiBasisFunctions(SpaceMin, SpaceMax, NPoints, nx, mu
 % ~~~~~~~~~~~~~~~
 
 
-psi = ComputePsi(X, Y, SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi, mu_psi, vector_Sigma_Psi); % compute psi with function ComputePsi
+psi = ComputePsi(X, Y, SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi, mu_psi, vector_Sigma_Psi); % compute PS with function ComputePsi
 
 %% Firing rate function
 % ~~~~~~~~~~~~~~~

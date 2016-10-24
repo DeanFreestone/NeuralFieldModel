@@ -17,21 +17,16 @@ function VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, vector_S
 % NPoints - number of points in each row or column of cortical
 % surface/neural field (spatial resolution)
 
-%% Numerical check. Implement equation (12)
-% implementationf of Equation (12)
-
 %% Spatial parameters
 % ~~~~~~~~~~~~~~~
 
 
 % parameters to create a 2-D cortical surface
-% SpaceMin = -10; SpaceMax = 10; NPoints = 201;
-
-x = linspace(SpaceMin, SpaceMax, NPoints);
+x = linspace(SpaceMin, SpaceMax, NPoints); % a 2-D surface
 
 stepSize = x(2)-x(1);
 
-[X, Y] = meshgrid(x, x);
+[X, Y] = meshgrid(x, x); % x and y coordinates of the 2-D surface
 
 %% model parameters
 % ~~~~~~~~~~~~~~~
@@ -56,7 +51,7 @@ VtPlus1 = []; % field at T+1
 
 
 
-Ts = 0.0001; % time step
+Ts = 0.0001; % time step, temporal resolution
 
 % nx = 16; % number of Gaussian basis functions
 
@@ -102,8 +97,8 @@ for m = 1 : NPoints
     end
 end
 
-%% v(t+1)
+%% V(t+1), neural field at time T+1
 
-VtPlus1 = ks * Vt + Ts * integralPart + errorPart; % calculate v(t+1)
+VtPlus1 = ks * Vt + Ts * integralPart + errorPart; % calculate v(t+1), neural field at time T+1
 
 end
