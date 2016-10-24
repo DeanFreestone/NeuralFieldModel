@@ -14,9 +14,9 @@ close all
 % parameters to create a 2-D cortical surface
 SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 
-nx = 64; % number of Gaussian basis function of field decomposition
+nx = 81; % number of Gaussian basis function of field decomposition
 
-sigma_phi = 1.2; % width of Gaussian basis function of field decomposition
+sigma_phi = 1.5; % width of Gaussian basis function of field decomposition
 
 % connectivity kernel
 theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
@@ -42,6 +42,14 @@ CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, [0 
 
 
 % compare
-
+figure; 
+subplot(2,2,1);
+imagesc(Vt), colorbar; title('V(t)');
+subplot(2,2,2);
+imagesc(ReducedModel_VtPlus1), colorbar; title('Reduced V(t+1)');
+subplot(2,2,3);
+imagesc(CompleteModel_VtPlus1), colorbar; title('Full V(t+1)');
+subplot(2,2,4);
+imagesc(CompleteModel_VtPlus1 - ReducedModel_VtPlus1), colorbar; title('Res(Reduced, Full)');
 
 %%
