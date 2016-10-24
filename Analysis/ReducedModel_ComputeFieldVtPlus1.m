@@ -1,9 +1,22 @@
-function [v_tplus1, Vt] = ReducedModel_ComputeFieldVtPlus1(x_t, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
+function [v_tplus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
 %% Reduced model
-% Compute field at time (T+1)
-% To implement Equation (25), Freestone et al., 2011, NeuroImage
+% Compute neural field (post-synaptic membrane potential) at time (T+1)
 % Miao Cao
 
+
+% Parameter list:
+% Xt - State vector at time T
+% nx - Number of field basis functions (field decomposition)
+% sigma_phi - width of field basis functions (field decomposition)
+% theta - scale of basis functions of connectivity kernel
+% nTheta - number of basis functions of connectivity kernel
+% mu_psi - widths of basis functions of connectivity kernel
+% vector_Sigma_Psi - a vector of widiths of Gaussian basis functions of
+% connvectivity kernel (spatial decomposition)
+% SpaceMin - the negative edge of cortical surface/neural field
+% SpaceMax - the posive edge of cortical surface/neural field
+% NPoints - number of points in each row or column of cortical
+% surface/neural field (spatial resolution)
 
 %% Spatial parameters
 % ~~~~~~~~~~~~~~~
@@ -73,7 +86,7 @@ psi = ComputePsi(X, Y, SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigm
 phi_fields = zeros(size(phi_basisFunctions));
 
 for m = 1 : nx % to compute phi * x(t)
-    phi_fields(:,:, m) = phi_basisFunctions(:,:, m) * x_t(m);
+    phi_fields(:,:, m) = phi_basisFunctions(:,:, m) * Xt(m);
 end
 Vt = sum(phi_fields, 3); % v, mean membrane potential field, at time t.
 
@@ -92,7 +105,7 @@ for pNX = 1 : nx
         ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1);
     end
 end
-x_tplus1 = ks * x_t + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
+x_tplus1 = ks * Xt + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
 
 %% Compute field at time (T+1)
 % ~~~~~~~~~~~~~~~

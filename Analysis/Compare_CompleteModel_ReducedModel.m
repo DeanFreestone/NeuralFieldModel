@@ -12,11 +12,11 @@ close all
 
 
 % parameters to create a 2-D cortical surface
-SpaceMin = -10; SpaceMax = 10; NPoints = 301;
+SpaceMin = -10; SpaceMax = 10; NPoints = 201;
 
-nx = 16; % number of Gaussian basis function of field decomposition
+nx = 64; % number of Gaussian basis function of field decomposition
 
-sigma_phi = 0.8; % width of Gaussian basis function of field decomposition
+sigma_phi = 1.2; % width of Gaussian basis function of field decomposition
 
 % connectivity kernel
 theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel

@@ -1,5 +1,21 @@
 function VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
+%% Complete/Full model
+% Compute neural field (post-synaptic membrane potential) at time (T+1)
+% Based on the equation (12), Freestone et al. 2011 NeuroImage
+% But we ignore error part in equation (12) for now.
+% Miao Cao
 
+
+% Parameter list:
+% Vt - Neural field at time T
+% theta - scale of basis functions of connectivity kernel
+% nTheta - number of basis functions of connectivity kernel
+% vector_Sigma_Psi - a vector of widiths of Gaussian basis functions of
+% connvectivity kernel (spatial decomposition)
+% SpaceMin - the negative edge of cortical surface/neural field
+% SpaceMax - the posive edge of cortical surface/neural field
+% NPoints - number of points in each row or column of cortical
+% surface/neural field (spatial resolution)
 
 %% Numerical check. Implement equation (12)
 % implementationf of Equation (12)
