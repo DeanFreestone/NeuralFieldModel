@@ -68,20 +68,27 @@ for m=1 : nTheta
         % these guys here are used with the LS algorithm for estimating
         % theta and xi
         
-        % cycle through every point on the cortical surface
-        for p = 1 : NPoints
-            for q = 1 : NPoints
-                
-                rPrime = [X(p, q) Y(p, q)]; % location r'
-                
-                mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :) + rPrime; % centre of Gaussian after convolution
-                
-                psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [vector_Sigma_Psi(m) 0; 0 vector_Sigma_Psi(m)]+covMat_phi, NPoints, SpaceMin, SpaceMax);
-                
-                psi_phi_basis(m, n, :, :) = squeeze(psi_phi_basis(m, n, :, :)) + psi_phi(:, :);
-                
-            end
-        end
+        mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :); % centre of Gaussian after convolution
+        
+        psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [vector_Sigma_Psi(m) 0; 0 vector_Sigma_Psi(m)]+covMat_phi, NPoints, SpaceMin, SpaceMax);
+        
+        psi_phi_basis(m, n, :, :) = psi_phi(:, :);
+        
+        
+        %         % cycle through every point on the cortical surface
+        %         for p = 1 : NPoints
+        %             for q = 1 : NPoints
+        %
+        %                 rPrime = [X(p, q) Y(p, q)]; % location r'
+        %
+        %                 mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :) + rPrime; % centre of Gaussian after convolution
+        %
+        %                 psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [vector_Sigma_Psi(m) 0; 0 vector_Sigma_Psi(m)]+covMat_phi, NPoints, SpaceMin, SpaceMax);
+        %
+        %                 psi_phi_basis(m, n, :, :) = squeeze(psi_phi_basis(m, n, :, :)) + psi_phi(:, :);
+        %
+        %             end
+        %         end
         %         theta_psi_phi_basis(nn,n,:) = theta(nn)*psi_phi_basis(nn,n,:);
     end
     
