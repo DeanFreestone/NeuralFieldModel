@@ -37,7 +37,7 @@ vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectiv
 % ~~~~~~~~~~~~~~~
 
 
-Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
+Xt = randn(nx, 1, 'single')*10; % x(t), state vector at time t. Set as rand numbers for now.
 
 % reduced model
 [ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);

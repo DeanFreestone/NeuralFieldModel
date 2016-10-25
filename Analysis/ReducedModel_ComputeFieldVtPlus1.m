@@ -1,4 +1,4 @@
-function [v_tplus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
+function [v_tplus1, Vt, XtPlus1] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
 %% Reduced model
 % Compute neural field (post-synaptic membrane potential) at time (T+1)
 % Miao Cao
@@ -103,14 +103,14 @@ for pNX = 1 : nx
         ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1);
     end
 end
-x_tplus1 = ks * Xt + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
+XtPlus1 = ks * Xt + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
 
 %% Compute field at time (T+1)
 % ~~~~~~~~~~~~~~~
 
 
 for m = 1 : nx % to compute phi * x(t)
-    fields_tplus1(:,:, m) = phi_basisFunctions(:,:, m) * x_tplus1(m);
+    fields_tplus1(:,:, m) = phi_basisFunctions(:,:, m) * XtPlus1(m);
 end
 v_tplus1 = squeeze(sum(fields_tplus1, 3));
 
