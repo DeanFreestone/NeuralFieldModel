@@ -31,7 +31,7 @@ nTheta = 3; % number of connectivity kernel basis functions
 
 mu_psi = [0 0; 0 0; 0 0]; % centres of basis functions of connectivity kernel
 
-vector_Sigma_Psi = [0.6 0.8 2]; % width of Gaussian basis functions of connectivity kernel
+vector_Sigma_Psi = [0.6 0; 0.8 0;2 0]; % width of Gaussian basis functions of connectivity kernel
 
 %% Compare models with Mexican-hat connectvity kernels
 % ~~~~~~~~~~~~~~~

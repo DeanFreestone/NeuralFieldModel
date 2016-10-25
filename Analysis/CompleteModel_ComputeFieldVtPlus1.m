@@ -83,8 +83,9 @@ firingRate_v_t = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - Vt)));
 
 
 % Compute connectivity kernel, decomposed into three basis functions
+gaussians = zeros(NPoints, NPoints, nTheta);
 for p = 1 : nTheta
-    gaussians(:,:, p) = Define2DGaussian_AnisotropicKernel(mu_psi(p, 1), mu_psi(p, 2), [vector_Sigma_Psi(p) 0; 0 vector_Sigma_Psi(p)], NPoints, SpaceMin, SpaceMax) * theta(p); % define each Gaussian basis function
+    gaussians(:,:, p) = Define2DGaussian_AnisotropicKernel(mu_psi(p, 1), mu_psi(p, 2), [vector_Sigma_Psi(p, 1) vector_Sigma_Psi(p, 2); vector_Sigma_Psi(p, 2) vector_Sigma_Psi(p, 1)], NPoints, SpaceMin, SpaceMax) * theta(p); % define each Gaussian basis function
 end
 w = squeeze(sum(gaussians, 3)); % connectivity kernel
 

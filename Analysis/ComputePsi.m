@@ -70,7 +70,7 @@ for m=1 : nTheta
         
         mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :); % centre of Gaussian after convolution
         
-        psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [vector_Sigma_Psi(m) 0; 0 vector_Sigma_Psi(m)]+covMat_phi, NPoints, SpaceMin, SpaceMax);
+        psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [vector_Sigma_Psi(m, 1) vector_Sigma_Psi(m, 2); vector_Sigma_Psi(m, 2) vector_Sigma_Psi(m, 1)]+covMat_phi, NPoints, SpaceMin, SpaceMax);
         
         psi_phi_basis(m, n, :, :) = psi_phi(:, :);
         
