@@ -10,7 +10,7 @@ close all
 
 
 % parameters to create a 2-D cortical surface
-SpaceMin = -10; SpaceMax = 10; NPoints = 101;
+SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 
 x = linspace(SpaceMin, SpaceMax, NPoints);
 

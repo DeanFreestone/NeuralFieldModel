@@ -17,12 +17,12 @@ addpath(genpath('./Functions/'));
 
 
 % parameters to create a 2-D cortical surface
-SpaceMin = -10; SpaceMax = 10; NPoints = 201;
+SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 
 % field basis function parameters
-nx = 225; % number of Gaussian basis function of field decomposition
+nx = 64; % number of Gaussian basis function of field decomposition
 
-sigma_phi = 1.0; % width of Gaussian basis function of field decomposition
+sigma_phi = 1.2; % width of Gaussian basis function of field decomposition
 
 % connectivity kernel parameters
 theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
@@ -44,7 +44,7 @@ Xt = randn(nx, 1, 'single')*10; % x(t), state vector at time t. Set as rand numb
 
 
 % complete model
-CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta,mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
+CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
 % residual of two models
 residual = CompleteModel_VtPlus1 - ReducedModel_VtPlus1;

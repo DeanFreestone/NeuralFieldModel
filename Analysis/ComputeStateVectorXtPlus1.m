@@ -12,7 +12,7 @@ close all
 
 
 % parameters to create a 2-D cortical surface
-SpaceMin = -10; SpaceMax = 10; NPoints = 501;
+SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 x = linspace(SpaceMin, SpaceMax, NPoints);
 stepSize = x(2)-x(1);
 [X, Y] = meshgrid(x, x);

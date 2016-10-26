@@ -22,6 +22,9 @@ function phiBasisFunctions =  CreatePhiBasisFunctions(SpaceMin, SpaceMax, NPoint
 
 
 
+x = linspace(SpaceMin, SpaceMax, NPoints*2-1);
+
+
 numRow = sqrt(nx); % number of gaussians for each colomn
 numCol = nx / numRow; % number of columns
 
@@ -34,7 +37,11 @@ if isempty(mu_phi) || any(mu_phi) % if mu_phi is empty or only zeros
     mu_phi = zeros(nx, 2); % centres of each phi (gaussian)
     for m = 1 : numRow
         for n = 1 : numCol
-            mu_phi(n + numCol*(m-1), :) = [(SpaceMin - widthCentre + m*widthCentre*2) (SpaceMin - widthCentre + n*widthCentre*2)];
+            r = [(SpaceMin - widthCentre + m*widthCentre*2) (SpaceMin - widthCentre + n*widthCentre*2)]; % location if uniform distribution
+            rX = r(1); rY = r(2);
+            [~, indX] = min(abs(x - rX)); [~, indY] = min(abs(x - rY));
+            rX = x(indX); rY = x(indY); % aligned with discretisation
+            mu_phi(n + numCol*(m-1), :) = [rX, rY];
         end
     end
 end
