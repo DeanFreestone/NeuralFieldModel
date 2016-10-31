@@ -81,7 +81,7 @@ for m=1 : nTheta
         
         mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :); % centre of a Gaussian after convolution of phi and psi
         
-        % covariance matrix of this basis function
+        % covariance matrix of this basis function of connectivity kernel
         covMat_Psi = [vector_Sigma_Psi(m, 1) vector_Sigma_Psi(m, 2); vector_Sigma_Psi(m, 2) vector_Sigma_Psi(m, 1)];
         
         psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), covMat_phi + covMat_Psi, NPoints, SpaceMin, SpaceMax);
