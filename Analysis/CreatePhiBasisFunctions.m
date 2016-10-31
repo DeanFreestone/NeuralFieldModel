@@ -1,4 +1,4 @@
-function phiBasisFunctions =  CreatePhiBasisFunctions(SpaceMin, SpaceMax, NPoints, nx, mu_phi, sigma_phi)
+function [phiBasisFunctions, mu_phi] =  CreatePhiBasisFunctions(SpaceMin, SpaceMax, NPoints, nx, mu_phi, sigma_phi)
 %% Create field basis functions for Phi
 % To implement Equation (21). Freestone et al., 2011, NeuroImage
 % Miao Cao
@@ -33,7 +33,7 @@ widthCentre = widthSpace / (numCol*2);
 
 % If mu_phi is not pre-defined, create phi with centres of Gaussian basis
 % function uniformly distributed.
-if isempty(mu_phi) || any(mu_phi) % if mu_phi is empty or only zeros
+if isempty(mu_phi) || ~any(mu_phi) % if mu_phi is empty or only zeros
     mu_phi = zeros(nx, 2); % centres of each phi (gaussian)
     for m = 1 : numRow
         for n = 1 : numCol
@@ -46,7 +46,7 @@ if isempty(mu_phi) || any(mu_phi) % if mu_phi is empty or only zeros
     end
 end
 
-covMat_phi = [sigma_phi 0; 0 sigma_phi];
+covMat_phi = sigma_phi;
 
 %%
 % ~~~~~~~~~~~~~~~

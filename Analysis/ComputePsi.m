@@ -33,16 +33,20 @@ numCol = nx / numRow; % number of columns
 widthSpace = SpaceMax - SpaceMin;
 widthCentre = widthSpace / (numCol*2);
 
-if isempty(mu_phi) || any(mu_phi) % if mu_phi is empty or only zeros
+if isempty(mu_phi) || ~any(mu_phi) % if mu_phi is empty or only zeros
     mu_phi = zeros(nx, 2); % centres of each phi (gaussian)
     for m = 1 : numRow
         for n = 1 : numCol
-            mu_phi(n + numCol*(m-1), :) = [(SpaceMin - widthCentre + m*widthCentre*2) (SpaceMin - widthCentre + n*widthCentre*2)];
+            r = [(SpaceMin - widthCentre + m*widthCentre*2) (SpaceMin - widthCentre + n*widthCentre*2)]; % location if uniform distribution
+            rX = r(1); rY = r(2);
+            [~, indX] = min(abs(x - rX)); [~, indY] = min(abs(x - rY));
+            rX = x(indX); rY = x(indY); % aligned with discretisation
+            mu_phi(n + numCol*(m-1), :) = [rX, rY];
         end
     end
 end
 
-covMat_phi = [sigma_phi 0; 0 sigma_phi]; % covariance matrix of phi
+covMat_phi = sigma_phi; % covariance matrix of phi
 
 %% Compute gamma
 % ~~~~~~~~~~~~~~~
@@ -57,20 +61,30 @@ Gamma = ComputeGamma(SpaceMin, SpaceMax, NPoints, nx, mu_phi, covMat_phi); % com
 
 
 psi_phi_coefficient = zeros(length(vector_Sigma_Psi), 1);
-for m = 1 : length(vector_Sigma_Psi)
-    psi_phi_coefficient(m) = pi*vector_Sigma_Psi(m)*sigma_phi / (vector_Sigma_Psi(m)+sigma_phi);
+for m = 1 : nTheta
+    
+    % covariance matrix of this basis function
+    covMat_Psi = [vector_Sigma_Psi(m, 1) vector_Sigma_Psi(m, 2); vector_Sigma_Psi(m, 2) vector_Sigma_Psi(m, 1)];
+    
+    % coefficient of convolution of phi and psi basis functions
+    psi_phi_coefficient(m) = pi*det(covMat_Psi)*det(covMat_phi) / det(covMat_Psi+covMat_phi); % coefficient of convolution of phi and psi basis functions
 end
+
 
 % compute the convolution between phi and psi
 psi_phi_basis = zeros(nTheta, nx, NPoints, NPoints); % nx * ntheta * fields
+
 for m=1 : nTheta
     for n=1 : nx
         % these guys here are used with the LS algorithm for estimating
         % theta and xi
         
-        mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :); % centre of Gaussian after convolution
+        mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :); % centre of a Gaussian after convolution of phi and psi
         
-        psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [vector_Sigma_Psi(m, 1) vector_Sigma_Psi(m, 2); vector_Sigma_Psi(m, 2) vector_Sigma_Psi(m, 1)]+covMat_phi, NPoints, SpaceMin, SpaceMax);
+        % covariance matrix of this basis function
+        covMat_Psi = [vector_Sigma_Psi(m, 1) vector_Sigma_Psi(m, 2); vector_Sigma_Psi(m, 2) vector_Sigma_Psi(m, 1)];
+        
+        psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), covMat_phi + covMat_Psi, NPoints, SpaceMin, SpaceMax);
         
         psi_phi_basis(m, n, :, :) = psi_phi(:, :);
         

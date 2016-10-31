@@ -66,7 +66,7 @@ v0 = 1.8; % Firing threshold
 % ~~~~~~~~~~~~~~~
 
 
-phi_basisFunctions = CreatePhiBasisFunctions(SpaceMin, SpaceMax, NPoints, nx, mu_phi, sigma_phi); % use this function to create Gaussian basis functions
+[phi_basisFunctions, mu_phi] = CreatePhiBasisFunctions(SpaceMin, SpaceMax, NPoints, nx, mu_phi, sigma_phi); % use this function to create Gaussian basis functions
 
 %% Compute Psi
 % ~~~~~~~~~~~~~~~

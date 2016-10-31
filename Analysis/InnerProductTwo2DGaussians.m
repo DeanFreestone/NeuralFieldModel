@@ -16,12 +16,12 @@ function [product] = InnerProductTwo2DGaussians(mu_1, mu_2, sigma_1, sigma_2)
 %%
 mu = (mu_1 - mu_2)';
 % var_phi = sigma_phi; var_psi = sigma_psi;
-var_1 = sigma_1(1,1); var_2 = sigma_2(1,1);
+covMat_1 = sigma_1; covMat_2 = sigma_2;
 
-CovMat = (var_1 + var_2);
+CovMat = (covMat_1 + covMat_2);
 exponential = exp(-(mu'/CovMat*mu));
 
-coefficient = (pi*var_1*var_2)/(var_1 + var_2);
+coefficient = (pi*det(covMat_1)*det(covMat_2)) / det(CovMat);
 product = coefficient*exponential;
 
 end
