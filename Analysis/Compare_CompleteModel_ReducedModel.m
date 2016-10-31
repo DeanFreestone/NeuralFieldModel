@@ -20,9 +20,9 @@ addpath(genpath('./Functions/'));
 SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 
 % field basis function parameters
-nx = 64; % number of Gaussian basis function of field decomposition
+nx = 81; % number of Gaussian basis function of field decomposition
 
-sigma_phi = [1.2 0; 0 1.2]; % width of Gaussian basis function of field decomposition
+sigma_phi = [2 0; 0 2]; % width of Gaussian basis function of field decomposition
 
 % connectivity kernel parameters
 theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
@@ -75,7 +75,7 @@ nTheta = 2; % number of connectivity kernel basis functions
 
 mu_psi = [-0.5 0; 0 0.5]; % centres of basis functions of connectivity kernel
 
-vector_Sigma_Psi = [0.8 0.8]; % width of Gaussian basis functions of connectivity kernel
+vector_Sigma_Psi = [0.8 0.2; 0.8 0.2]; % width of Gaussian basis functions of connectivity kernel
 
 
 
