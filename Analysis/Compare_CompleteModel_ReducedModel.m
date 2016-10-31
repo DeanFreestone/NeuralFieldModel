@@ -22,7 +22,7 @@ SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 % field basis function parameters
 nx = 64; % number of Gaussian basis function of field decomposition
 
-sigma_phi = 1.2; % width of Gaussian basis function of field decomposition
+sigma_phi = [1.2 0; 0 1.2]; % width of Gaussian basis function of field decomposition
 
 % connectivity kernel parameters
 theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel

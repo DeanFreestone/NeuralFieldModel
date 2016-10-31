@@ -33,7 +33,7 @@ widthCentre = widthSpace / (numCol*2);
 
 % If mu_phi is not pre-defined, create phi with centres of Gaussian basis
 % function uniformly distributed.
-if isempty(mu_phi) || ~any(mu_phi) % if mu_phi is empty or only zeros
+if isempty(mu_phi) || ~any(mu_phi(:)) % if mu_phi is empty or only zeros
     mu_phi = zeros(nx, 2); % centres of each phi (gaussian)
     for m = 1 : numRow
         for n = 1 : numCol
