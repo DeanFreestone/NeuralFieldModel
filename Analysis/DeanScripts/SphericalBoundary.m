@@ -5,7 +5,7 @@
 
 % spatial parameters
 % ~~~~~~~~~~~
-% Delta = 0.5;                          % space step for the spatial discretisation
+Delta = 0.5;                          % space step for the spatial discretisation
 Delta_squared = Delta^2;
 SpaceMaxPeriodicField = 30;                    % maximum space in mm
 SpaceMinPeriodicField = -30;         % minimum space in mm
