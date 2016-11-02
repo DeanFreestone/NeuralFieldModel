@@ -89,6 +89,13 @@ Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers
 CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
 
+% residual of two models
+residual = CompleteModel_VtPlus1 - ReducedModel_VtPlus1;
+
+% calculate squared error
+sqrError = sum(sum(residual.^2, 2), 1)
+
+
 % compare
 figure('units','normalized','outerposition',[0 0 1 1]);
 subplot(2,2,1);
