@@ -44,7 +44,6 @@ Xt = randn(nx, 1, 'single')*10; % x(t), state vector at time t. Set as rand numb
 % reduced model
 [ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
-
 % complete model
 CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
@@ -73,6 +72,8 @@ print(fig1, '-dpdf', filename);
 %% Compare models with Gabor-kernel connectvity kernels
 % ~~~~~~~~~~~~~~~
 
+
+clear ReducedModel_VtPlus1 Vt CompleteModel_VtPlus1 residual theta nTheta mu_psi vector_Sigma_Psi
 
 % connectivity kernel - Gabor
 theta = [5 -5]'; % scale Gaussian basis functions of connectivity kernel
