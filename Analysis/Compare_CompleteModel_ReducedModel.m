@@ -55,7 +55,7 @@ residual = CompleteModel_VtPlus1 - ReducedModel_VtPlus1;
 sqrError = sum(sum(residual.^2, 2), 1)
 
 % compare
-fig = figure('units','normalized','outerposition',[0 0 1 1]);
+fig1 = figure('units','normalized','outerposition',[0 0 1 1]);
 subplot(2,2,1);
 imagesc(Vt), colorbar; title('V(t)');
 subplot(2,2,2);
@@ -68,7 +68,7 @@ suptitle({'Mexican-Hat kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1
 
 filename =[figurePath 'modelComparison_MexHat_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_vTPlus1.pdf'];
 
-print(fig, '-dpdf', filename);
+print(fig1, '-dpdf', filename);
 
 %% Compare models with Gabor-kernel connectvity kernels
 % ~~~~~~~~~~~~~~~
@@ -103,7 +103,7 @@ sqrError = sum(sum(residual.^2, 2), 1)
 
 
 % compare
-f2 = figure('units','normalized','outerposition',[0 0 1 1]);
+fig2 = figure('units','normalized','outerposition',[0 0 1 1]);
 subplot(2,2,1);
 imagesc(Vt), colorbar; title('V(t)');
 subplot(2,2,2);
@@ -115,4 +115,4 @@ imagesc(CompleteModel_VtPlus1 - ReducedModel_VtPlus1), colorbar; title('Residual
 suptitle({'Gabor kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1,1))]});
 
 filename =[figurePath 'modelComparison_Gabor_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_vTPlus1.pdf'];
-print(fig, '-dpdf', filename);
+print(fig2, '-dpdf', filename);
