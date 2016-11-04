@@ -12,6 +12,8 @@ close all
 
 addpath(genpath('./Functions/'));
 
+figurePath = '../Figures/'; % figure folder
+
 %% Parameters
 % ~~~~~~~~~~~~~~~
 
@@ -20,7 +22,7 @@ addpath(genpath('./Functions/'));
 SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 
 % field basis function parameters
-nx = 81; % number of Gaussian basis function of field decomposition
+nx = 121; % number of Gaussian basis function of field decomposition
 
 sigma_phi = [2 0; 0 2]; % variance-covariance matrix of Gaussian basis function of field decomposition
 
@@ -53,7 +55,7 @@ residual = CompleteModel_VtPlus1 - ReducedModel_VtPlus1;
 sqrError = sum(sum(residual.^2, 2), 1)
 
 % compare
-figure('units','normalized','outerposition',[0 0 1 1]);
+fig = figure('units','normalized','outerposition',[0 0 1 1]);
 subplot(2,2,1);
 imagesc(Vt), colorbar; title('V(t)');
 subplot(2,2,2);
@@ -62,7 +64,11 @@ subplot(2,2,3);
 imagesc(CompleteModel_VtPlus1), colorbar; title('Full V(t+1)');
 subplot(2,2,4);
 imagesc(CompleteModel_VtPlus1 - ReducedModel_VtPlus1), colorbar; title('Residual');
-suptitle('Mexican Hat kernel');
+suptitle({'Mexican-Hat kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1,1))]});
+
+filename =[figurePath 'modelComparison_MexHat_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_vTPlus1.pdf'];
+
+print(fig, '-dpdf', filename);
 
 %% Compare models with Gabor-kernel connectvity kernels
 % ~~~~~~~~~~~~~~~
@@ -97,7 +103,7 @@ sqrError = sum(sum(residual.^2, 2), 1)
 
 
 % compare
-figure('units','normalized','outerposition',[0 0 1 1]);
+f2 = figure('units','normalized','outerposition',[0 0 1 1]);
 subplot(2,2,1);
 imagesc(Vt), colorbar; title('V(t)');
 subplot(2,2,2);
@@ -106,4 +112,7 @@ subplot(2,2,3);
 imagesc(CompleteModel_VtPlus1), colorbar; title('Full V(t+1)');
 subplot(2,2,4);
 imagesc(CompleteModel_VtPlus1 - ReducedModel_VtPlus1), colorbar; title('Residual');
-suptitle('Gabor');
+suptitle({'Gabor kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1,1))]});
+
+filename =[figurePath 'modelComparison_Gabor_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_vTPlus1.pdf'];
+print(fig, '-dpdf', filename);
