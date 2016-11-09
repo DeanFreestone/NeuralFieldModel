@@ -44,6 +44,8 @@ Xt = randn(nx, 1, 'single')*10; % x(t), state vector at time t. Set as rand numb
 % reduced model
 [ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
+temp = Vt;
+
 % complete model
 CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
@@ -86,8 +88,6 @@ vector_Sigma_Psi = [0.8 0.2; 0.8 0.2]; % width of Gaussian basis functions of co
 
 
 
-% Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
-
 % reduced model
 [ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
@@ -117,3 +117,5 @@ suptitle({'Gabor kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1,1))]}
 
 filename =[figurePath 'modelComparison_Gabor_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_vTPlus1.pdf'];
 print(fig2, '-dpdf', filename);
+
+figure, imagesc(temp - Vt), colorbar;
