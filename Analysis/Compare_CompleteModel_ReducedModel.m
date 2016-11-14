@@ -118,4 +118,4 @@ suptitle({'Gabor kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1,1))]}
 filename =[figurePath 'modelComparison_Gabor_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_vTPlus1.pdf'];
 print(fig2, '-dpdf', filename);
 
-figure, imagesc(temp - Vt), colorbar;
+figure, imagesc(temp - Vt);
