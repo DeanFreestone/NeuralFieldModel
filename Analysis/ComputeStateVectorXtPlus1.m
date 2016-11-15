@@ -13,8 +13,11 @@ close all
 
 % parameters to create a 2-D cortical surface
 SpaceMin = -10; SpaceMax = 10; NPoints = 301;
+
 x = linspace(SpaceMin, SpaceMax, NPoints);
+
 stepSize = x(2)-x(1);
+
 [X, Y] = meshgrid(x, x);
 
 %% Parameters used to compute psi
@@ -26,13 +29,15 @@ Ts = 0.0001; % time step
 
 ks = 1- Ts*(1/tau); % time constant parameter
 
-nx = 16; % number of Gaussian basis functions
+nx = 121; % number of Gaussian basis functions
 theta = [1, 1.2, 1.5]'; % scale 
 nTheta = 3; % number of connectivity kernel basis functions
 
 % ~~~~~~~~~~~~~~~
 % parameters for firing rate function
+
 slope_sigmoidal = 0.56; % slope of sigmoidal activation function
+
 v0 = 1.8; % Firing threshold
 
 % ~~~~~~~~~~~~~~~
@@ -87,4 +92,5 @@ for pNX = 1 : nx
         ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1);
     end
 end
+
 x_tplus1 = ks * x_t + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
