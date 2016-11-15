@@ -1,5 +1,9 @@
 %% Analytic test of inner product
-clc, clear, close all
+
+
+clc
+clear
+close all
 
 %% Generate data
 SpaceMin = -1; SpaceMax = 1; NPoints = 101;
