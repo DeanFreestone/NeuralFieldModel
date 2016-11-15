@@ -4,6 +4,7 @@
 % The function ReducedModel_ComputeFieldVtPlus1 is based on this script.
 % Miao Cao
 
+
 clc
 clear
 close all
@@ -63,7 +64,9 @@ v0 = 1.8; % Firing threshold
 ks = 1- Ts*(1/tau); % time constant parameter
 
 errorPart = zeros(NPoints, NPoints); % set error part to zero for now
+
 %% integral part
+% ~~~~~~~~~~~~~~~
 
 
 % initialise integral part
@@ -91,5 +94,7 @@ for m = 1 : NPoints
 end
 
 %% v(t+1)
+% ~~~~~~~~~~~~~~~
+
 
 VtPlus1 = ks * Vt + Ts * integralPart + errorPart; % calculate v(t+1)

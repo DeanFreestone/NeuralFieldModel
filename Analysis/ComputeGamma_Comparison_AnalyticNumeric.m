@@ -5,6 +5,7 @@
 
 clc, clear, close all
 %% Generate data
+% ~~~~~~~~~~~~~~~
 
 
 SpaceMin = -10; SpaceMax = 10; NPoints = 301;
@@ -12,7 +13,9 @@ SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 x = linspace(SpaceMin, SpaceMax, NPoints);
 stepSize = x(2)-x(1);
 [X, Y] = meshgrid(x, x);
+
 %% define Gaussian basis functions
+% ~~~~~~~~~~~~~~~
 % define mu and sigma for gaussian basis functions
 
 
@@ -37,9 +40,15 @@ gaussians = zeros(NPoints, NPoints, nx);
 for n = 1 : nx
     gaussians(:,:, n) = Define2DGaussian_AnisotropicKernel(mu(n, 1), mu(n, 2), sigma, NPoints, SpaceMin, SpaceMax);
 end
+
 %% plot
+% ~~~~~~~~~~~~~~~
+
+
 figure, clf, shg; imagesc(squeeze(sum(gaussians, 3))), colorbar; title('Guassian basis functions in the field');
+
 %% Compute gamma - analytic
+% ~~~~~~~~~~~~~~~
 
 
 gamma_analytic = zeros(nx, nx);
@@ -51,7 +60,9 @@ for m = 1 : nx
 end
 % plot
 figure, imagesc(gamma_analytic), colorbar, title('gamma matrix - analytic');
+
 %% Compute gamma - numeric
+% ~~~~~~~~~~~~~~~
 
 
 gamma_numeric = zeros(nx, nx);
@@ -63,5 +74,9 @@ for m = 1 : nx
 end
 % plot
 figure, imagesc(gamma_numeric), colorbar, title('gamma matrix - numeric');
+
 %% plot
+% ~~~~~~~~~~~~~~~
+
+
 figure, clf, shg; imagesc(gamma_analytic - gamma_numeric), colorbar; title('gamma matrix Diff(analytic - numeric)');

@@ -1,7 +1,17 @@
-%% Compute Psi check
-%
-clc, clear, close all
+%% Compute Psi
+% This script is to analytically and numerically check the function
+% ComputePsi
+% Miao Cao
+
+
+clc
+clear
+close all
 %% parameters and variables are pre-defined here
+% ~~~~~~~~~~~~~~~
+
+
+
 SpaceMin = -10; SpaceMax = 10; NPoints = 501;
 x = linspace(SpaceMin, SpaceMax, NPoints);
 stepSize = x(2)-x(1);
@@ -32,11 +42,18 @@ mu_psi = [1 1;
     1 1;
     1 1];
 %% Compute gamma
+% ~~~~~~~~~~~~~~~
+
+
 Gamma = ComputeGamma(SpaceMin, SpaceMax, NPoints, nx, mu_phi, sigma_phi); % compute gamma based on the function
 %% Compute Psi - analytic
+% ~~~~~~~~~~~~~~~
 % now form the matrix
 % these are the coefficients for the analytic convolution of psi and phi
 % But, we haven't figure out covariance matrix here.
+
+
+
 psi_phi_coefficient(1) = pi*sigma_psi(1)*sigma_phi(1, 1) / (sigma_psi(1)+sigma_phi(1, 1));
 psi_phi_coefficient(2) = pi*sigma_psi(2)*sigma_phi(1, 1) / (sigma_psi(2)+sigma_phi(1, 1));
 psi_phi_coefficient(3) = pi*sigma_psi(3)*sigma_phi(1, 1) / (sigma_psi(3)+sigma_phi(1, 1));
@@ -81,6 +98,8 @@ end
 % Ts_invGamma_phi_psi(2,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(2, :, :, :)));
 % Ts_invGamma_phi_psi(3,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(3, :, :, :)));
 %% Compute Psi - numeric
+% ~~~~~~~~~~~~~~~
+
 
 % Compute convolution
 psi_phi_basis_numeric = zeros(length(theta), nx, NPoints, NPoints);
@@ -115,6 +134,10 @@ for n = 1 : length(theta) % cycle through each row of the matrix of fields
     Ts_invGamma_phi_psi_numeric(n,:,:,:) = Ts * inv_Gamma_fieldVector;
 end
 %% compare difference
+% ~~~~~~~~~~~~~~~
+
+
+
 for m=1:length(theta)
     for n=1 : nx
         figure, shg, clf;
