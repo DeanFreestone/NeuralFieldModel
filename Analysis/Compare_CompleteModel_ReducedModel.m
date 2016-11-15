@@ -19,12 +19,12 @@ figurePath = '../Figures/'; % figure folder
 
 
 % parameters to create a 2-D cortical surface
-SpaceMin = -10; SpaceMax = 10; NPoints = 801;
+SpaceMin = -10; SpaceMax = 10; NPoints = 1001;
 
 % field basis function parameters
 nx = 121; % number of Gaussian basis function of field decomposition
 
-sigma_phi = [1.5 0; 0 1.5]; % variance-covariance matrix of Gaussian basis function of field decomposition
+sigma_phi = [0.8 0; 0 0.8]; % variance-covariance matrix of Gaussian basis function of field decomposition
 
 % connectivity kernel parameters
 theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
