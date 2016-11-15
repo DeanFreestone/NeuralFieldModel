@@ -24,7 +24,7 @@ SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 % field basis function parameters
 nx = 121; % number of Gaussian basis function of field decomposition
 
-sigma_phi = [2 0; 0 2]; % variance-covariance matrix of Gaussian basis function of field decomposition
+sigma_phi = [1.5 0; 0 1.5]; % variance-covariance matrix of Gaussian basis function of field decomposition
 
 % connectivity kernel parameters
 theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
@@ -67,7 +67,7 @@ subplot(2,2,4);
 imagesc(CompleteModel_VtPlus1 - ReducedModel_VtPlus1), colorbar; title('Residual');
 suptitle({'Mexican-Hat kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1,1))]});
 
-filename =[figurePath 'modelComparison_MexHat_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_vTPlus1.pdf'];
+filename =[figurePath 'modelComparison_MexHat_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_nPoints_' num2str(NPoints) '_vTPlus1.pdf'];
 
 print(fig1, '-dpdf', filename);
 
@@ -115,7 +115,7 @@ subplot(2,2,4);
 imagesc(CompleteModel_VtPlus1 - ReducedModel_VtPlus1), colorbar; title('Residual');
 suptitle({'Gabor kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1,1))]});
 
-filename =[figurePath 'modelComparison_Gabor_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_vTPlus1.pdf'];
+filename =[figurePath 'modelComparison_Gabor_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_nPoints_' num2str(NPoints) '_vTPlus1.pdf'];
 print(fig2, '-dpdf', filename);
 
 figure, imagesc(temp - Vt);

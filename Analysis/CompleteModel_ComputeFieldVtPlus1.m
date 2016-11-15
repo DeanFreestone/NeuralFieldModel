@@ -97,7 +97,7 @@ w = squeeze(sum(gaussians, 3)); % connectivity kernel
 
 % convolution of connectivity kernel and neural field (after firing rate function)
 
-%% extend the field to 3*3 fields
+%% extend the field to 3*3 fields/tiles
 % ~~~~~~~~~~~~~~~
 
 
@@ -105,14 +105,33 @@ NPoints_ExtendedField = 3 * NPoints;
 
 extendedField = zeros(NPoints_ExtendedField, NPoints_ExtendedField);
 
-topLeft = rot90(firingRate_v_t, -2); top = flipud(firingRate_v_t); topRight = rot90(firingRate_v_t, -2);
-left = fliplr(firingRate_v_t); centre = firingRate_v_t; right = fliplr(firingRate_v_t);
-bottomLeft = rot90(firingRate_v_t, -2); bottom = flipud(firingRate_v_t); bottomRight = rot90(firingRate_v_t, -2);
+% sysmetry boundary condition
+% topLeft = rot90(firingRate_v_t, -2);
+% top = flipud(firingRate_v_t); 
+% topRight = rot90(firingRate_v_t, -2);
+% left = fliplr(firingRate_v_t); 
+% centre = firingRate_v_t; 
+% right = fliplr(firingRate_v_t);
+% bottomLeft = rot90(firingRate_v_t, -2); 
+% bottom = flipud(firingRate_v_t); 
+% bottomRight = rot90(firingRate_v_t, -2);
+
+
+topLeft = firingRate_v_t;
+top = firingRate_v_t; 
+topRight = firingRate_v_t;
+left = firingRate_v_t; 
+centre = firingRate_v_t; 
+right = firingRate_v_t;
+bottomLeft = firingRate_v_t; 
+bottom = firingRate_v_t; 
+bottomRight = firingRate_v_t;
+
 
 % top row
 extendedField(1 : NPoints, 1 : NPoints) = topLeft; extendedField(1 : NPoints, NPoints+1 : 2 * NPoints) = top; extendedField(1 : NPoints, 2 * NPoints +1 : 3 * NPoints) = topRight;
 % middle row
-extendedField( NPoints+1 : 2 * NPoints, 1 : NPoints) = left; extendedField(NPoints+1 : 2 * NPoints, NPoints+1 : 2 * NPoints) = centre; extendedField(NPoints+1 : 2 * NPoints, 2 * NPoints +1 : 3 * NPoints) = right;
+extendedField(NPoints+1 : 2 * NPoints, 1 : NPoints) = left; extendedField(NPoints+1 : 2 * NPoints, NPoints+1 : 2 * NPoints) = centre; extendedField(NPoints+1 : 2 * NPoints, 2 * NPoints +1 : 3 * NPoints) = right;
 % bottom row
 extendedField(2 * NPoints +1 : 3 * NPoints, 1 : NPoints) = bottomLeft; extendedField(2 * NPoints +1 : 3 * NPoints, NPoints+1 : 2 * NPoints) = bottom; extendedField(2 * NPoints +1 : 3 * NPoints, 2 * NPoints +1 : 3 * NPoints) = bottomRight;
 
