@@ -7,12 +7,13 @@
 clc
 clear
 close all
+
 %% parameters and variables are pre-defined here
 % ~~~~~~~~~~~~~~~
 
 
 
-SpaceMin = -10; SpaceMax = 10; NPoints = 501;
+SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 x = linspace(SpaceMin, SpaceMax, NPoints);
 stepSize = x(2)-x(1);
 
@@ -34,9 +35,9 @@ for m = 1 : numRow
     end
 end
 
-sigma_phi = [0.8 0; 0 0.8]; % covariance matrix of phi
+sigma_phi = [2 0; 0 2]; % covariance matrix of phi
 
-sigma_psi = [0.5, 0.8, 1];
+sigma_psi = [0.6, 0.8, 2];
 
 mu_psi = [1 1;
     1 1;
@@ -47,6 +48,7 @@ mu_psi = [1 1;
 
 
 Gamma = ComputeGamma(SpaceMin, SpaceMax, NPoints, nx, mu_phi, sigma_phi); % compute gamma based on the function
+
 %% Compute Psi - analytic
 % ~~~~~~~~~~~~~~~
 % now form the matrix
@@ -98,6 +100,7 @@ end
 % Ts_invGamma_phi_psi(1,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(1, :, :, :)));
 % Ts_invGamma_phi_psi(2,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(2, :, :, :)));
 % Ts_invGamma_phi_psi(3,:,:,:) = Ts*(Gamma\squeeze(psi_phi_basis(3, :, :, :)));
+
 %% Compute Psi - numeric
 % ~~~~~~~~~~~~~~~
 

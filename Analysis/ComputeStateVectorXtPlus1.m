@@ -37,13 +37,14 @@ v0 = 1.8; % Firing threshold
 
 % ~~~~~~~~~~~~~~~
 mu_phi = []; % centres of Gaussian basis functions. But for now let's leave it empty for function ComputePsi to generate centres that are uniformly distributed on the surface.
-sigma_phi = 0.8; % variance of gaussian basis functions
+
+sigma_phi = [2 0; 0 2]; % variance-covariance matrix of Gaussian basis function of field decomposition
 
 % centres of Gaussian basis functions of connectivity kernel
-mu_psi = [1 1;
-    1 1;
-    1 1];
-vector_Sigma_Psi = [0.5, 0.8, 1]; % a vector of variances of Gaussian basis function of connectivity kernel
+
+mu_psi = [0 0; 0 0; 0 0]; % centres of basis functions of connectivity kernel
+
+vector_Sigma_Psi = [0.6 0; 0.8 0; 2 0]; % width of Gaussian basis functions of connectivity kernel
 
 %% Create Phi basis functions
 % ~~~~~~~~~~~~~~~
@@ -55,7 +56,7 @@ phi_basisFunctions = CreatePhiBasisFunctions(SpaceMin, SpaceMax, NPoints, nx, mu
 % ~~~~~~~~~~~~~~~
 
 
-psi = ComputePsi(SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi, mu_psi, vector_Sigma_Psi); % compute psi with function ComputePsi
+psi = ComputePsi(X, Y, SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi, mu_psi, vector_Sigma_Psi); % compute psi with function ComputePsi
 
 %% Firing rate function
 % ~~~~~~~~~~~~~~~
