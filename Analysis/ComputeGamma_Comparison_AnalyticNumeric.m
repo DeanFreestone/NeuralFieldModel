@@ -30,7 +30,7 @@ for m = 1 : numRow
         mu(n + numCol*(m-1), :) = [(SpaceMin - widthCentre + m*widthCentre*2) (SpaceMin - widthCentre + n*widthCentre*2)];
     end
 end
-sigma = [1 0; 0 1]; % covariance matrix
+sigma = [2 0; 0 2]; % covariance matrix
 
 % define gaussian basis functions
 gaussians = zeros(NPoints, NPoints, nx);
