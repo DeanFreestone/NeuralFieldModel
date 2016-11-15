@@ -1,5 +1,8 @@
 %% Numerical check. Implement equation (12)
-% implementationf of Equation (12)
+% Implementationf of Equation (12)
+% This script is to analytically test Equation (12) in the paper.
+% The function ReducedModel_ComputeFieldVtPlus1 is based on this script.
+% Miao Cao
 
 clc
 clear
