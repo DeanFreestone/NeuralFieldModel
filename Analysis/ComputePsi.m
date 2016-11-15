@@ -27,6 +27,9 @@ function Ts_invGamma_phi_psi = ComputePsi(X, Y, SpaceMin, SpaceMax, NPoints, nTh
 % calc location of Gaussian basis functions. Uniformly distributed over 2-D surface.
 
 
+
+x = linspace(SpaceMin, SpaceMax, NPoints*2-1);
+
 numRow = sqrt(nx); % number of gaussians for each colomn
 numCol = nx / numRow; % number of columns
 
