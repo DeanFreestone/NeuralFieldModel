@@ -97,34 +97,38 @@ w = squeeze(sum(gaussians, 3)); % connectivity kernel
 
 % convolution of connectivity kernel and neural field (after firing rate function)
 
-%% extend the field to 3*3 fields/tiles
+%% extend the field to 3*3 fields/tiles, to solve errors induced by boundary condition
 % ~~~~~~~~~~~~~~~
 
 
-NPoints_ExtendedField = 3 * NPoints;
+NPoints_ExtendedField = 3 * NPoints; % number of discretisation points in the extended field
 
-extendedField = zeros(NPoints_ExtendedField, NPoints_ExtendedField);
+extendedField = zeros(NPoints_ExtendedField, NPoints_ExtendedField); % extended neural field
+
+
 
 % sysmetry boundary condition
+
 % topLeft = rot90(firingRate_v_t, -2);
-% top = flipud(firingRate_v_t); 
+% top = flipud(firingRate_v_t);
 % topRight = rot90(firingRate_v_t, -2);
-% left = fliplr(firingRate_v_t); 
-% centre = firingRate_v_t; 
+% left = fliplr(firingRate_v_t);
+% centre = firingRate_v_t;
 % right = fliplr(firingRate_v_t);
-% bottomLeft = rot90(firingRate_v_t, -2); 
-% bottom = flipud(firingRate_v_t); 
+% bottomLeft = rot90(firingRate_v_t, -2);
+% bottom = flipud(firingRate_v_t);
 % bottomRight = rot90(firingRate_v_t, -2);
 
+% boundary condition - 9 identical copies into 9 tiles
 
 topLeft = firingRate_v_t;
-top = firingRate_v_t; 
+top = firingRate_v_t;
 topRight = firingRate_v_t;
-left = firingRate_v_t; 
-centre = firingRate_v_t; 
+left = firingRate_v_t;
+centre = firingRate_v_t;
 right = firingRate_v_t;
-bottomLeft = firingRate_v_t; 
-bottom = firingRate_v_t; 
+bottomLeft = firingRate_v_t;
+bottom = firingRate_v_t;
 bottomRight = firingRate_v_t;
 
 

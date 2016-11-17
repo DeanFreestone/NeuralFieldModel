@@ -71,7 +71,7 @@ v = sum(phi_fields, 3); % v, mean membrane potential field, at time t.
 % firing rate function
 firingRate_phi_xt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v))); % firing rate sigmoidal function, field
 
-%% integral over 2-D space
+%% integrate over 2-D space
 % ~~~~~~~~~~~~~~~
 
 x_tplus1 = []; % here is x(t+1)

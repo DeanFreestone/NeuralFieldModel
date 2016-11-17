@@ -87,8 +87,11 @@ psi = ComputePsi(X, Y, SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigm
 phi_fields = zeros(size(phi_basisFunctions));
 
 for m = 1 : nx % to compute phi * x(t)
-    phi_fields(:,:, m) = phi_basisFunctions(:,:, m) * Xt(m);
+    
+    phi_fields(:,:, m) = phi_basisFunctions(:,:, m) * Xt(m); % field basis function times state vector
+    
 end
+
 Vt = sum(phi_fields, 3); % v, mean membrane potential field, at time t.
 
 % firing rate function
@@ -99,13 +102,20 @@ firingRate_phi_Vt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - Vt))); % firing rate si
 
 
 % compute x(T+1)
-ingtegralProduct = zeros(nx, nTheta);
+ingtegralProduct = zeros(nx, nTheta); % a nx times nTheta matrix of integrations
+
 for pNX = 1 : nx % cycle through field basis functions
+    
     for qNTheta = 1 : nTheta % cycle through basis functions of connectivity kernel
+        
         product_psi_firingRate = squeeze(psi(qNTheta, pNX, :, :)) * firingRate_phi_Vt; % product of Psi and field after firing rate function
+        
         ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1); % integrate over space
+        
     end
+    
 end
+
 XtPlus1 = ks * Xt + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
 
 %% Compute field at time (T+1)
@@ -113,8 +123,11 @@ XtPlus1 = ks * Xt + ingtegralProduct * theta; % finally times theta (vector) and
 
 
 for m = 1 : nx % to compute phi * x(t)
-    fields_tplus1(:,:, m) = phi_basisFunctions(:,:, m) * XtPlus1(m);
+    
+    fields_tplus1(:,:, m) = phi_basisFunctions(:,:, m) * XtPlus1(m); % field basis functions times state vector
+    
 end
-VtPlus1 = squeeze(sum(fields_tplus1, 3));
+
+VtPlus1 = squeeze(sum(fields_tplus1, 3)); % field at time T+1
 
 end

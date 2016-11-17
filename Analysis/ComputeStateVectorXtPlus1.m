@@ -30,7 +30,9 @@ Ts = 0.0001; % time step
 ks = 1- Ts*(1/tau); % time constant parameter
 
 nx = 121; % number of Gaussian basis functions
-theta = [1, 1.2, 1.5]'; % scale 
+
+theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
+
 nTheta = 3; % number of connectivity kernel basis functions
 
 % ~~~~~~~~~~~~~~~
@@ -69,28 +71,34 @@ psi = ComputePsi(X, Y, SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigm
 
 % Firing rate function. Equation (4) Freestone et al., 2011, NeuroImage
 
-x_t = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
+Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
 phi_fields = zeros(size(phi_basisFunctions));
 
 for m = 1 : nx % to compute phi * x(t)
-    phi_fields(:,:, m) = phi_basisFunctions(:,:, m) * x_t(m);
+    
+    phi_fields(:,:, m) = phi_basisFunctions(:,:, m) * Xt(m);
+    
 end
 v_t = sum(phi_fields, 3); % v, mean membrane potential field, at time t.
 
 % firing rate function
 firingRate_phi_xt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - v_t))); % firing rate sigmoidal function, field
 
-%% integral over 2-D space
+%% integrate over 2-D space
 % ~~~~~~~~~~~~~~~
 
 
-x_tplus1 = []; % here is x(t+1)
+
 ingtegralProduct = zeros(nx, nTheta);
+
 for pNX = 1 : nx
     for qNTheta = 1 : nTheta
-        product_psi_firingRate = squeeze(psi(qNTheta, pNX, :, :)) * firingRate_phi_xt;
+        
+        product_psi_firingRate = squeeze(psi(qNTheta, pNX, :, :)) * firingRate_phi_xt; % Psi times firing(Xt)
+        
         ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1);
+        
     end
 end
 
-x_tplus1 = ks * x_t + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
+XtPlus1 = ks * Xt + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
