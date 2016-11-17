@@ -27,6 +27,6 @@ exponential = exp(-(mu'/CovMat*mu)); % exponential part
 
 coefficient = (pi*det(covMat_1)*det(covMat_2)) / det(CovMat); % coefficient
 
-product = coefficient*exponential;
+product = coefficient*exponential; % product of coefficient and exponential
 
 end
