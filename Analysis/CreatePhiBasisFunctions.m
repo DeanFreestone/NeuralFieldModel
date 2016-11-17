@@ -48,13 +48,13 @@ end
 
 covMat_phi = sigma_phi;
 
-%%
+%% Define field basis functions
 % ~~~~~~~~~~~~~~~
 
 
 phiBasisFunctions = zeros(NPoints, NPoints, nx);
 for n = 1 : nx
-    phiBasisFunctions(:,:, n) = Define2DGaussian_AnisotropicKernel(mu_phi(n, 1), mu_phi(n, 2), covMat_phi, NPoints, SpaceMin, SpaceMax);
+    phiBasisFunctions(:,:, n) = Define2DGaussian_AnisotropicKernel(mu_phi(n, 1), mu_phi(n, 2), covMat_phi, NPoints, SpaceMin, SpaceMax); % define 2-D anisotropic Gaussian basis function
 end
 
 end
