@@ -1,4 +1,4 @@
-%% Analytic test of inner product
+%% Test the analytic convolution of two Gaussians
 
 
 clc
