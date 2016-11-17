@@ -11,8 +11,8 @@ function gamma = ComputeGamma(SpaceMin, SpaceMax, NPoints, nx, mu, sigma)
 % NPoints - number of points along each dimension
 
 % nx - number of Gaussian basis functions
-% mu - centres of Gaussians
-% sigma - sigma of Gaussians
+% mu - centres of Gaussians, a 2 times Nx matrix
+% sigma - variance-covariance matrix of each Gaussian
 
 % ~~~~~~~~~~~~~~~
 % output parameter list:
