@@ -6,13 +6,14 @@
 clc
 clear
 close all
+
 %% Generate data
 % ~~~~~~~~~~~~~~~
 
 
 
 
-SpaceMin = -4; SpaceMax = 4; NPoints = 401;
+SpaceMin = -10; SpaceMax = 10; NPoints = 401;
 % random data, fData
 x = linspace(SpaceMin, SpaceMax, NPoints);
 stepSize = x(2)-x(1);
@@ -21,16 +22,16 @@ fData = randn(NPoints);
 
 % Define phi Gaussian basis function
 %
-mu_phi = [0.5 0.5];                   % center of basis function
-sigma_phi = [0.02 0; 0 0.02];           % variance-covariance matrix of phi
+mu_phi = [1 1];                   % center of basis function
+sigma_phi = [1 0; 0 1];           % variance-covariance matrix of phi
 
-phi = Define2DGaussian(mu_phi(1), mu_phi(2), sigma_phi(1,1), 0, NPoints, SpaceMin, SpaceMax);
+phi = Define2DGaussian_3(mu_phi(1), mu_phi(2), sigma_phi(1,1), 0, NPoints, SpaceMin, SpaceMax);
 % phi = Define2DGaussian(mu_phi(1), mu_phi(2), sigma_phi(1,1), 0, NPoints, SpaceMin, SpaceMax);
 
 % Define psi Gaussian kernel
-mu_psi = [-.5 -.5];              % centre of basis function
-sigma_psi = [0.04 0; 0 0.04];        % variance-covariance matrix of phi
-psi = Define2DGaussian(mu_psi(1), mu_psi(2), sigma_psi(1,1), 0, NPoints, SpaceMin, SpaceMax);
+mu_psi = [-1 -1];              % centre of basis function
+sigma_psi = [1.5 0; 0 1.5];        % variance-covariance matrix of phi
+psi = Define2DGaussian_3(mu_psi(1), mu_psi(2), sigma_psi(1,1), 0, NPoints, SpaceMin, SpaceMax);
 % psi = Define2DGaussian(mu_psi(1), mu_psi(2), sigma_psi(1,1), 0, NPoints, SpaceMin, SpaceMax);
 
 
