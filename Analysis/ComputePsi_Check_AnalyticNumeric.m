@@ -13,13 +13,13 @@ close all
 
 
 
-SpaceMin = -10; SpaceMax = 10; NPoints = 301;
+SpaceMin = -10; SpaceMax = 10; NPoints = 801;
 x = linspace(SpaceMin, SpaceMax, NPoints);
 stepSize = x(2)-x(1);
 
 Ts = 0.0001;
 nx = 16; % number of states basis functions
-theta = [1, 1.2, 1.5]; % number of connectivity kernel basis functions
+theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
 
 %
 numRow = sqrt(nx); % number of gaussians for each colomn
@@ -35,13 +35,13 @@ for m = 1 : numRow
     end
 end
 
-sigma_phi = [2 0; 0 2]; % covariance matrix of phi
+sigma_phi = [1 0; 0 1]; % covariance matrix of phi
 
 sigma_psi = [0.6, 0.8, 2];
 
-mu_psi = [1 1;
-    1 1;
-    1 1];
+mu_psi = [0 0;
+    0 0;
+    0 0];
 
 %% Compute gamma
 % ~~~~~~~~~~~~~~~
@@ -65,8 +65,8 @@ psi_phi_coefficient(3) = pi*sigma_psi(3)*sigma_phi(1, 1) / (sigma_psi(3)+sigma_p
 psi_phi_basis = zeros(length(theta), nx, NPoints, NPoints);
 for m=1:length(theta)
     for n=1 : nx
-        % these guys here are used with the LS algorithm for estimating
-        % theta and xi
+        
+        
         mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :);
         psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [sigma_psi(m) 0; 0 sigma_psi(m)]+sigma_phi, NPoints, SpaceMin, SpaceMax);
         
@@ -142,30 +142,48 @@ end
 
 
 
-for m=1:length(theta)
-    for n=1 : nx
-        figure, shg, clf;
-        subplot(3,1,1);
-        imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], squeeze(psi_phi_basis(m, n, :, :))); colorbar; title('analytic');
-        subplot(3,1,2);
-        imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], squeeze(psi_phi_basis_numeric(m, n, :, :))), colorbar; title('numeric');
-        subplot(3,1,3);
-        diffMat = squeeze(psi_phi_basis(m, n, :, :)) - squeeze(psi_phi_basis_numeric(m, n, :, :));
-        imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], diffMat), colorbar; title('Diff(analytic, numeric)');
-        suptitle(['n:' num2str(n) ' m:' num2str(m)]);
-    end
-end
-%% compare
-xT = -10 : 0.1 : 10;
-offset = 2;
-mu_f = 0; mu_g = 1;
-f = exp(-1*(xT - mu_f).^2);
-g = 0.5*exp(-1*0.3*(xT - mu_g).^2);
-g2 = 0.5*exp(-1*0.3*(xT - mu_g - offset).^2);
-c1 = conv(f, g, 'same');
-c2 = conv(f, g2, 'same');
-figure;
-subplot(2,1,1);
-plot(xT, f); hold on; plot(xT, g); hold on; plot(xT, c1); hold on; plot(xT, c2);
-subplot(2,1,2);
-plot(xT+offset, c1); xlim([-10 10])
+% for m=1:length(theta)
+%     for n=1 : nx
+%         figure, shg, clf;
+%         subplot(3,1,1);
+%         imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], squeeze(psi_phi_basis(m, n, :, :))); colorbar; title('analytic');
+%         subplot(3,1,2);
+%         imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], squeeze(psi_phi_basis_numeric(m, n, :, :))), colorbar; title('numeric');
+%         subplot(3,1,3);
+%         diffField = squeeze(psi_phi_basis(m, n, :, :)) - squeeze(psi_phi_basis_numeric(m, n, :, :));
+%         imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], diffField), colorbar; title('Diff(analytic, numeric)');
+%         suptitle(['n:' num2str(n) ' m:' num2str(m)]);
+%     end
+% end
+
+%% compare (summed field)
+
+
+field_numeric = squeeze(sum(sum(Ts_invGamma_phi_psi_numeric, 1), 2));
+
+field_analytic = squeeze(sum(sum(Ts_invGamma_phi_psi, 1), 2));
+
+figure, shg, clf;
+subplot(3,1,1);
+imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], field_analytic); colorbar; title('summed analytic');
+subplot(3,1,2);
+imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], field_numeric), colorbar; title('summed numeric');
+subplot(3,1,3);
+diffField = field_analytic -field_numeric;
+imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], diffField), colorbar; title('Diff(analytic, numeric)');
+suptitle('Compare summed field');
+
+%%
+% xT = -10 : 0.1 : 10;
+% offset = 2;
+% mu_f = 0; mu_g = 1;
+% f = exp(-1*(xT - mu_f).^2);
+% g = 0.5*exp(-1*0.3*(xT - mu_g).^2);
+% g2 = 0.5*exp(-1*0.3*(xT - mu_g - offset).^2);
+% c1 = conv(f, g, 'same');
+% c2 = conv(f, g2, 'same');
+% figure;
+% subplot(2,1,1);
+% plot(xT, f); hold on; plot(xT, g); hold on; plot(xT, c1); hold on; plot(xT, c2);
+% subplot(2,1,2);
+% plot(xT+offset, c1); xlim([-10 10])
