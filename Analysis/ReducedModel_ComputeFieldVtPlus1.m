@@ -75,7 +75,7 @@ v0 = 1.8; % Firing threshold
 % ~~~~~~~~~~~~~~~
 
 
-psi = ComputePsi(X, Y, SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi, mu_psi, vector_Sigma_Psi); % compute PS with function ComputePsi
+psi = ComputePsi(SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi, mu_psi, vector_Sigma_Psi); % compute PS with function ComputePsi
 
 %% Firing rate function
 % ~~~~~~~~~~~~~~~

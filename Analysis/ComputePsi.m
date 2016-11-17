@@ -1,4 +1,4 @@
-function Ts_invGamma_phi_psi = ComputePsi(X, Y, SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi, mu_psi, vector_Sigma_Psi)
+function Ts_invGamma_phi_psi = ComputePsi(SpaceMin, SpaceMax, NPoints, nTheta, Ts, nx, mu_phi, sigma_phi, mu_psi, vector_Sigma_Psi)
 %% Compute Psi
 % Compute Psi in Equation (24), Freestone et al., 2011, NeuroImage
 % Miao Cao
