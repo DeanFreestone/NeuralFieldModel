@@ -1,4 +1,4 @@
-function VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
+function VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, tau, Ts, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
 %% Complete/Full model
 % Compute neural field (post-synaptic membrane potential) at time (T+1)
 % Based on the equation (12), Freestone et al. 2011 NeuroImage
@@ -34,7 +34,7 @@ stepSize = x(2)-x(1);
 
 
 
-tau = 0.01; % synaptic time constant
+% tau = 0.01; % synaptic time constant
 
 VtPlus1 = []; % field at T+1
 
@@ -52,7 +52,7 @@ VtPlus1 = []; % field at T+1
 
 
 
-Ts = 0.0001; % time step, temporal resolution
+% Ts = 0.0001; % time step, temporal resolution
 
 % nx = 16; % number of Gaussian basis functions
 

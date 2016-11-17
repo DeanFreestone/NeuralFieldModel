@@ -1,4 +1,4 @@
-function [VtPlus1, Vt, XtPlus1] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
+function [VtPlus1, Vt, XtPlus1] = ReducedModel_ComputeFieldVtPlus1(Xt, tau, Ts, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints)
 %% Reduced model
 % Compute neural field (post-synaptic membrane potential) at time (T+1)
 % Miao Cao
@@ -36,9 +36,9 @@ stepSize = x(2)-x(1); % distance between two adjacent points in the 2-D surface
 % ~~~~~~~~~~~~~~~
 
 
-tau = 0.01; % synaptic time constant
+% tau = 0.01; % synaptic time constant
 
-Ts = 0.0001; % time step
+% Ts = 0.0001; % time step
 
 ks = 1- Ts*(1/tau); % time constant parameter
 

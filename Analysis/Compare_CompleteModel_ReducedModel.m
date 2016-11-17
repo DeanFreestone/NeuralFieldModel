@@ -18,8 +18,14 @@ figurePath = '../Figures/'; % figure folder
 % ~~~~~~~~~~~~~~~
 
 
+
+tau = 0.01; % synaptic time constant
+
+Ts = 0.0001; % time step
+
+
 % parameters to create a 2-D cortical surface
-SpaceMin = -10; SpaceMax = 10; NPoints = 1001;
+SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 
 % field basis function parameters
 nx = 121; % number of Gaussian basis function of field decomposition
@@ -42,12 +48,12 @@ vector_Sigma_Psi = [0.6 0; 0.8 0; 2 0]; % width of Gaussian basis functions of c
 Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
 
 % reduced model
-[ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
+[ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, tau, Ts, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
 temp = Vt;
 
 % complete model
-CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
+CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, tau, Ts, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
 % residual of two models
 residual = CompleteModel_VtPlus1 - ReducedModel_VtPlus1;
@@ -89,11 +95,11 @@ vector_Sigma_Psi = [0.8 0.2; 0.8 0.2]; % width of Gaussian basis functions of co
 
 
 % reduced model
-[ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
+[ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, tau, Ts, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
 
 % complete model
-CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
+CompleteModel_VtPlus1 = CompleteModel_ComputeFieldVtPlus1(Vt, tau, Ts, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
 
 
 % residual of two models
