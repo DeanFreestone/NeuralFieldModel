@@ -20,12 +20,18 @@ function gamma = ComputeGamma(SpaceMin, SpaceMax, NPoints, nx, mu, sigma)
 
 %% Compute gamma
 % ~~~~~~~~~~~~~~~
+
+
 gamma = zeros(nx, nx); % Gamma is a matrix with dimensions, nx * nx
 
 for m = 1 : nx % compute pair-wise inner production of two Gaussians
+    
     for n = 1 : nx
+        
         gamma(m, n) = InnerProductTwo2DGaussians(mu(m, :), mu(n, :), sigma, sigma);
+        
     end
+    
 end
 
 end
