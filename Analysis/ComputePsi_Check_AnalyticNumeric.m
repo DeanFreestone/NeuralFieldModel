@@ -165,13 +165,13 @@ field_analytic = squeeze(sum(sum(Ts_invGamma_phi_psi, 1), 2));
 
 figure, shg, clf;
 subplot(3,1,1);
-imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], field_analytic); colorbar; title('summed analytic');
+imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], field_analytic); colorbar; title('Analytic');
 subplot(3,1,2);
-imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], field_numeric), colorbar; title('summed numeric');
+imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], field_numeric), colorbar; title('Numeric');
 subplot(3,1,3);
 diffField = field_analytic -field_numeric;
 imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], diffField), colorbar; title('Diff(analytic, numeric)');
-suptitle('Compare summed field');
+suptitle('Compute Psi - Compare analytic and numeric');
 
 %%
 % xT = -10 : 0.1 : 10;

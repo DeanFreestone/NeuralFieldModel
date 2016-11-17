@@ -60,11 +60,11 @@ fig1 = figure('units','normalized','outerposition',[0 0 1 1]);
 subplot(2,2,1);
 imagesc(Vt), colorbar; title('V(t)');
 subplot(2,2,2);
-imagesc(ReducedModel_VtPlus1), colorbar; title('Reduced V(t+1)');
+imagesc(ReducedModel_VtPlus1), colorbar; title('Reduced Model V(t+1)');
 subplot(2,2,3);
-imagesc(CompleteModel_VtPlus1), colorbar; title('Full V(t+1)');
+imagesc(CompleteModel_VtPlus1), colorbar; title('Full Model V(t+1)');
 subplot(2,2,4);
-imagesc(CompleteModel_VtPlus1 - ReducedModel_VtPlus1), colorbar; title('Residual');
+imagesc(CompleteModel_VtPlus1 - ReducedModel_VtPlus1), colorbar; title('Residual(Reduced Model, Full Model)');
 suptitle({'Mexican-Hat kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1,1))]});
 
 filename =[figurePath 'modelComparison_MexHat_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_nPoints_' num2str(NPoints) '_vTPlus1.pdf'];

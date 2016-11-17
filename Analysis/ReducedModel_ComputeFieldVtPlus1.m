@@ -97,10 +97,10 @@ firingRate_phi_Vt = 1 ./ ( 1 + exp(slope_sigmoidal*(v0 - Vt))); % firing rate si
 
 % compute x(T+1)
 ingtegralProduct = zeros(nx, nTheta);
-for pNX = 1 : nx
-    for qNTheta = 1 : nTheta
-        product_psi_firingRate = squeeze(psi(qNTheta, pNX, :, :)) * firingRate_phi_Vt;
-        ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1);
+for pNX = 1 : nx % cycle through field basis functions
+    for qNTheta = 1 : nTheta % cycle through basis functions of connectivity kernel
+        product_psi_firingRate = squeeze(psi(qNTheta, pNX, :, :)) * firingRate_phi_Vt; % product of Psi and field after firing rate function
+        ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1); 
     end
 end
 XtPlus1 = ks * Xt + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)
