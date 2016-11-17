@@ -13,15 +13,20 @@ function [product] = InnerProductTwo2DGaussians(mu_1, mu_2, sigma_1, sigma_2)
 % output parameter list:
 % product - inner product of two gaussians
 
-%%
-mu = (mu_1 - mu_2)';
-% var_phi = sigma_phi; var_psi = sigma_psi;
-covMat_1 = sigma_1; covMat_2 = sigma_2;
+%% implement the equation
+% ~~~~~~~~~~~~~~~
+
+
+mu = (mu_1 - mu_2)'; % centre of the resultant Gaussian
+
+covMat_1 = sigma_1; covMat_2 = sigma_2; % variance-covariance matrix
 
 CovMat = (covMat_1 + covMat_2);
-exponential = exp(-(mu'/CovMat*mu));
 
-coefficient = (pi*det(covMat_1)*det(covMat_2)) / det(CovMat);
+exponential = exp(-(mu'/CovMat*mu)); % exponential part
+
+coefficient = (pi*det(covMat_1)*det(covMat_2)) / det(CovMat); % coefficient
+
 product = coefficient*exponential;
 
 end
