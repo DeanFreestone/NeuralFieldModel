@@ -22,6 +22,6 @@ x = linspace(SpaceMin,SpaceMax,SpacePoints);    % xmu-PlotWidth*maxsd:0.1:xmu+Pl
 % z =  exp(-(A(1,1)*(X-xmu).^2 + 2*A(1,2)*(X-xmu).*(Y-ymu) + A(2,2)*(Y-ymu).^2));
 
 % compute Gaussian from basic equation
-coefficient = 1/(2*pi*sd*sd*sqrt(1-rho^2));
+% coefficient = 1/(2*pi*sd*sd*sqrt(1-rho^2));
 % z = coefficient * exp(-1*(((X-xmu).^2)./var + ((Y-ymu).^2)./var - (2*rho*(X-xmu).*(Y-ymu))./var )/(2*(1-rho^2)));
 z = exp(-1*(((X-xmu).^2)./var + ((Y-ymu).^2)./var - (2*rho*(X-xmu).*(Y-ymu))./var )/(2*(1-rho^2)));
