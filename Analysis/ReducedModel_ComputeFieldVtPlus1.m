@@ -23,11 +23,14 @@ function [VtPlus1, Vt, XtPlus1] = ReducedModel_ComputeFieldVtPlus1(Xt, nx, sigma
 
 
 % parameters to create a 2-D cortical surface
-x = linspace(SpaceMin, SpaceMax, NPoints); % a 2-D surface
+% a 2-D surface
+
+x = linspace(SpaceMin, SpaceMax, NPoints); % coordinates of discretisation of the surface
 
 stepSize = x(2)-x(1); % distance between two adjacent points in the 2-D surface
 
 [X, Y] = meshgrid(x, x); % x and y coordinates of the 2-D surface
+
 
 %% Parameters
 % ~~~~~~~~~~~~~~~

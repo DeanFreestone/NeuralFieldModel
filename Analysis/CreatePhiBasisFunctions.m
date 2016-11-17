@@ -22,14 +22,14 @@ function [phiBasisFunctions, mu_phi] =  CreatePhiBasisFunctions(SpaceMin, SpaceM
 
 
 
-x = linspace(SpaceMin, SpaceMax, NPoints*2-1);
+x = linspace(SpaceMin, SpaceMax, NPoints*2-1); % coordinates of discretisation of the surface
 
 
 numRow = sqrt(nx); % number of gaussians for each colomn
 numCol = nx / numRow; % number of columns
 
-widthSpace = SpaceMax - SpaceMin;
-widthCentre = widthSpace / (numCol*2);
+widthSpace = SpaceMax - SpaceMin; % width of the whole cortical surface
+widthCentre = widthSpace / (numCol*2); % distance between two centres of adjacent Gaussian basis functions
 
 % If mu_phi is not pre-defined, create phi with centres of Gaussian basis
 % function uniformly distributed.
@@ -46,7 +46,7 @@ if isempty(mu_phi) || ~any(mu_phi(:)) % if mu_phi is empty or only zeros
     end
 end
 
-covMat_phi = sigma_phi;
+covMat_phi = sigma_phi; % variance-covariance matrix of each phi/field basis function
 
 %% Define field basis functions
 % ~~~~~~~~~~~~~~~

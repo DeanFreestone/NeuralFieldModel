@@ -28,7 +28,7 @@ function Ts_invGamma_phi_psi = ComputePsi(X, Y, SpaceMin, SpaceMax, NPoints, nTh
 
 
 
-x = linspace(SpaceMin, SpaceMax, NPoints*2-1);
+x = linspace(SpaceMin, SpaceMax, NPoints*2-1); % coordinates of discretisation of the surface
 
 numRow = sqrt(nx); % number of gaussians for each colomn
 numCol = nx / numRow; % number of columns
