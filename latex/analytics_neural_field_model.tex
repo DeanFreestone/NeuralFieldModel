@@ -6,8 +6,11 @@
 
 
 % packages
+\usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
 
 
 % graphic path
@@ -40,7 +43,7 @@
 \paragraph{In order to implement and simulate Neural Field Model, we break down
 the model into several parts and implement and test each of them independently. The
 following sections show the details of our implementation. Please always refer to
-Freestone et al., 2011, NeuroImage to equations and details.}
+Freestone et al., 2011, NeuroImage for equations and details.}
 
 \newpage
 
@@ -62,53 +65,14 @@ Appendix E (Freestone et al., 2011, NeuroImage), Equation (4) $\left(\phi_{i}\ot
 \subparagraph{Section: Generate spatial data, create a $NPoints\times NPoints$ cortical surface and phi and psi Gaussian basis functions.\\}
 
 
-\begin{tabular}{|c|c|}
-\hline
-Variable name & Explanation\tabularnewline
-\hline
-X & Coordinates of x-axis\tabularnewline
-\hline
-Y & Coordinates of y-axis\tabularnewline
-\hline
-mu\_phi & Centre of gaussian\tabularnewline
-\hline
-sigma\_phi & covariance matrix of phi\tabularnewline
-\hline
-phi & Gaussian basis function\tabularnewline
-\hline
-mu\_psi & Centre of gaussian\tabularnewline
-\hline
-sigma\_psi & covariance matrix of psi\tabularnewline
-\hline
-psi & Gaussian basis function\tabularnewline
-\hline
-\end{tabular}
+\subsection{Results}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{Convolution2DGaussians_Analytic_Conv2.pdf}
+\caption{Residual(analytic, Conv2)}\label{Convolution2DGaussians_Analytic_Conv2.pdf}
+\end{figure}
 
-\paragraph{Analytic check of convolution of two Gaussians.\\}
-\label{subp:Analytic check of convolution of two Gaussians}
 
-%\subparagraph{Section: analytic check of convolution of two gaussians}
-
-\begin{tabular}{|c|c|}
-\hline
-Variable name & Explanation\tabularnewline
-\hline
-mu & Centre of a gaussian resulted from convolution of two gaussians, phi
-and psi\tabularnewline
-\hline
-var\_phi & variance of gaussian phi\tabularnewline
-\hline
-var\_psi & variance of gaussian psi\tabularnewline
-\hline
-exponential & exponential part of Equation Appendix E.4 (Freestone et al. 2011)\tabularnewline
-\hline
-CovMat & covariance matrix of a resultant gaussian convolved by two other gaussians\tabularnewline
-\hline
-coefficient & coefficient part of Equation Appendix E.4 (Freestone et al. 2011)\tabularnewline
-\hline
-convE2\_equivalent & analytic result of convolution of two gaussians, phi and psi\tabularnewline
-\hline
-\end{tabular}
 
 \newpage
 
@@ -174,7 +138,7 @@ We implement to compute Psi.
 Compare reduced model and full model.
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{modelComparison_MexHat_nx_121_sigma_1_5_nPoints_501_vTPlus1.pdf}
+\includegraphics[width=\textwidth]{modelComparison_MexHat_nx_121_sigma_1_5_nPoints_501_vTPlus1.pdf}
 \caption{Connectivity kernel, Mexican Hat}
 \end{figure}
 
