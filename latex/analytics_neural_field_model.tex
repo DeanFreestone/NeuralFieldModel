@@ -1,14 +1,17 @@
-%% Tex file of coding notes of analytic implementation of neural field model
-\documentclass[a4paper, 8pt, english]{article}
+% Tex file of coding notes of analytic implementation of neural field model
+\documentclass[a4paper, 12pt, english]{article}
 
-%% packages
+% packages
 \usepackage{amsmath}
 \usepackage{graphicx}
 
-%% title of this manuscript
-\title{Matlab Code Notes for Neural Field Model}
+% title of this manuscript
+\title{Matlab Implementation of Neural Field Model}
 \author{Miao Cao}
 \date{1 July 2016}
+
+% graphic path
+\graphicspath{{/Users/miao/Documents/Miao/Neurosciences/Projects/NeuralFieldModel/Figures/}}
 
 
 \begin{document}
@@ -23,9 +26,23 @@
 \tableofcontents
 
 \newpage
-%% sections start from here
 
 
+
+
+% Introduction
+\section{Introduction}
+\paragraph{In order to implement and simulate Neural Field Model, we break down
+the model into several parts and implement and test them independently. The
+following sections show the details of our implementation.}
+
+\newpage
+
+
+
+
+
+% Convolution of two Gaussians
 \section{Convolution of Two Gaussian basis functions}
 
 \paragraph{Analytically prove convolution of two Gaussians. In general, the
@@ -88,6 +105,12 @@ convE2\_equivalent & analytic result of convolution of two gaussians, phi and ps
 \hline
 \end{tabular}
 
+\newpage
+
+
+
+
+% Compute Gamma
 \section{Compute Gamma}
 
 \paragraph{File (Matlab script): ComputeGamma.m}
@@ -104,28 +127,47 @@ a vector of Gaussian basis functions.}
 define $\phi(r)$, as a vector of Gaussian basis functions. Each Gaussian
 function is defined as $\phi(r-r')=\exp{(-\frac{(r-r')^{T}(r-r')}{\sigma_{\phi}^{2}})}$.}
 
-\section{Compute Psi}
-\label{compute psi}
-\paragraph{Compute Psi --- connectivity kernel}
-\label{par:Compute}
+\newpage
 
-\section{Compute State Vector}
+
+
+% Compute Psi
+\section{Compute Psi}
+We implement to compute Psi.
+
+\[[\Psi(r\prime)] = Ts\Gamma\int_\omega\]
+
+\section{Compute State Vector at time T+1}
 \label{state vector}
 \paragraph{parameter table, figures}
 
-
-\section{Compute State Vector --- Check with numerical solution}
-\label{sec:Compute State Vector --- Check}
-\section{In order to check the computation of state vectors, we firstly initialise a random field. }
+\newpage
 
 
 
-\section{Compare Reduced Model and Full Model}
-Parameter list:
-
-\includegraphics[width=\linewidth]{/figures/}
 
 
+\section{Compute field at time T+1}
+
+\newpage
+
+
+
+
+
+\section{Compute full model}
+\paragraph{We compute the full model.}
+
+\newpage
+
+
+\section{Compare reduced model and full model}
+Compare reduced model and full model.
+\begin{figure}
+\centering
+\includegraphics[width=0.8\textwidth]{modelComparison_MexHat_nx_121_sigma_1_5_nPoints_501_vTPlus1.pdf}
+\caption{Connectivity kernel, Mexican Hat}
+\end{figure}
 
 
 \end{document}
