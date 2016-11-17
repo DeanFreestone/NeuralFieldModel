@@ -100,7 +100,7 @@ ingtegralProduct = zeros(nx, nTheta);
 for pNX = 1 : nx % cycle through field basis functions
     for qNTheta = 1 : nTheta % cycle through basis functions of connectivity kernel
         product_psi_firingRate = squeeze(psi(qNTheta, pNX, :, :)) * firingRate_phi_Vt; % product of Psi and field after firing rate function
-        ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1); 
+        ingtegralProduct(pNX, qNTheta) = sum(sum(product_psi_firingRate * stepSize^2, 2), 1); % integrate over space
     end
 end
 XtPlus1 = ks * Xt + ingtegralProduct * theta; % finally times theta (vector) and get x(t+1)

@@ -13,7 +13,7 @@ close all
 
 
 
-SpaceMin = -10; SpaceMax = 10; NPoints = 801;
+SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 x = linspace(SpaceMin, SpaceMax, NPoints);
 stepSize = x(2)-x(1);
 
@@ -137,26 +137,9 @@ for n = 1 : length(theta) % cycle through each row of the matrix of fields
     
     Ts_invGamma_phi_psi_numeric(n,:,:,:) = Ts * inv_Gamma_fieldVector;
 end
-%% compare difference
+%% compare analytic and numeric results - residual
 % ~~~~~~~~~~~~~~~
 
-
-
-% for m=1:length(theta)
-%     for n=1 : nx
-%         figure, shg, clf;
-%         subplot(3,1,1);
-%         imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], squeeze(psi_phi_basis(m, n, :, :))); colorbar; title('analytic');
-%         subplot(3,1,2);
-%         imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], squeeze(psi_phi_basis_numeric(m, n, :, :))), colorbar; title('numeric');
-%         subplot(3,1,3);
-%         diffField = squeeze(psi_phi_basis(m, n, :, :)) - squeeze(psi_phi_basis_numeric(m, n, :, :));
-%         imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], diffField), colorbar; title('Diff(analytic, numeric)');
-%         suptitle(['n:' num2str(n) ' m:' num2str(m)]);
-%     end
-% end
-
-%% compare (summed field)
 
 
 field_numeric = squeeze(sum(sum(Ts_invGamma_phi_psi_numeric, 1), 2));
@@ -173,17 +156,4 @@ diffField = field_analytic -field_numeric;
 imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], diffField), colorbar; title('Diff(analytic, numeric)');
 suptitle('Compute Psi - Compare analytic and numeric');
 
-%%
-% xT = -10 : 0.1 : 10;
-% offset = 2;
-% mu_f = 0; mu_g = 1;
-% f = exp(-1*(xT - mu_f).^2);
-% g = 0.5*exp(-1*0.3*(xT - mu_g).^2);
-% g2 = 0.5*exp(-1*0.3*(xT - mu_g - offset).^2);
-% c1 = conv(f, g, 'same');
-% c2 = conv(f, g2, 'same');
-% figure;
-% subplot(2,1,1);
-% plot(xT, f); hold on; plot(xT, g); hold on; plot(xT, c1); hold on; plot(xT, c2);
-% subplot(2,1,2);
-% plot(xT+offset, c1); xlim([-10 10])
+
