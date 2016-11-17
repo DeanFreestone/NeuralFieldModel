@@ -8,6 +8,12 @@ clc
 clear
 close all
 
+%% figure save path
+% ~~~~~~~~~~~~~~~
+
+
+figurePath = '../Figures/';
+
 %% parameters and variables are pre-defined here
 % ~~~~~~~~~~~~~~~
 
@@ -142,11 +148,11 @@ end
 
 
 
-field_numeric = squeeze(sum(sum(Ts_invGamma_phi_psi_numeric, 1), 2));
+field_analytic = squeeze(sum(sum(Ts_invGamma_phi_psi, 1), 2)); % analytic
 
-field_analytic = squeeze(sum(sum(Ts_invGamma_phi_psi, 1), 2));
+field_numeric = squeeze(sum(sum(Ts_invGamma_phi_psi_numeric, 1), 2)); % numeric
 
-figure, shg, clf;
+fig = figure; shg, clf;
 subplot(3,1,1);
 imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], field_analytic); colorbar; title('Analytic');
 subplot(3,1,2);
@@ -156,4 +162,5 @@ diffField = field_analytic -field_numeric;
 imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], diffField), colorbar; title('Diff(analytic, numeric)');
 suptitle('Compute Psi - Compare analytic and numeric');
 
-
+filename =[figurePath 'ComputePsi_Check_AnalyticNumeric_SpatialRes_' num2str(NPoints) '.pdf'];
+print(fig, '-dpdf', filename);
