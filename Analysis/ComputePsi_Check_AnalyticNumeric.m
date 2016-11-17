@@ -152,14 +152,16 @@ field_analytic = squeeze(sum(sum(Ts_invGamma_phi_psi, 1), 2)); % analytic
 
 field_numeric = squeeze(sum(sum(Ts_invGamma_phi_psi_numeric, 1), 2)); % numeric
 
+residualField = field_analytic -field_numeric;
+
+% visualise the residual
 fig = figure; shg, clf;
 subplot(3,1,1);
 imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], field_analytic); colorbar; title('Analytic');
 subplot(3,1,2);
 imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], field_numeric), colorbar; title('Numeric');
 subplot(3,1,3);
-diffField = field_analytic -field_numeric;
-imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], diffField), colorbar; title('Diff(analytic, numeric)');
+imagesc([SpaceMin SpaceMax], [SpaceMax SpaceMin], residualField), colorbar; title('Diff(analytic, numeric)');
 suptitle('Compute Psi - Compare analytic and numeric');
 
 filename =[figurePath 'ComputePsi_Check_AnalyticNumeric_SpatialRes_' num2str(NPoints) '.pdf'];
