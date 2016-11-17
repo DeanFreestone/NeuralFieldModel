@@ -63,7 +63,10 @@ Gamma = ComputeGamma(SpaceMin, SpaceMax, NPoints, nx, mu_phi, covMat_phi); % com
 % But, we haven't figure out covariance matrix here.
 
 
+
+% compute coeffcients
 psi_phi_coefficient = zeros(length(vector_Sigma_Psi), 1);
+
 for m = 1 : nTheta
     
     % covariance matrix of this basis function
@@ -72,62 +75,52 @@ for m = 1 : nTheta
     % coefficient of convolution of phi and psi basis functions
     %     psi_phi_coefficient(m) = pi*det(covMat_Psi)*det(covMat_phi) / det(covMat_Psi+covMat_phi); % coefficient of convolution of phi and psi basis functions
     psi_phi_coefficient(m) = 2*pi*sqrt(det(covMat_Psi))*sqrt(det(covMat_phi)) / sqrt(det(covMat_Psi+covMat_phi)); % coefficient of convolution of phi and psi basis functions
+    
 end
 
 
-% compute the convolution between phi and psi
+% compute the convolution of phi and psi
 psi_phi_basis = zeros(nTheta, nx, NPoints, NPoints); % nx * ntheta * fields
 
-for m=1 : nTheta
-    for n=1 : nx
-        % these guys here are used with the LS algorithm for estimating
-        % theta and xi
+for m=1 : nTheta % cycle through each connectivity basis function
+    
+    for n=1 : nx % cycle through each field basis function
         
         mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :); % centre of a Gaussian after convolution of phi and psi
         
         % covariance matrix of this basis function of connectivity kernel
         covMat_Psi = [vector_Sigma_Psi(m, 1) vector_Sigma_Psi(m, 2); vector_Sigma_Psi(m, 2) vector_Sigma_Psi(m, 1)];
         
-        psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), covMat_phi + covMat_Psi, NPoints, SpaceMin, SpaceMax);
+        psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), covMat_phi + covMat_Psi, NPoints, SpaceMin, SpaceMax); % convolution of phi ans psi is another Gaussian
         
         psi_phi_basis(m, n, :, :) = psi_phi(:, :);
         
         
-        %         % cycle through every point on the cortical surface
-        %         for p = 1 : NPoints
-        %             for q = 1 : NPoints
-        %
-        %                 rPrime = [X(p, q) Y(p, q)]; % location r'
-        %
-        %                 mu = mu_phi(n, :) + mu_psi(m, :) + 2*mu_psi(m, :) + rPrime; % centre of Gaussian after convolution
-        %
-        %                 psi_phi = psi_phi_coefficient(m)*Define2DGaussian_AnisotropicKernel(mu(1), mu(2), [vector_Sigma_Psi(m) 0; 0 vector_Sigma_Psi(m)]+covMat_phi, NPoints, SpaceMin, SpaceMax);
-        %
-        %                 psi_phi_basis(m, n, :, :) = squeeze(psi_phi_basis(m, n, :, :)) + psi_phi(:, :);
-        %
-        %             end
-        %         end
-        %         theta_psi_phi_basis(nn,n,:) = theta(nn)*psi_phi_basis(nn,n,:);
     end
     
 end
 
-Ts_invGamma_phi_psi = zeros(nTheta, nx, NPoints, NPoints); % initialise the matrix of fields. nx * ntheta * fields
+Ts_invGamma_phi_psi = zeros(nTheta, nx, NPoints, NPoints); % initialise the matrix of fields. Psi matrix. Dimensions: nx * ntheta * fields
 
-inv_Gamma = inv(Gamma);
+inv_Gamma = inv(Gamma); % inverse Gamma matrix
 
 for m = 1 : nTheta % cycle through each row of the matrix of fields
     
-    fieldVector = squeeze(psi_phi_basis(m, :, :, :)); % a
+    fieldVector = squeeze(psi_phi_basis(m, :, :, :));
+    
     inv_Gamma_fieldVector = zeros(size(fieldVector));
     
-    for p = 1 : nx
-        for q = 1 : nx
-            inv_Gamma_fieldVector(p, :, :) = inv_Gamma_fieldVector(p, :, :) + inv_Gamma(p, q) .* fieldVector(q, :, :);
+    for p = 1 : nx % cycle through each field basis function
+        
+        for q = 1 : nx % cycle through each field basis function
+            
+            inv_Gamma_fieldVector(p, :, :) = inv_Gamma_fieldVector(p, :, :) + inv_Gamma(p, q) .* fieldVector(q, :, :); % calculate each element in the Psi matrix
+            
         end
+        
     end
     
-    Ts_invGamma_phi_psi(m,:,:,:) = Ts * inv_Gamma_fieldVector;
+    Ts_invGamma_phi_psi(m,:,:,:) = Ts * inv_Gamma_fieldVector; % Psi matrix
 end
 
 end
