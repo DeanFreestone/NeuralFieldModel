@@ -40,10 +40,10 @@
 
 % Introduction
 \section{Introduction}
-\paragraph{In order to implement and simulate Neural Field Model, we break down
-the model into several parts and implement and test each of them independently. The
+\paragraph{In order to implement and simulate Neural Field Model in Matlab, we break down
+neural field model into several parts based mathematical equations and independently implement and test each part. The
 following sections show the details of our implementation. Please always refer to
-Freestone et al., 2011, NeuroImage for equations and details.}
+Freestone et al., 2011, NeuroImage for derivations, equations and details.}
 
 \newpage
 
@@ -63,6 +63,14 @@ precision level of analytic simulation should be around $10^{-6}$.}
 Appendix E (Freestone et al., 2011, NeuroImage), Equation (4) $\left(\phi_{i}\otimes\phi_{j}\right)(r)=(\frac{\pi\sigma_{i}^{2}\sigma_{j}^{2}}{\sigma_{i}^{2}+\sigma_{i}^{2}})^{\frac{n}{2}}\exp(-\frac{1}{\sigma_{i}^{2}+\sigma_{i}^{2}}r^{T}r)$.
 
 \subparagraph{Section: Generate spatial data, create a $NPoints\times NPoints$ cortical surface and phi and psi Gaussian basis functions.\\}
+
+
+\subsection{Parameters}
+
+
+
+\subsection{Implementations}
+
 
 
 \subsection{Results}
@@ -96,16 +104,23 @@ a vector of Gaussian basis functions.}
 define $\phi(r)$, as a vector of Gaussian basis functions. Each Gaussian
 function is defined as $\phi(r-r')=\exp{(-\frac{(r-r')^{T}(r-r')}{\sigma_{\phi}^{2}})}$.}
 
+
+\subsection{Parameter List}
+\subsection{Implementations}
+\subsection{Results}
+
 \newpage
 
 
 
 % Compute Psi
 \section{Compute Psi}
-We implement to compute Psi.
+\paragraph{We implement to compute Psi.}
 
-\[[\Psi(r\prime)] = Ts\Gamma\int_\omega\]
 
+\subsection{Parameter List}
+\subsection{Implementations}
+\subsection{Results}
 
 \newpage
 
@@ -113,7 +128,9 @@ We implement to compute Psi.
 \section{Compute State Vector at time T+1}
 \label{state vector}
 \paragraph{parameter table, figures}
-
+\subsection{Parameter List}
+\subsection{Implementations}
+\subsection{Results}
 \newpage
 
 
@@ -121,6 +138,9 @@ We implement to compute Psi.
 
 
 \section{Compute Reduced Model}
+\subsection{Parameter List}
+\subsection{Implementations}
+\subsection{Results}
 
 \newpage
 
@@ -129,14 +149,30 @@ We implement to compute Psi.
 
 
 \section{Compute Full Model}
-\paragraph{We compute the full model.}
+\paragraph{We numerically compute neural field at time T+1 based on field at time T.
+As opposed to reduced model, full model does not decompose neural field into field basis functions; it directly convolves
+the neural field at time T with connectivity kernel.}
 
+\subparagraph{In the full model, when we convolve neural field at time T with connectivity kernel,
+we have significant errors or residual on the edges of the field. In order to conquer this,
+we apply a boundary condition method to extend the field into 9 tiles and each tile is an identical copy
+of the neural field.}
+
+\subsection{Parameters}
+\subsection{Implementations}
+\subsection{Results}
 \newpage
 
 
 \section{Compare Reduced Model and Full Model}
-Compare reduced model and full model.
-\begin{figure}
+\paragraph{Compare neural fields at time T+1 computed by reduced model and full model.\newline
+Script name: Compare\_CompleteModel\_ReducedModel.m}
+\subsection{Parameters}
+\subsection{Implementations}
+\subsection{Results}
+
+
+\begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{modelComparison_MexHat_nx_121_sigma_1_5_nPoints_501_vTPlus1.pdf}
 \caption{Connectivity kernel, Mexican Hat}
