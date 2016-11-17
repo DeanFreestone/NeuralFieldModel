@@ -30,7 +30,7 @@ SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 % field basis function parameters
 nx = 121; % number of Gaussian basis function of field decomposition
 
-sigma_phi = [0.8 0; 0 0.8]; % variance-covariance matrix of Gaussian basis function of field decomposition
+sigma_phi = [1.5 0; 0 1.5]; % variance-covariance matrix of Gaussian basis function of field decomposition
 
 % connectivity kernel parameters
 theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
@@ -114,9 +114,9 @@ fig2 = figure('units','normalized','outerposition',[0 0 1 1]);
 subplot(2,2,1);
 imagesc(Vt), colorbar; title('V(t)');
 subplot(2,2,2);
-imagesc(ReducedModel_VtPlus1), colorbar; title('Reduced V(t+1)');
+imagesc(ReducedModel_VtPlus1), colorbar; title('Reduced Model V(t+1)');
 subplot(2,2,3);
-imagesc(CompleteModel_VtPlus1), colorbar; title('Full V(t+1)');
+imagesc(CompleteModel_VtPlus1), colorbar; title('Full Model V(t+1)');
 subplot(2,2,4);
 imagesc(CompleteModel_VtPlus1 - ReducedModel_VtPlus1), colorbar; title('Residual');
 suptitle({'Gabor kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1,1))]});
