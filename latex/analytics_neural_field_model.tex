@@ -144,8 +144,33 @@ Psi - Psi matrix
 
 \subsection{Implementations}
 
+\paragraph{Pre-define parameters and centres of field basis functions\newline}
+Define the coordinates of discretisation of the cortical surface as varialbe \textit{x}. If the centres of field basis function are left as empy the input parameters (mu\_phi, a
+vectore of 2-D coordinates of centres), we define these centres here and spread them
+uniformly in the cortical surface. \newline
+We calculate the number of rows, \textit{numRow}, and columns, \textit{numCol}, based on the
+number of field basis function, \textit{nx}.\newline
+We align the centres of field basis functions to either right on the
+discretisation points or the middle point of two adjacent discretisation
+points, to avode introducing unnecessary dynamics. \newline
+So, we have centres, \textit{mu\_phi}, and variance-covariance matrix, \textit{covMat\_phi},
+of each field basis functions.\newline
+\paragraph{Compute Gamma\newline}
+Call function, \textit{ComputeGamma.m}, to compute Gamma matrix, \textit{Gamma} (a \(\textit{nx}\times
+\textit{nx}\) matrix).\newline
 
+\paragraph{Compute coefficients of convolution of phi and psi\newline}
+A vector of Gaussian coefficients, \textit{psi\_phi\_coefficient} (\(1\times\textit{nTheta}\) vector), is computed based on Equation
+(E.4) Appendix E.
 
+\paragraph{Compute convolution of phi and psi\newline}
+To compute convolution of psi and phi analytically, we use function \textit{Define2DGaussian\_AnisotropicKernel.m}
+to define Gaussian basis and times the coefficients, \textit{psi\_phi\_coefficient}.
+The resultant Gaussians are stored in variable \textit{psi\_phi\_basis}
+
+\paragraph{Compute Psi matrix\newline}
+Firstly we inverse Gamma matrix as \textit{inv\_Gamma}. Then we times time step, \textit{Ts} (constant), and \textit{inv\_Gamma} to each row of \textit{psi\_phi\_basis}.
+The result is Psi matrix and it's stored in variable \textit{Ts\_invGamma\_phi\_psi} and is returned back to the function.
 
 \subsection{Results}
 Run script: ComputePsi\_Compare\_AnalyticNumeric.m
