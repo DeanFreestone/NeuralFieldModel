@@ -1,14 +1,15 @@
 function [product] = InnerProductTwo2DGaussians(mu_1, mu_2, sigma_1, sigma_2)
-%% Inner product of two 2-D Gaussians
+%% Inner product of two 2-D Gaussian basis functions
 % To implement Appendix D Equation (D.7). Freestone et al., 2011, NeuroImage
 % Miao Cao
 
+
 % ~~~~~~~~~~~~~~~
 % input parameter list:
-% mu_1 - centres of Gaussian 1
-% mu _2- centres of Gaussian 2
-% sigma_1 - sigma of Gaussian 1
-% sigma_2 - sigma of Gaussian 2
+% mu_1 - centre of Gaussian basis function 1
+% mu_2- centre of Gaussian basis function 2
+% sigma_1 - sigma/variance-covariance matrix of Gaussian basis function 1
+% sigma_2 - sigma/variance-covariance matrix of Gaussian basis function 2
 
 % output parameter list:
 % product - inner product of two gaussians
