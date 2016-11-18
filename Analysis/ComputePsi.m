@@ -22,7 +22,10 @@ function Ts_invGamma_phi_psi = ComputePsi(SpaceMin, SpaceMax, NPoints, nTheta, T
 % output parameter list:
 % Psi - Psi matrix
 
-%% parameters and variables are pre-defined here
+%% parameters and centres of field basis functions are pre-defined here
+% We align the centres of field basis function to either right on the
+% discretisation points or the middle point of two adjacent discretisation
+% points
 % ~~~~~~~~~~~~~~~
 % calc location of Gaussian basis functions. Uniformly distributed over 2-D surface.
 

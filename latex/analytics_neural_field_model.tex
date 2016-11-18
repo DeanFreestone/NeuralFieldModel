@@ -7,6 +7,7 @@
 
 % packages
 \usepackage[english]{babel}
+\usepackage{setspace}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
@@ -24,7 +25,7 @@
 
 
 \begin{document}
-
+\onehalfspacing
 % title of the document
 \begin{titlepage}\centering
 \vspace*{\fill}
@@ -106,7 +107,11 @@ function is defined as $\phi(r-r')=\exp{(-\frac{(r-r')^{T}(r-r')}{\sigma_{\phi}^
 
 
 \subsection{Parameter List}
+
+
 \subsection{Implementations}
+
+
 \subsection{Results}
 
 \newpage
@@ -115,13 +120,40 @@ function is defined as $\phi(r-r')=\exp{(-\frac{(r-r')^{T}(r-r')}{\sigma_{\phi}^
 
 % Compute Psi
 \section{Compute Psi}
-\paragraph{We implement to compute Psi.}
+\paragraph{We will compute Psi Matrix, according to Equation (24). In this section, we
+wiil use the Gamma matrix computed from the previous section.}
+\paragraph{File (Matlab script): ComputePsi.m}
 
 
 \subsection{Parameter List}
-\subsection{Implementations}
-\subsection{Results}
+\textbf{\textit{Input parameters}}\newline
+SpaceMin - Edge of surface on the negative side \newline
+SpaceMax - Edge of surface on the positive side \newline
+NPoints - number of points along each dimension \newline
+nTheta - number of connectivity kernel basis functions \newline
+Ts - Time step \newline
+nx - number of Gaussian basis functions \newline
+mu\_phi - centre of Gaussian basis function for phi \newline
+sigma\_phi - sigma of Gaussian basis function for phi \newline
+mu\_psi - a vector of centres of Gaussian basis functions of connectivity kernel \newline
+vector\_Sigma\_Psi - a vector of sigma of Gaussian basis functions \newline
+\textbf{\textit{Output parameters}}\newline
+Psi - Psi matrix
 
+
+
+\subsection{Implementations}
+
+
+
+
+\subsection{Results}
+Run script: ComputePsi\_Compare\_AnalyticNumeric.m
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{ComputePsi_Check_AnalyticNumeric_SpatialRes_301.pdf}
+\caption{Compare analytic and numeric results of computing Psi}
+\end{figure}
 \newpage
 
 
