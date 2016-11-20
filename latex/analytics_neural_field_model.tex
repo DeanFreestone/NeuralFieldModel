@@ -9,6 +9,8 @@
 \usepackage[english]{babel}
 \usepackage{setspace}
 \usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bm}
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{caption}
@@ -63,7 +65,9 @@ precision level of analytic simulation should be around $10^{-6}$.}
 
 \subsection*{Matlab script description}
 
-Appendix E (Freestone et al., 2011, NeuroImage), Equation (4) $\left(\phi_{i}\otimes\phi_{j}\right)(r)=(\frac{\pi\sigma_{i}^{2}\sigma_{j}^{2}}{\sigma_{i}^{2}+\sigma_{i}^{2}})^{\frac{n}{2}}\exp(-\frac{1}{\sigma_{i}^{2}+\sigma_{i}^{2}}r^{T}r)$.
+Appendix E (Freestone et al., 2011, NeuroImage), Equation (4)
+
+$\left(\phi_{i}\otimes\phi_{j}\right)(\boldsymbol{r})=(\frac{\pi\sigma_{i}^{2}\sigma_{j}^{2}}{\sigma_{i}^{2}+\sigma_{i}^{2}})^{\frac{n}{2}}\exp(-\frac{1}{\sigma_{i}^{2}+\sigma_{i}^{2}}r^{T}r)$.
 
 \subparagraph{Section: Generate spatial data, create a $NPoints\times NPoints$ cortical surface and phi and psi Gaussian basis functions.\\}
 
@@ -93,15 +97,11 @@ Appendix E (Freestone et al., 2011, NeuroImage), Equation (4) $\left(\phi_{i}\ot
 % Compute Gamma
 \section{Compute Gamma}
 
-\paragraph{We analytically estimate Gamma matrix based on Equation (21) and Equation
-(D.7) in Appendix D.}
-
-\paragraph{We decompose neural field into a finite-dimentional state vector. Each element
-of the state vector is a Gaussian basis function.}
-
-\paragraph{Define $\Gamma=\int_{\Omega}\phi(r)\phi^{T}(r)dr$. Firstly, programmatically
-define $\phi(r)$, as a vector of Gaussian basis functions. Each Gaussian
-function is defined as $\phi(r-r')=\exp{(-\frac{(r-r')^{T}(r-r')}{\sigma_{\phi}^{2}})}$.}
+\paragraph{To analytically compute Gamma Matrix, we define
+$\Gamma=\int_{\Omega}\phi(\boldsymbol{r})\phi^{T}(\boldsymbol{r})dr$.
+Firstly, we define $\phi(\boldsymbol{r})$ as a vector of Gaussian basis functions.
+Each Gaussian basis function is defined as,
+$$\phi(\boldsymbol{r}-\boldsymbol{r}\prime)=\exp{\left(-\frac{(\boldsymbol{r}-\boldsymbol{r}\prime)^{T}(\boldsymbol{r}-\boldsymbol{r}\prime)}{\sigma_{\phi}^{2}}\right)}$$}
 
 \paragraph{File (Matlab script): ComputeGamma.m}
 
@@ -125,11 +125,12 @@ $$\Gamma = \left(
 \vdots&\ddots&\vdots\\
 \varphi_{nx}\otimes\varphi_1&\cdots&\varphi_{nx}\otimes\varphi_{nx}
 \end{array}
-\right)$$
+\right),$$ each $ \varphi$ is a Gaussian basis function.\par
 To compute Gamma Matrix, we compute inner product between each Gaussian basis
-function by calling local function \textit{InnerProductTwo2DGaussians.m}. The inner
+function by calling local function, \textit{InnerProductTwo2DGaussians.m}. \newline The inner
 product of two Gaussian basis function is defined as below,
-$$\varphi_i\otimes\varphi_j=\int_{\mathbb{R}^\mathbb{N}}\varphi_i(r)\varphi_j(r)\,dr,$$ in Equation (D.3) Appendix D.\par
+$$\varphi_i\otimes\varphi_j=\int_{\mathbb{R}^\mathbb{N}}\varphi_i(\boldsymbol{r})\varphi_j(\boldsymbol{r})\,d\boldsymbol{r},$$
+in Equation (D.3) Appendix D.\par
 The local function, \textit{InnerProductTwo2DGaussians.m}, analytically computes the
 integration of two Gaussian basis functions over the space. This analytic solution
 is defined as below,
@@ -149,7 +150,9 @@ in Equation (D.7) Appendix D.
 
 % Compute Psi
 \section{Compute Psi}
-\paragraph{We will compute Psi Matrix, according to Equation (24) XXX. In this section, we
+\paragraph{We will compute Psi Matrix, according to
+$$[\Psi(\boldsymbol{r}\prime)]_{:i}= T_s\Gamma^{-1}\int_{\Omega}\phi(\boldsymbol{r})\psi_i(2\boldsymbol{c}_i-\boldsymbol{r}\prime- \boldsymbol{r})\,d\boldsymbol{r},$$ 
+Equation (24). In this section, we
 wiil use the Gamma matrix computed from the previous section.}
 \paragraph{File (Matlab script): ComputePsi.m}
 
