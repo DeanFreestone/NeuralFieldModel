@@ -217,15 +217,27 @@ Run script: ComputePsi\_Compare\_AnalyticNumeric.m
 
 
 \section{Compute Reduced Model}
+
 \paragraph{We use analytical solution to compute neural field at time T+1 based on
 neural field at time T.\newline
 This analytical solution is computed based on equations,
-$$\boldsymbol{x}_{t+1}=\int_{\Omega}\Psi(\boldsymbol{r}\prime)f(\phi^{T}(\boldsymbol{r\prime})\boldsymbol{x_t})d\boldsymbol{r}\theta + \xi\boldsymbol{x_t} $$}
-
+$$\boldsymbol{x}_{t+1}=\int_{\Omega}\Psi(\boldsymbol{r}\prime)f(\phi^{T}(\boldsymbol{r\prime})\boldsymbol{x_t})d\boldsymbol{r}\theta + \xi\boldsymbol{x_t} + \Gamma^{-1}\int_{\Omega}\phi(\boldsymbol{r})e_t(\boldsymbol{r})d\boldsymbol{r},$$
+Equation (25) and,
+$$v_{t+1}(\boldsymbol{r})\approx\phi^T(\boldsymbol{r})\boldsymbol{x_{t+1}}, $$
+Equation (15).\newline
+In this implementation, we ignore the error part, $\Gamma^{-1}\int_{\Omega}\phi(\boldsymbol{r})e_t(\boldsymbol{r})$, in Equation (25).\newline
+To compute neural fieldt at T+1 with reduced model, we use local functions implemented in the previous sections.
+}
 
 \subsection{Parameter List}
+
+
+
 \subsection{Implementations}
+
 \subsection{Results}
+
+
 
 \newpage
 
