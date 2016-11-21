@@ -229,6 +229,8 @@ In this implementation, we ignore the error part, $\Gamma^{-1}\int_{\Omega}\phi(
 To compute neural fieldt at t+1 with reduced model, we use local functions implemented in the previous sections.
 }
 
+\paragraph{File (Matlab script): ReducedModel\_ComputeFieldVtPlus1.m}
+
 \subsection{Parameter List}
 \textbf{\textit{Input parameters}:}\newline
 Xt - State vector at time t\newline
@@ -259,6 +261,7 @@ Here we define \textit{x} as coordinates of discretisation of the surface and
 ks - $\xi = 1 - T_s\zeta $, where $T_s$ is the time step and $\zeta $ is inverse synaptic time constant. \newline
 slope\_sigmoidal - slope of sigmoidal activation function of firing rate function.\newline
 v0 - firing threshold of firing rate function.\newline
+In this implementation, we set those parameters to the values estimated in the paper.
 
 \paragraph{Create field basis functions - $\phi(\boldsymbol{r}) $\newline}
 To create a vector of field basis functions, namely phi, we call a local function,
@@ -312,6 +315,8 @@ we have significant errors or residuals on the edges of the field. In order to c
 we apply a boundary condition method to extend the field into 9 tiles and each tile is an identical copy
 of the neural field.}
 
+\paragraph{File (Matlab script): CompleteModel\_ComputeFieldVtPlus1.m}
+
 \subsection{Parameters}
 \textbf{\textit{Input parameters}:}\newline
 Vt - Neural field at time t\newline
@@ -328,7 +333,40 @@ VtPlus1 - neural field at time t+1\newline
 
 \subsection{Implementations}
 
+\paragraph{Spatial parameters\newline}
+Here we define \textit{x} as coordinates of discretisation of the surface and
+\textit{stepSize} as distance between two adjacent points in the 2-D surface.
+\textit{X} and \textit{Y} are the x-coordinates and y-coordinates of the 2-D surface.
 
+
+\paragraph{Model parameters\newline}
+ks - $\xi = 1 - T_s\zeta $, where $T_s$ is the time step and $\zeta $ is inverse synaptic time constant. \newline
+slope\_sigmoidal - slope of sigmoidal activation function of firing rate function.\newline
+v0 - firing threshold of firing rate function.\newline
+In this implementation, we set those parameters to the values estimated in the paper.
+
+\paragraph{Boundary condition\newline}
+In this implementation, we programed two boundary conditions, 9 tiles and symmetry condition.
+In both boundary conditions, we extend the current neural field into a $3\times3 $ field.
+The extended field is called \textit{extendedField} in the implementation.
+In 9-tile condition, each tile is the identical copy of the original field.
+In symmetry condition, each edge of the orignal field becomes a mirror and
+each tile is the mirrored field of the original field.
+
+\paragraph{Convolution\newline}
+In this part, we convolve the extended field with the connectivity kernel
+that we define based on input parameters. After this convolution, we crop the
+centre or the middle field of the extended field as the convolved field.\par
+
+In the script, we use variable \textit{w} as the connectivity kernel and
+\textit{extendedField} as the solution of boundary condition.
+The convolution implements
+$ T_s\int_{\Omega}w(\boldsymbol{r}, \boldsymbol{r\prime})f(v_t(\boldsymbol{r\prime}))d\boldsymbol{r\prime}$
+in the Equation (12).
+
+\paragraph{Neural field at time t+1\newline}
+Finally, given the convolution result from previous part and Equation (12),
+we are able to directly calculate the neural field at t+1.
 
 \subsection{Results}
 We present the neural field at time t+1 in the Section of Compare Reduced Model and Full Model.
@@ -336,11 +374,21 @@ We present the neural field at time t+1 in the Section of Compare Reduced Model 
 
 
 \section{Compare Reduced Model and Full Model}
-\paragraph{Compare neural fields at time T+1 computed by reduced model and full model.\newline
-Script name: Compare\_CompleteModel\_ReducedModel.m}
+\paragraph{Compare neural fields at time T+1 computed by reduced model and full model.}
+
+\paragraph{Script name: Compare\_CompleteModel\_ReducedModel.m}
+
 \subsection{Parameters}
 
+
+
 \subsection{Implementation}
+In fact, we want to test two types of connectivity kernels, Mexican hat and Gabor kernel.
+In order to switch between two different types of connectivity kernels,
+we parameterised connectivity kernels as centres of basis functions, \textit{mu_psi},
+and variance-covariane matrix, \textit{}.\newline
+
+We
 
 
 \subsection{Results}
