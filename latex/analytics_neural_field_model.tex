@@ -151,7 +151,7 @@ in Equation (D.7) Appendix D.
 % Compute Psi
 \section{Compute Psi}
 \paragraph{We will compute Psi Matrix, according to
-$$[\Psi(\boldsymbol{r}\prime)]_{:i}= T_s\Gamma^{-1}\int_{\Omega}\phi(\boldsymbol{r})\psi_i(2\boldsymbol{c}_i-\boldsymbol{r}\prime- \boldsymbol{r})\,d\boldsymbol{r},$$ 
+$$[\Psi(\boldsymbol{r}\prime)]_{:i}= T_s\Gamma^{-1}\int_{\Omega}\phi(\boldsymbol{r})\psi_i(2\boldsymbol{c}_i-\boldsymbol{r}\prime- \boldsymbol{r})\,d\boldsymbol{r},$$
 Equation (24). In this section, we
 wiil use the Gamma matrix computed from the previous section.}
 \paragraph{File (Matlab script): ComputePsi.m}
@@ -217,6 +217,12 @@ Run script: ComputePsi\_Compare\_AnalyticNumeric.m
 
 
 \section{Compute Reduced Model}
+\paragraph{We use analytical solution to compute neural field at time T+1 based on
+neural field at time T.\newline
+This analytical solution is computed based on equations,
+$$\boldsymbol{x}_{t+1}=\int_{\Omega}\Psi(\boldsymbol{r}\prime)f(\phi^{T}(\boldsymbol{r\prime})\boldsymbol{x_t})d\boldsymbol{r}\theta + \xi\boldsymbol{x_t} $$}
+
+
 \subsection{Parameter List}
 \subsection{Implementations}
 \subsection{Results}
