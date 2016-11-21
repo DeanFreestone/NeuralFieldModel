@@ -76,8 +76,8 @@ for m = 1 : nTheta
     covMat_Psi = [vector_Sigma_Psi(m, 1) vector_Sigma_Psi(m, 2); vector_Sigma_Psi(m, 2) vector_Sigma_Psi(m, 1)];
     
     % coefficient of convolution of phi and psi basis functions
-    psi_phi_coefficient(m) = pi*det(covMat_Psi)*det(covMat_phi) / det(covMat_Psi+covMat_phi); % coefficient of convolution of phi and psi basis functions
-    %     psi_phi_coefficient(m) = (2*pi*sqrt(det(covMat_Psi))*sqrt(det(covMat_phi))) / sqrt(det(covMat_Psi+covMat_phi)); % coefficient of convolution of phi and psi basis functions
+    %     psi_phi_coefficient(m) = pi*det(covMat_Psi)*det(covMat_phi) / det(covMat_Psi+covMat_phi); % coefficient of convolution of phi and psi basis functions
+    psi_phi_coefficient(m) = (2*pi*sqrt(det(covMat_Psi))*sqrt(det(covMat_phi))) / sqrt(det(covMat_Psi+covMat_phi)); % coefficient of convolution of phi and psi basis functions
     
 end
 
