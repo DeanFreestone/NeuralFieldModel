@@ -54,7 +54,6 @@ Freestone et al., 2011, NeuroImage for derivations, equations and details.}
 
 
 
-
 % Convolution of two Gaussians
 \section{Convolution of Two Gaussian Basis Functions}
 
@@ -63,20 +62,13 @@ precision level of analytic simulation should be around $10^{-6}$.}
 
 \paragraph{File (Matlab script): Convolution2DGaussians.m}
 
-\subsection*{Matlab script description}
 
+\subsection{Implementations}
 Appendix E (Freestone et al., 2011, NeuroImage), Equation (4)
 
 $\left(\phi_{i}\otimes\phi_{j}\right)(\boldsymbol{r})=(\frac{\pi\sigma_{i}^{2}\sigma_{j}^{2}}{\sigma_{i}^{2}+\sigma_{i}^{2}})^{\frac{n}{2}}\exp(-\frac{1}{\sigma_{i}^{2}+\sigma_{i}^{2}}r^{T}r)$.
 
 \subparagraph{Section: Generate spatial data, create a $NPoints\times NPoints$ cortical surface and phi and psi Gaussian basis functions.\\}
-
-
-\subsection{Parameters}
-
-
-
-\subsection{Implementations}
 
 
 
@@ -428,7 +420,6 @@ The results are shown in the next section.
 
 \subsection{Results}
 
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{modelComparison_MexHat_nx_121_sigma_1_5_nPoints_501_vTPlus1.pdf}
@@ -441,3 +432,5 @@ The results are shown in the next section.
 \caption{Connectivity kernel, Mexican Hat}
 \end{figure}
 \end{document}
+
+\subsection{Discussion}
