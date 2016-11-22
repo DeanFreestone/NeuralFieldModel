@@ -380,18 +380,42 @@ We present the neural field at time t+1 in the Section of Compare Reduced Model 
 
 \subsection{Parameters}
 
+tau = 0.01; % synaptic time constant
 
+Ts = 0.0001; % time step
+
+
+% parameters to create a 2-D cortical surface
+SpaceMin = -10; SpaceMax = 10; NPoints = 501;
+
+% field basis function parameters
+nx = 121; % number of Gaussian basis function of field decomposition
+
+sigma_phi = [2 0; 0 2]; % variance-covariance matrix of Gaussian basis function of field decomposition
+
+% connectivity kernel parameters
+theta = [10, -8, 0.5]'; % scale Gaussian basis functions of connectivity kernel
+
+nTheta = 3; % number of connectivity kernel basis functions
+
+mu_psi = [0 0; 0 0; 0 0]; % centres of basis functions of connectivity kernel
+
+vector_Sigma_Psi = [0.6 0; 0.8 0; 2 0]; % width of Gaussian basis functions of connectivity kernel
+
+
+Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
 
 \subsection{Implementation}
 In fact, we want to test two types of connectivity kernels, Mexican hat and Gabor kernel.
-In order to switch between two different types of connectivity kernels,
-we parameterised connectivity kernels as centres of basis functions, \textit{mu_psi},
-and variance-covariane matrix, \textit{}.\newline
-
-We
+In order to conveniently switch between different types of connectivity kernels,
+we parameterised connectivity kernels into centres of basis functions, \textit{mu_psi},
+and a vector of variance-covariane matrices, \textit{vector_Sigma_Psi}.
+Therefore, by changing the number of basis functions and variance-covariance matrices,
+we will have different connectivity kernels.
 
 
 \subsection{Results}
+
 
 
 \begin{figure}[H]
