@@ -41,11 +41,15 @@ mu_psi = [0 0; 0 0; 0 0]; % centres of basis functions of connectivity kernel
 
 vector_Sigma_Psi = [0.6 0; 0.8 0; 2 0]; % width of Gaussian basis functions of connectivity kernel
 
+
+% initialise state vector at time t
+
+Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
+
 %% Compare models with Mexican-hat connectvity kernels
 % ~~~~~~~~~~~~~~~
 
 
-Xt = randn(nx, 1, 'single'); % x(t), state vector at time t. Set as rand numbers for now.
 
 % reduced model
 [ReducedModel_VtPlus1, Vt] = ReducedModel_ComputeFieldVtPlus1(Xt, tau, Ts, nx, sigma_phi, theta, nTheta, mu_psi, vector_Sigma_Psi, SpaceMin, SpaceMax, NPoints);
