@@ -57,19 +57,27 @@ Freestone et al., 2011, NeuroImage for derivations, equations and details.}
 % Convolution of two Gaussians
 \section{Convolution of Two Gaussian Basis Functions}
 
-\paragraph{Analytically prove convolution of two Gaussians. In general, the
-precision level of analytic simulation should be around $10^{-6}$.}
+\paragraph{To test the analytic solution of convolution of two Gaussians, w
+e compute the convolution of two Gaussians both analytically and numerically.
+The numerical solution is to use Matlab built-in funciton conv2. By obtaining
+the residual of two solutions, we are able to prove that our analytical solution
+has very significantly high accuracy.}
 
 \paragraph{File (Matlab script): Convolution2DGaussians.m}
 
 
 \subsection{Implementations}
-Appendix E (Freestone et al., 2011, NeuroImage), Equation (4)
+To analytically compute the convolution of two Gaussians, we use the following
+equation:
+$$\left(\varphi_i\ast\varphi_j\right)(\boldsymbol{r}) = \left(\frac{\pi\sigma^2_i\sigma^2_j}{\sigma^2_i + \sigma^2_j}\right)^{\frac{n}{2}}\\
+\times\exp\left(-\frac{1}{\sigma^2_i + \sigma^2_j}(\boldsymbol{r}-\boldsymbol{\mu})^T(\boldsymbol{r}-\boldsymbol{\mu})\right), $$
+where $\boldsymbol{\mu} = \boldsymbol{\mu_i} + \boldsymbol{\mu_j} $.
+This equation is given as Equation (E.4) in Appendix E.\par
 
-$\left(\phi_{i}\otimes\phi_{j}\right)(\boldsymbol{r})=(\frac{\pi\sigma_{i}^{2}\sigma_{j}^{2}}{\sigma_{i}^{2}+\sigma_{i}^{2}})^{\frac{n}{2}}\exp(-\frac{1}{\sigma_{i}^{2}+\sigma_{i}^{2}}r^{T}r)$.
-
-\subparagraph{Section: Generate spatial data, create a $NPoints\times NPoints$ cortical surface and phi and psi Gaussian basis functions.\\}
-
+Practically, we compute the convolution of two Gaussians, $\phi$ and $\psi $,
+with analytical solution (Equation E.4) and numerical solution (Matlab
+buit-in function \textit{conv2}).
+The residual of two solutions are presented in the next section.
 
 
 \subsection{Results}
