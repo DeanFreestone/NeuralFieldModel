@@ -1,10 +1,13 @@
-%% Analytic test of inner product
+%% Analytic check of swap order of convolution and inner-product
 % ~~~~~~~~~~~~~~~
 
 
 
 clc
+
+
 clear
+
 close all
 
 %% Generate data

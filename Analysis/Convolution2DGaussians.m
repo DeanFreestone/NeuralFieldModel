@@ -1,9 +1,11 @@
 %% Test of analytic convolution of two 2-D Gaussians
-
+% ~~~~~~~~~~~~~~~
 
 
 clc
+
 clear
+
 close all
 
 %% figure save path
@@ -14,6 +16,7 @@ close all
 figurePath = '../Figures/'; % figure folder
 
 %% Generate data
+% ~~~~~~~~~~~~~~~
 
 
 
@@ -54,7 +57,7 @@ psi = Define2DGaussian_AnisotropicKernel(mu_psi(1), mu_psi(2), sigma_psi, NPoint
 
 conv2_convPhiPsi = conv2(phi, psi, 'same') * stepSize ^ 2;
 
-%% Analytic check of convolution of two gaussians
+%% Analytic solution of convolution of two gaussians
 % ~~~~~~~~~~~~~~~
 
 
