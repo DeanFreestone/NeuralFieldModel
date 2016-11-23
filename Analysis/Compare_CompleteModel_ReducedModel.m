@@ -25,7 +25,7 @@ Ts = 0.0001; % time step
 
 
 % parameters to create a 2-D cortical surface
-SpaceMin = -10; SpaceMax = 10; NPoints = 301;
+SpaceMin = -10; SpaceMax = 10; NPoints = 501;
 
 % field basis function parameters
 nx = 121; % number of Gaussian basis function of field decomposition
