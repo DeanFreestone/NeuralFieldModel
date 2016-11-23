@@ -25,7 +25,7 @@ Ts = 0.0001; % time step
 
 
 % parameters to create a 2-D cortical surface
-SpaceMin = -10; SpaceMax = 10; NPoints = 501;
+SpaceMin = -10; SpaceMax = 10; NPoints = 301;
 
 % field basis function parameters
 nx = 121; % number of Gaussian basis function of field decomposition
@@ -78,7 +78,7 @@ suptitle({'Mexican-Hat kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1
 
 filename =[figurePath 'modelComparison_MexHat_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_nPoints_' num2str(NPoints) '_vTPlus1.pdf'];
 
-print(fig1, '-dpdf', filename);
+print(fig1, '-dpdf', filename, '-bestfit');
 
 %% Compare models with Gabor-kernel connectvity kernels
 % ~~~~~~~~~~~~~~~
@@ -127,4 +127,4 @@ suptitle({'Gabor kernel', ['nx:' num2str(nx) ' sigma:' num2str(sigma_phi(1,1))]}
 
 filename =[figurePath 'modelComparison_Gabor_nx_' num2str(nx) '_sigma_' num2str(sigma_phi(1,1)) '_nPoints_' num2str(NPoints) '_vTPlus1.pdf'];
 
-print(fig2, '-dpdf', filename);
+print(fig2, '-dpdf', filename, '-bestfit');

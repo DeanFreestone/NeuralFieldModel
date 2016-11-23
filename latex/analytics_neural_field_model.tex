@@ -91,21 +91,33 @@ The residual of two solutions are presented in the next section.
 
 \newpage
 
-\section{Swap the order}
-\paragraph{Here is to provide the derivation of swap the order of convolution and inner-product.}
+\section{Swap the order of convolution and inner-product of Gaussians}
+\paragraph{Here is to provide the derivation of swap the order of convolution and inner-product of Gaussians.}
 
 
 \subsection{Derivation}
 Define $\varphi(\boldsymbol{r}) $ and $\psi(\boldsymbol{r}) $ as 2-dimensional Gaussians.
 Define $f(\boldsymbol{r}) $ as 2-dimensional random data. The target is prove
-$$ \varphi \otimes (\psi \ast f) = (\varphi \ast \psi) \otimes f,   $$
-where $\otimes $ is inner product of two Gaussians and $\ast $ is convolution, through derivations and analytic check.
+$$ \varphi \otimes (\psi \ast f) = (\varphi \ast \psi) \otimes f, $$
+where $\otimes $ is inner product of two Gaussians and $\ast $ is convolution, through derivations and analytic check.\par
+$$\int_{\Omega}\varphi(\boldsymbol{r})\int_{\Omega}\psi(\boldsymbol{r} - \boldsymbol{r\prime})f(\boldsymbol{r\prime})\,d\boldsymbol{r\prime}\,d\boldsymbol{r}. $$
+Let $\theta(\boldsymbol{r}) =  \int_{\Omega}\psi(\boldsymbol{r} - \boldsymbol{r\prime})f(\boldsymbol{r\prime})\,d\boldsymbol{r\prime}.$ Therefore,
+$$\int_{\Omega}\varphi(\boldsymbol{r})\int_{\Omega}\psi(\boldsymbol{r} - \boldsymbol{r\prime})f(\boldsymbol{r\prime})\,d\boldsymbol{r\prime}\,d\boldsymbol{r}=
+\int_{\Omega}\varphi(\boldsymbol{r})\theta(\boldsymbol{r})\,d\boldsymbol{r}. $$
+If Gaussian is symmetric, we have $\varphi(\boldsymbol{\mu}-\boldsymbol{x}) = \varphi(\boldsymbol{\mu}+\boldsymbol{x}). $\newline
+Let $x= \boldsymbol{\mu}-\boldsymbol{x}$, and substitute it into the above, we have
+$$\varphi(\boldsymbol{r}) = \varphi(2\boldsymbol{\mu} - \boldsymbol{r}) ,$$
+which gives
+$$\int_{\Omega}\varphi(2\boldsymbol{\mu} - \boldsymbol{r})\theta(\boldsymbol{r})\,d\boldsymbol{r} = (\varphi \ast \theta)(2\boldsymbol{\mu}). $$
 
-    
+Hence we have
+$$\varphi \otimes (\psi \ast f) = (\varphi \ast \psi) \otimes f, $$
+where $\varphi $ and $\psi $ are Gaussians, f is a random field.
 
-\subsection{Analytical and numerical check}
-By running script, \textit{Check_Change_Convolution-InnerProduct_Order.m}, we numerically
-compute the left side and right side of the equation and calculate the residual.
+\subsection{Numerical check}
+By running script, \textit{Check\_Change\_Convolution-InnerProduct\_Order.m}, we numerically
+compute the left side, $\varphi \otimes (\psi \ast f)$,and right side, $(\varphi \ast \psi) \otimes f $,
+of the equation and calculate the residual.
 With 301 points spatial resolution, the residual is 4.3454e-13.
 
 \newpage
@@ -442,15 +454,13 @@ The results are shown in the next section.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{modelComparison_MexHat_nx_121_sigma_1_5_nPoints_501_vTPlus1.pdf}
+\includegraphics[width=\textwidth]{modelComparison_MexHat_nx_121_sigma_2_nPoints_301_vTPlus1.pdf}
 \caption{Connectivity kernel, Mexican Hat}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{modelComparison_MexHat_nx_121_sigma_1_5_nPoints_501_vTPlus1.pdf}
-\caption{Connectivity kernel, Mexican Hat}
+\includegraphics[width=\textwidth]{modelComparison_Gabor_nx_121_sigma_2_nPoints_301_vTPlus1.pdf}
+\caption{Connectivity kernel, Gabor Hat}
 \end{figure}
 \end{document}
-
-\subsection{Discussion}
